@@ -65,3 +65,5 @@ INTRO = """
 
         Are you ready to embark on this swashbuckling quest?"
         """
+
+FIRST_DECISION = ""
