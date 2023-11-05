@@ -1,6 +1,3 @@
-# ASCII ART
-# https://ascii.co.uk/art
-
 # import packages
 from pkgs.config import START_TREASURE_ISLAND, INTRO
 
