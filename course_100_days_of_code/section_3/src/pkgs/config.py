@@ -191,7 +191,9 @@ DEEP_JUNGLE_DECISION = """
 
 # here the user must choose between three doors. You have to give the user a description for each of the door
 # once chosen: what's inside? with a possible link to a keyboard, mouse and keyboard/mouse mat
-DOOR_DECISION = ""
+EMERALD_DOOR_DECISION = ""
+SAPPHIRE_DOOR_DECISION = ""
+RUBY_DOOR_DECISION = ""
 
 CLIFF_DEFICION = """
             As you ascend the rocky cliff, the journey is strenuous but promising. 

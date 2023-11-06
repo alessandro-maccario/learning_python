@@ -43,20 +43,25 @@ if __name__ == "__main__":
 
                 # third decision of the user: here three
                 user_path_decision = input(
-                    """ Which dore would you like to choose? Insert emerald, sapphire or ruby """
+                    """ Which door would you like to choose? Insert emerald, sapphire or ruby """
                 ).lower()
-                if user_path_decision == "yellow":
+                if user_path_decision == "emerald":
                     print(""" You found the Pirate Treasure! Congrats! """)
                     is_loop_true = False
+                elif user_path_decision == "sapphire":
+                    print("")
                 else:
-                    print(""" Game over! """)
-                    is_continue = input(
-                        """ Do you want to start over again?  Insert Y of N: """
-                    ).lower()
-                    if is_continue == "y":
-                        continue
-                    else:
-                        is_loop_true = False
+                    print("")
+
+                # else:
+                #     print(""" Game over! """)
+                #     is_continue = input(
+                #         """ Do you want to start over again?  Insert Y of N: """
+                #     ).lower()
+                #     if is_continue == "y":
+                #         continue
+                #     else:
+                #         is_loop_true = False
 
             else:
                 print(CLIFF_DEFICION)
