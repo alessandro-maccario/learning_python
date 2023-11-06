@@ -14,23 +14,23 @@ if __name__ == "__main__":
 
     # You should start with a loop so the user can start again whenever they want!
     is_loop_true = True
+    # add a boolean variable to keep track of the fact that the user won or not
+    isWinning = True
 
     while is_loop_true:
+        print(INTRO_FIRST_DECISION)
         # give the user an intro based on the next decision
         print(FIRST_LEFT_PATH)
-        print()
         print(FIRST_RIGHT_PATH)
 
         # let the user choose the first step
         user_path_decision = input(
             """ Which one do you chose? Insert left or right? """
         ).lower()
-        print("-----")
 
         # first decision of the user (left = continue adventure; right = game over)
         if user_path_decision == "left":
             print(JUNGLE_DECISION)
-            print("-----")
 
             # second decision of the user (wait = continue adventure; swim = game over)
             user_path_decision = input(
@@ -39,7 +39,6 @@ if __name__ == "__main__":
 
             if user_path_decision == "jungle":
                 print(DEEP_JUNGLE_DECISION)
-                print("-----")
 
                 # third decision of the user: here three
                 user_path_decision = input(
@@ -68,6 +67,7 @@ if __name__ == "__main__":
                     continue
                 else:
                     is_loop_true = False
+                    isWinning = False
 
         else:
             print(ROCKY_SHORELINE)
@@ -78,5 +78,9 @@ if __name__ == "__main__":
                 continue
             else:
                 is_loop_true = False
+                isWinning = False
 
-print()
+if isWinning == False:
+    print(" Thank you for playing! Come back again to try your luck! ")
+else:
+    print(ENDING_GAME)
