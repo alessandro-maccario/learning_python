@@ -191,11 +191,16 @@ DEEP_JUNGLE_DECISION = """
 
 # here the user must choose between three doors. You have to give the user a description for each of the door
 # once chosen: what's inside? with a possible link to a keyboard, mouse and keyboard/mouse mat
-EMERALD_DOOR_DECISION = ""
-SAPPHIRE_DOOR_DECISION = ""
-RUBY_DOOR_DECISION = ""
+EMERALD_DOOR_DECISION = """ Congrats, mate, you found the mistycal KEYCHRON K3 mechanical keyboard!!! Shop it here, and get the Pirate discount that you deserve 
+                                for finishing this quest: https://shorturl.at/xBH38 """
 
-CLIFF_DEFICION = """
+SAPPHIRE_DOOR_DECISION = """ Congrats, mate, you found the mistycal CORSAIR HARPOON gaming mouse!!! Shop it here, and get the Pirate discount that you deserve 
+                                for finishing this quest: https://shorturl.at/cRU56 """
+
+RUBY_DOOR_DECISION = """ Congrats, mate, you found the mistycal Silent Monster Keyboard Mat!!! Shop it here, and get the Pirate discount that you deserve 
+                                for finishing this quest: https://shorturl.at/fDJZ9"""
+
+CLIFF_DECISION = """
             As you ascend the rocky cliff, the journey is strenuous but promising. 
             The view from above must be incredible, you think. 
             You conquer the rugged terrain, step by step, until finally, 
@@ -222,3 +227,16 @@ CLIFF_DEFICION = """
 
             Game over!
             """
+
+ENDING_GAME = """ 
+                You've navigated through treacherous waters, unraveled cryptic riddles, and braved the unknown, 
+                like a true swashbuckler of the digital realm.
+                You've found the treasure, not just of gold and gems, but of the journey itself. 
+                In the heart of the digital world, you've become a legendary pirate, a master of code, and a seeker of adventure.
+                With the treasure in hand, you return to the real world, but the memories of your 
+                exploits in the digital realm will forever shine in your heart. 
+                As a pirate of the digital seas, your legend lives on, and the treasures you've 
+                discovered are a testament to the explorer's spirit that beats within every true adventurer.
+                
+                Congratulations, matey, you've emerged victorious in the grand tale of the Pirate's Treasure Island Adventure!!!
+                """

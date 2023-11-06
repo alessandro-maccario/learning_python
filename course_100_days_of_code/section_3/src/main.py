@@ -29,7 +29,7 @@ if __name__ == "__main__":
 
         # first decision of the user (left = continue adventure; right = game over)
         if user_path_decision == "left":
-            print(DEEP_JUNGLE_DECISION)
+            print(JUNGLE_DECISION)
             print("-----")
 
             # second decision of the user (wait = continue adventure; swim = game over)
@@ -45,26 +45,22 @@ if __name__ == "__main__":
                 user_path_decision = input(
                     """ Which door would you like to choose? Insert emerald, sapphire or ruby """
                 ).lower()
+                # if the user decide for the emerald door
                 if user_path_decision == "emerald":
-                    print(""" You found the Pirate Treasure! Congrats! """)
+                    print(EMERALD_DOOR_DECISION)
                     is_loop_true = False
+                # if the user decide for the sapphire door
                 elif user_path_decision == "sapphire":
-                    print("")
+                    print(SAPPHIRE_DOOR_DECISION)
+                    is_loop_true = False
+                # if the user decide for the ruby door
                 else:
-                    print("")
-
-                # else:
-                #     print(""" Game over! """)
-                #     is_continue = input(
-                #         """ Do you want to start over again?  Insert Y of N: """
-                #     ).lower()
-                #     if is_continue == "y":
-                #         continue
-                #     else:
-                #         is_loop_true = False
+                    print(RUBY_DOOR_DECISION)
+                    is_loop_true = False
 
             else:
-                print(CLIFF_DEFICION)
+                # if the user decide for going towards the cliff
+                print(CLIFF_DECISION)
                 is_continue = input(
                     """ Do you want to start over again?  Insert Y of N: """
                 ).lower()
@@ -82,3 +78,5 @@ if __name__ == "__main__":
                 continue
             else:
                 is_loop_true = False
+
+print()
