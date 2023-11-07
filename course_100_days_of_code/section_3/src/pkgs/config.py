@@ -35,28 +35,21 @@ START_TREASURE_ISLAND = '''
                         *******************************************************************************
                         '''
 
-INTRO_DESCRIPTION = """
-        Ahoy, matey! 
-        Welcome to the treacherous shores of Skull Island, 
-        a haven for scallywags and for buried treasure. 
-        As you step onto these sun-soaked sands, you become the protagonist of an epic pirate tale. 
-        Your mission is to unravel the mysteries of this legendary island and lay your hands on the 
-        long-lost pirate booty hidden beneath its rugged terrain.
+INTRO_DESCRIPTION = """                        
+                        Welcome to Skull Island, a text-based game adventure where you, matey, will find yourself
+                        in a haven for treasure seekers, a Piraty adventure to found an amazing treasure at the end 
+                        of the quest... 
+                        
+                        If you can survive the perils along the way!
+                        
+                        Your mission: unravel the island's mysteries and claim its legendary loot. 
+                        But beware, for a ghostly curse haunts these shores. 
+                        Will you conquer the treacherous waters, decipher cryptic maps, and outsmart cunning pirates to seize the fortune that awaits?
+                        Let's start then!
 
-        Once a bustling pirate haven, Skull Island now stands eerily deserted. 
-        The reason? A ghostly curse, they say... 
-        It is whispered in the darkest corners of the seven seas that 
-        the island's treasure is guarded by vengeful spirits, 
-        the restless souls of pirates who perished seeking their ill-gotten gains. 
-        These tormented souls, unable to move on to the afterlife, have driven away all but the boldest of adventurers.
-
-        You'll need to navigate treacherous waters, decipher cryptic maps, 
-        and outsmart cunning pirates who guard the secrets of this island. 
-        The winds of destiny are at your back, and the choice is yours, me heartie. 
-        Will you seize the fortune that awaits, or will you be swallowed by the depths of the sea?
-
-        Are you ready to embark on this swashbuckling quest?
-        """
+                        You arrived on Skull island with a unique desire: find the most famous Pirate treasure that, since your childhood, your old man told you so many story about. 
+                        You see two paths in front of you.
+                        """
 
 INTRO_FIRST_DECISION = """
                         As you stand on the sun-drenched beach of Skull Island, 
@@ -73,6 +66,8 @@ FIRST_RIGHT_PATH = """
                         The path to the right takes you along the rocky shoreline, where the crashing waves sing a haunting tune. 
                         You spot the remains of a weathered shipwreck, partially buried in the sand, hinting at forgotten tales of the sea.
                         """
+
+USER_PATH_DECISION = "Choose your path..."
 
 ROCKY_SHORELINE = """
                         As you follow the path to the right, you tread upon the rocky shoreline, 
@@ -101,17 +96,13 @@ JUNGLE_DECISION = """
                         Ancient trees with gnarled roots tower above, their leaves creating a natural canopy 
                         that filters the sunlight into an enchanting green glow. 
                         
-                        The air is thick with humidity and the calls of exotic birds.
                         With each step, you uncover remnants of a forgotten civilization – overgrown statues, 
                         moss-covered ruins, and cryptic symbols etched into stone. 
                                                 
                         Deeper into the jungle, you stumble upon a massive stone doorway, half-covered by creeping vines.
                         Moonstones, radiant and otherworldly, are embedded in the door.
-                        Each moonstone is intricately embedded in the door's surface, creating a mesmerizing pattern.
 
-                        But as you study the moonstone mosaic, you notice something amiss: 
-                        there's a conspicuous gap in the pattern where one moonstone should be. 
-                        It's as if one of the precious gems has been removed, leaving a void in the mosaic.
+                        As you study the moonstone mosaic, you notice that one moonstone is missing.
                         Below the missing moonstone, there's an inscription that appears to be a riddle: 
 
                         'The path to richeness lies beyond the guardian's gaze, beneath the watchful eye of the moon.'
@@ -123,56 +114,54 @@ JUNGLE_DECISION = """
                         thereby solving the riddle, or will you ascend the rocky cliff to seek a vantage point? 
                         Your decision will shape the course of your pirate legend. 
                         
-                        Which path shall it be?
                         """
 
 DEEP_JUNGLE_DECISION = """
                         As you venture deeper into the dense jungle, the intertwined branches create a maze of intricate paths. 
                         However, your keen eye catches a glint of metal amidst the foliage. 
-                        With the rusty saber you discovered earlier, you carefully clear the way, and the path becomes more defined.
-                        After a few more steps, the saber reveals a hidden treasure - a very old and ancient statue, 
-                        nearly lost to time, obscured by creeping branches. As you diligently cut away the last of the 
-                        encroaching foliage, you uncover a moon-like shape beneath the overgrowth.
+                        With the rusty saber you discovered earlier, you carefully clear the way revealing a hidden treasure - a very old and ancient statue, 
+                        nearly lost to time, obscured by creeping branches, a moon-like shape beneath the overgrowth.
                         
-                        Intrigued, you reach out to touch the mysterious shape, and as you turn it, 
-                        a wrenching sound echoes through the jungle. With a sudden shift, the statue reveals a 
+                        You reach out to touch the mysterious shape, and as you turn it, 
+                        a wrenching sound echoes through the jungle. The statue reveals a 
                         hidden gemstone underneath, glistening like a captured fragment of the night's sky.
 
-                        You carefully pocket the gemstone, sensing its significance. 
-                        Your journey leads you back to the massive stone doorway, where you gently place the 
-                        gemstone into the gap in the moonstone mosaic. 
-                        With a soft click, the missing piece falls into place.
+                        You go back to the massive stone doorway, where you gently place the 
+                        gemstone into the gap in the moonstone mosaic and, with a soft click the door creaks open, revealing an eerie darkness beyond.
+                        You take a deep breath and step inside. A dim light gradually fills the room, 
+                        revealing three very different doors, each with its distinct color and an enigmatic riddle etched into its surface.
+                        """
 
-                        The door creaks open, revealing an eerie darkness beyond. 
-                        You take a deep breath and step inside. After a few seconds, dim light gradually fills the room, 
-                        revealing three very different doors, each with its distinct color and an 
-                        enigmatic riddle etched into its surface.
-
-                        You also notice that for each door, there is no keyhole to be found. 
-                        Instead, all you need to do is turn the handle to open it.
-
+EMERALD_RIDDLE = """
                         The first door, with an emerald hue, bears a riddle that asks, 
                         
-                        "I hold keys but can't unlock a box,
-                        A realm with space, yet lacks a chamber's locks.
-                        You can enter but can't go inside. 
+                        "I hold keys but can't unlock a box, \n
+                        A realm with space, yet lacks a chamber's locks. \n 
+                        You can enter but can't go inside. \n
                         What am I?"
-                        
+
+                        """
+
+SAPPHIRE_RIDDLE = """
                         The second door, a deep sapphire blue, presents a riddle:
                         
-                        "I have no tail, no paws, just clicks and rays,
+                        "I have no tail or paws, just clicks and rays,
                         Yet through the maze, I'll guide your way.
                         With fingertip, palm, or claw, it's all a breeze,
-                        The choice is yours, how gentle your touch can appease.
-                        What am I, you'll ponder, for hours and days?"
+                        the choice is yours, how gentle your touch can appease.\n \n
+                        What am I?"
+                        """
 
+RUBY_RIDDLE = """
                         The third door, painted in a rich ruby red, challenges you with the riddle: 
                         
                         "I'm spread beneath your keys, but I'm no secret treasure map,
-                        Soft as a pirate's touch, yet I offer a quiet lap.
+                        soft as a pirate's touch, yet I offer a quiet lap.
                         I guard the deck from stains, where your crew likes to chat,
-                        What am I, in this pirate life, keeping your sizes snug and flat?"
-                        
+                        what am I, in this pirate life, keeping your sizes snug and flat?"
+                        """
+
+DOOR_DECISION = """
                         Your heart races with anticipation as you stand before these three enigmatic choices. 
                         Each door holds a different mystery. 
                         Which one will you choose to unlock?"
@@ -182,17 +171,17 @@ DEEP_JUNGLE_DECISION = """
 # once chosen: what's inside? with a possible link to a keyboard, mouse and keyboard/mouse mat
 EMERALD_DOOR_DECISION = """ 
                                 Congrats, mate, you found the mistycal KEYCHRON K3 mechanical keyboard!!! Shop it here, and get the Pirate discount that you deserve 
-                                for finishing this quest: https://shorturl.at/xBH38 
+                                for finishing this quest!
                                 """
 
 SAPPHIRE_DOOR_DECISION = """ 
                                 Congrats, mate, you found the mistycal CORSAIR HARPOON gaming mouse!!! Shop it here, and get the Pirate discount that you deserve 
-                                for finishing this quest: https://shorturl.at/cRU56 
+                                for finishing this quest!
                                 """
 
 RUBY_DOOR_DECISION = """ 
-                                Congrats, mate, you found the mistycal Silent Monster Keyboard Mat!!! Shop it here, and get the Pirate discount that you deserve 
-                                for finishing this quest: https://shorturl.at/fDJZ9
+                                Congrats, mate, you found the mistycal SILENT MONSTER KEYBOARD MAT!!! Shop it here, and get the Pirate discount that you deserve 
+                                for finishing this quest!
                                 """
 
 CLIFF_DECISION = """
