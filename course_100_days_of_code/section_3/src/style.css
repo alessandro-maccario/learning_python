@@ -1,0 +1,8 @@
+/* CSS file to change the css regarding the buttons*/
+
+.stButton > button {
+    margin-right: 50px;
+    color: #E0115F;
+    height: 5em;
+    width: 10em;
+}

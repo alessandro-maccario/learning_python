@@ -3,11 +3,13 @@ from pkgs.config import *
 import streamlit as st
 from PIL import Image
 from streamlit_extras.switch_page_button import switch_page
+from pkgs.utils import *
 
 ############################################
 ################# SIDEBAR ##################
 ############################################
-# Sidebar
+# collapsed and the disable the Sidebar
+# the st.set_page_config MUST be placed at the beginning of the code
 st.set_page_config(
     layout="centered",  # set the content centered on the page
     initial_sidebar_state="collapsed",  # set the sidebar as collapsed
@@ -30,13 +32,16 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+# import the css to change style to the buttons
+local_css("style.css")
 ############################################
+
 
 # add a title to the main page
 # st.title(":blue[The Pirate Treasure Island Adventure]")
 # set the title to the center overriding the streamlit html
 st.markdown(
-    "<h1 style='text-align: center; color: #990000;'>The Pirate Treasure Island Adventure</h1>",
+    "<h1 style='text-align: center; color: #E0115F;'>The Pirate Treasure Island Adventure</h1>",
     unsafe_allow_html=True,
 )
 # add a grey divider for better separation
@@ -47,7 +52,6 @@ st.header("", divider="grey")
 ################## IMAGE ###################
 ############################################
 
-print(START_TREASURE_ISLAND)
 # add the treasure chest image
 image = Image.open("../imgs/treasure_chest_pixel_cropped.png")
 col1, col2, col3 = st.columns(3)
@@ -62,15 +66,11 @@ with col3:
     st.write(" ")
 
 
-############################################
-
-# add another division line
-# st.header("", divider="green")
-st.write("-----")
-
 ###################################
 ###### TREASURE ISLAND GAME #######
 ###################################
+# add division line
+st.write("-----")
 
 
 if __name__ == "__main__":
@@ -95,21 +95,27 @@ if __name__ == "__main__":
     # hacking way of centering the buttons:
     # https://discuss.streamlit.io/t/center-button-st-button/9751/3
     # create seven fictitious columns and use column 5 and 6 for centering the buttons
-    col1, col2, col3, col4, col5, col6, col7 = st.columns([1, 2, 3, 4, 5, 6, 7])
+    col1, col2, col3, col4, col5, col6, col7 = st.columns([1, 1, 1, 1, 1, 1, 1])
 
     with col1:
         pass
     with col2:
         pass
     with col3:
-        pass
+        if st.button("Jungle", key="left"):
+            switch_page("jungle_path")
     with col4:
         pass
     with col5:
-        if st.button("Jungle", key="left"):
-            switch_page("jungle_path")
-    with col6:
         if st.button("Rocky shoreline", key="right"):
             switch_page("rocky_shoreline_path")
+    with col6:
+        pass
     with col7:
         pass
+
+#######################################
+############ FOOTER ###################
+#######################################
+
+st.markdown(footer, unsafe_allow_html=True)
