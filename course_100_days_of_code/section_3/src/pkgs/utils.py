@@ -32,19 +32,34 @@ def local_css(file_name):
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 
+######################################
+############# Footer #################
+######################################
+
 # create the footer
 # https://discuss.streamlit.io/t/st-footer/6447
 
 
 def image(src_as_string, **style):
+    """
+    Grab an image from internet
+    """
+
     return img(src=src_as_string, style=styles(**style))
 
 
 def link(link, text, **style):
+    """
+    Create a link that opens in a new page
+    """
     return a(_href=link, _target="_blank", style=styles(**style))(text)
 
 
 def layout(*args):
+    """
+    Define the style for the footer
+    """
+
     style = """
     <style>
       # MainMenu {visibility: hidden;}
