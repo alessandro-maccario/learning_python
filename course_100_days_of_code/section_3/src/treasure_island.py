@@ -114,8 +114,7 @@ if __name__ == "__main__":
     with col7:
         pass
 
+    footer()
 #######################################
 ############ FOOTER ###################
 #######################################
-
-st.markdown(footer, unsafe_allow_html=True)

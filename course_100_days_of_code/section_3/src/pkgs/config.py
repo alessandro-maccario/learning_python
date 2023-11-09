@@ -199,32 +199,5 @@ ENDING_GAME = """
                         Congratulations, matey, you've emerged victorious in the grand tale of the Pirate's Treasure Island Adventure!!!
                         """
 
-footer = """<style>
-a:link , a:visited{
-color: blue;
-background-color: transparent;
-text-decoration: underline;
-}
-
-a:hover,  a:active {
-color: red;
-background-color: transparent;
-text-decoration: underline;
-}
-
-.footer {
-position: fixed;
-left: 0;
-bottom: 0;
-width: 100%;
-background-color: black;
-color: white;
-text-align: center;
-}
-</style>
-<div class="footer">
-<p> Developed in <a style='text-align: center;' href="https://streamlit.io/" target="_blank"> Streamlit</a> with ❤️ by <a style='text-align: center;' href="https://github.com/alessandro-maccario" target="_blank"> Alessandro Maccario </a></p>
-</div>
-"""
 
 # Streamlit <a href = "https://avatars3.githubusercontent.com/u/45109972?s=400&v=4",
