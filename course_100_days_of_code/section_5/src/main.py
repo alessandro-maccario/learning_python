@@ -13,7 +13,7 @@
 
 # import packages
 import random
-from ..utils.constants import *
+from pkgs.config import *
 
 
 # build the main logic
@@ -25,3 +25,7 @@ def main():
         print("paper")
     else:
         print("rock")
+
+
+if __name__ == "__main__":
+    main()
