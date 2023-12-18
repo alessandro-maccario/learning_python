@@ -1,0 +1,20 @@
+# Automatically rerun script when the file is modified on disk.
+
+# Default: false
+# runOnSave = true
+
+# Whether to send usage statistics to Streamlit.
+# Default: true
+# The value below was set in C:\Users\M\.streamlit\config.toml
+# gatherUsageStats = false
+
+[theme]
+# The preset Streamlit theme that your custom theme inherits from.
+# One of "light" or "dark".
+base = "dark"
+primaryColor="#f63366"
+backgroundColor="#000000"
+secondaryBackgroundColor="#242c35"
+textColor="#ffffff"
+font="monospace"
+
