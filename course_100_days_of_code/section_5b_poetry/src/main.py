@@ -15,9 +15,9 @@
 import streamlit as st
 
 # --- built in python packages ---#
-import secrets  # https://docs.python.org/3/library/secrets.html
-import string  # https://docs.python.org/3/library/string.html#string.ascii_lowercase
-import clipboard
+# import secrets  # https://docs.python.org/3/library/secrets.html
+# import string  # https://docs.python.org/3/library/string.html#string.ascii_lowercase
+# import clipboard
 from pkgs.utils import *
 
 
@@ -31,9 +31,7 @@ layout = "centered"
 # --- page config --- #
 st.set_page_config(page_title=page_title, page_icon=page_icon, layout=layout)
 
-"#"
 st.title(f"{page_icon}{page_title}")
-"#"
 
 # --- Streamlit config hide --- #
 # Hide some page settings of streamlit such as the burger menu
@@ -87,5 +85,8 @@ with col1:
     st.subheader(st.session_state["pw"])
 with col2:
     st.button(
-        "Copy to Clipboard 📋", on_click=on_copy_click, args=(st.session_state["pw"])
+        "Copy to Clipboard 📋", on_click=on_copy_click, args=(st.session_state["pw"],)
     )
+
+for text in st.session_state.copied:
+    st.toast(f"Copied to clipboard: {text}", icon="✅")
