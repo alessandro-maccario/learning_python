@@ -22,6 +22,7 @@ def generate_password() -> None:
     Returns
     -------
     session_state: str
+        Password string with the latest password created.
     """
     letters = string.ascii_letters
     digits = string.digits
