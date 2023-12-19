@@ -88,5 +88,6 @@ with col2:
         "Copy to Clipboard 📋", on_click=on_copy_click, args=(st.session_state["pw"],)
     )
 
+# show when the password has been copied
 for text in st.session_state.copied:
     st.toast(f"Copied to clipboard: {text}", icon="✅")
