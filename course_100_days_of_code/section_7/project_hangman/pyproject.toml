@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "project-hangman"
+version = "0.1.0"
+description = ""
+authors = ["alessandro-maccario <a.maccario1@campus.unimib.it>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+numpy = "^2.0.1"
+ruff = "^0.5.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
