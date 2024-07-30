@@ -32,8 +32,12 @@ def main():
     while stop is not True:
         # user's choice between encoding/decoding
         description = get_user_action()
-
         clear_screen()
+
+        if description == STOP_CONDITION:
+            print("Thanks for using the Caesar Cipher!")
+            break
+
         print("-------------------------")
         text = get_message()  # message that you want to encode/decode
         shift = get_shift()  # integer for the number of shifts
