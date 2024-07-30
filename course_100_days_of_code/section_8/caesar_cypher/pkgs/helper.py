@@ -5,6 +5,10 @@ Script to store the helper functions.
 # --- Import packages --- #
 import os
 
+# CONSTANTS
+VALID_CHOICES = ("encode", "decode")
+STOP_CONDITION = "stop"
+
 
 def clear_screen():
     """
@@ -27,3 +31,27 @@ def get_shift():
             return int(input("Type the shift number:\n"))
         except ValueError:
             print("Please, insert a valid integer value.")
+
+
+def ask_continue():
+    """Asks the user if they want to continue or stop."""
+    while True:
+        decision = input(
+            "Do you want to continue? Type 'yes' to continue or 'stop' to stop the application.\n"
+        ).lower()
+        if decision in ("yes", STOP_CONDITION):
+            # once the decision is made between "yes" or "stop", the function terminates,
+            # therefore the while loop is terminated.
+            return decision
+        print("Invalid input. Please type 'yes' or 'stop'.")
+
+
+def get_user_action():
+    """Prompts the user for an action (encode, decode, stop)."""
+    while True:
+        action = input(
+            "Type 'encode' to encrypt the message, 'decode' to decrypt the message, or 'stop' to close the application.\n"
+        ).lower()
+        if action in VALID_CHOICES or action == STOP_CONDITION:
+            return action
+        print("Invalid input. Please type 'encode', 'decode', or 'stop'.")
