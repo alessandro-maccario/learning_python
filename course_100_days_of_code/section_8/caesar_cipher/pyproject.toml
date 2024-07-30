@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "caesar-cypher"
+name = "caesar-cipher"
 version = "0.1.0"
 description = ""
 authors = ["alessandro-maccario <a.maccario1@campus.unimib.it>"]
