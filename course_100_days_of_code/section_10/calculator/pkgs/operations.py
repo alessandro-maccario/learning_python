@@ -4,7 +4,7 @@ app.py calculator script.
 """
 
 
-def add(first_number, second_number):
+def add(first_number: float, second_number: float) -> float:
     """Add two numbers.
 
     Parameters
@@ -19,10 +19,10 @@ def add(first_number, second_number):
     _type_
         _description_
     """
-    return first_number + second_number
+    return float(first_number) + float(second_number)
 
 
-def subtract(first_number, second_number):
+def subtract(first_number: float, second_number: float) -> float:
     """Subtract two numbers.
 
     Parameters
@@ -37,10 +37,10 @@ def subtract(first_number, second_number):
     _type_
         _description_
     """
-    return first_number - second_number
+    return float(first_number) - float(second_number)
 
 
-def multiply(first_number, second_number):
+def multiply(first_number: float, second_number: float) -> float:
     """Multiply two numbers.
 
     Parameters
@@ -55,10 +55,12 @@ def multiply(first_number, second_number):
     _type_
         _description_
     """
-    return first_number * second_number
+    return float(first_number) * float(second_number)
 
 
-def divide(first_number, second_number):
+def divide(first_number: float, second_number: float) -> float:
+    # TODO
+    # catch DivisionErrors, e.g.: n/0
     """Divide two numbers.
 
     Parameters
@@ -73,4 +75,8 @@ def divide(first_number, second_number):
     _type_
         _description_
     """
-    return first_number / second_number
+    try:
+        return float(first_number) / float(second_number)
+    except ZeroDivisionError:
+        print("Cannot divide by 0!")
+        return float("inf")
