@@ -17,84 +17,109 @@ print("~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
 current_operation = 0
 history_value = 0
-temp_current_operation = 0
+count_running = 0
+
+operations = {"+": add, "-": subtract, "*": multiply, "/": divide}
 
 while True:
-    first_number = float(input("What is the first number?: "))
+    if count_running == 0:
+        first_number = float(input("What is the first number?: "))
+        decision_operation = input("Pick an operation amongst +, -, *, /: ")
+        second_number = float(input("What is the next number?: "))
 
-    print("+")
-    print("-")
-    print("*")
-    print("/")
-    decision_operation = input("Pick an operation: ")
-    second_number = float(input("What is the next number?: "))
+        # call the dictionary with the single operation and output the result of the function
+        operation_result = operations[decision_operation](first_number, second_number)
 
-    temp_current_operation = current_operation
-    # possible to convert this if-else with a function and reduce the code
-    if decision_operation == "+":
-        current_operation += add(
-            first_number,
-            second_number,
-        )
-        # save the current, valid, current_operation value
-        if current_operation != float("inf"):
-            history_value = current_operation
-    elif decision_operation == "-":
-        current_operation -= subtract(
-            first_number,
-            second_number,
-        )
-        # save the current, valid, current_operation value
-        if current_operation != float("inf"):
-            history_value = current_operation
-    elif decision_operation == "*":
-        current_operation *= multiply(
-            first_number,
-            second_number,
-        )
-        # save the current, valid, current_operation value
-        if current_operation != float("inf"):
-            history_value = current_operation
-    elif decision_operation == "/":
-        current_operation /= divide(
-            first_number,
-            second_number,
-        )
-        # save the current, valid, current_operation value
-        if current_operation != float("inf"):
-            history_value = current_operation
-
-    # in case of divide(first_number = 0, second_number = 0), not possible to perform the division
-    if current_operation == float("inf"):
-        current_operation = history_value
-        print(
-            "It has been not possible to perform the operation. Check again the input."
-        )
-        clear_screen()
-        continue
-    else:
-        print(
-            f"Current operation: {temp_current_operation} {decision_operation} ({first_number} {decision_operation} {second_number}) = {current_operation}"
-        )
-
-    # next decision
-    decision_continuation = input(
-        "Do you want to continue? Type 'y' to continue, type 'n' to start a new calculation, type 'close' to close the application entirely: "
-    )
-
-    if decision_continuation in ("y", "n"):
-        if decision_continuation == "y":
+        # in case of divide(first_number = 0, second_number = 0), not possible to perform the division
+        if operation_result == float("inf"):
+            operation_result = history_value
+            print(
+                "It has been not possible to perform the operation. Check again the input."
+            )
             clear_screen()
             continue
         else:
-            current_operation = 0
+            history_value = operation_result
+            print(
+                f"Current operation: {first_number} {decision_operation} {second_number} = {operation_result}"
+            )
+
+        # next decision
+        decision_continuation = input(
+            "Do you want to continue? Type 'y' to continue, type 'n' to start a new calculation, type 'close' to close the application entirely: "
+        )
+
+        if decision_continuation in ("y", "n"):
+            if decision_continuation == "y":
+                count_running += 1
+                clear_screen()
+                continue
+            else:
+                current_operation = 0
+                clear_screen()
+                continue
+        elif decision_continuation == "close":
+            # close the application
+            print("Closing the calculator...")
+            break
+        else:
+            print(
+                "Please, provide a valid choice between: 'y' to continue, 'n' to start a new calculation, 'close' to close the application."
+            )
+            continue
+
+    else:
+        decision_operation = input("Pick an operation, chose between +, -, *, /: ")
+        # check if the decision_operation makes sense
+        while decision_operation not in ("+", "-", "*", "/"):
+            decision_operation = input(
+                "Please, choose a valid operator between +, -, *, /: "
+            )
+            continue
+        next_number = float(input("What is the next number?: "))
+
+        # call the dictionary with the single operation based on the operation_result input
+        # that we got from the first iteration
+        operation_result = operations[decision_operation](operation_result, next_number)
+
+        # in case of divide(first_number = 0, second_number = 0), not possible to perform the division
+        if operation_result == float("inf"):
+            operation_result = history_value
+            print(
+                "It has been not possible to perform the operation. Check again the input."
+            )
             clear_screen()
             continue
-    elif decision_continuation == "close":
-        # close the application
-        print("Closing the calculator...")
-        break
-    else:
-        print(
-            "Please, provide a valid choice between: 'y' to continue, 'n' to start a new calculation, 'close' to close the application."
+        else:
+            previous_operation = history_value
+            history_value = operation_result
+            print(
+                f"Current operation: {previous_operation} {decision_operation} {next_number} = {operation_result}"
+            )
+
+        # next decision
+        decision_continuation = input(
+            "Do you want to continue? Type 'y' to continue, type 'n' to start a new calculation, type 'close' to close the application entirely: "
         )
+
+        if decision_continuation in ("y", "n"):
+            if decision_continuation == "y":
+                count_running += 1
+                clear_screen()
+                continue
+            else:
+                # if "n", all the possible values will be zeroed
+                operation_result = 0
+                previous_operation = 0
+                history_value = 0
+                clear_screen()
+                continue
+        elif decision_continuation == "close":
+            # close the application
+            print("Closing the calculator...")
+            break
+        else:
+            print(
+                "Please, provide a valid choice between: 'y' to continue, 'n' to start a new calculation, 'close' to close the application."
+            )
+            continue
