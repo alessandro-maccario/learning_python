@@ -12,15 +12,15 @@ def add(first_number: float, second_number: float) -> float:
 
     Parameters
     ----------
-    first_number : _type_
-        _description_
-    second_number : _type_
-        _description_
+    first_number : float
+        First number to use for the calculation.
+    second_number : float
+        Second number to use for the calculation.
 
     Returns
     -------
-    _type_
-        _description_
+    float
+        Number resulting from the addition operation.
     """
     return float(first_number) + float(second_number)
 
@@ -30,15 +30,15 @@ def subtract(first_number: float, second_number: float) -> float:
 
     Parameters
     ----------
-    first_number : _type_
-        _description_
-    second_number : _type_
-        _description_
+    first_number : float
+        First number to use for the calculation.
+    second_number : float
+        Second number to use for the calculation.
 
     Returns
     -------
-    _type_
-        _description_
+    float
+        Number resulting from the subtraction operation.
     """
     return float(first_number) - float(second_number)
 
@@ -48,15 +48,15 @@ def multiply(first_number: float, second_number: float) -> float:
 
     Parameters
     ----------
-    first_number : _type_
-        _description_
-    second_number : _type_
-        _description_
+    first_number : float
+        First number to use for the calculation.
+    second_number : float
+        Second number to use for the calculation.
 
     Returns
     -------
-    _type_
-        _description_
+    float
+        Number resulting from the multiplication operation.
     """
     return float(first_number) * float(second_number)
 
@@ -68,26 +68,21 @@ def divide(first_number: float, second_number: float) -> float:
 
     Parameters
     ----------
-    first_number : _type_
-        _description_
-    second_number : _type_
-        _description_
+    first_number : float
+        First number to use for the calculation.
+    second_number : float
+        Second number to use for the calculation.
 
     Returns
     -------
-    _type_
-        _description_
+    float
+        Number resulting from the division operation.
     """
     try:
         return float(first_number) / float(second_number)
     except ZeroDivisionError:
         print("Cannot divide by 0!")
         return float("inf")
-
-
-#########################################
-########### TESTING RECURSION ###########
-#########################################
 
 
 def calculator(first_number: float, history_value: float) -> None:
@@ -136,6 +131,7 @@ def calculator(first_number: float, history_value: float) -> None:
     if decision_continuation in ("y", "n"):
         if decision_continuation == "y":
             clear_screen()
+            # recursion
             calculator(history_value, second_number)
         else:
             # if "n", all the possible values will be zeroed
@@ -143,6 +139,7 @@ def calculator(first_number: float, history_value: float) -> None:
             # previous_operation = 0
             history_value = 0
             clear_screen()
+            # recursion
             calculator(operation_result, history_value)
     elif decision_continuation == "close":
         print("Closing the calculator...")
@@ -152,4 +149,5 @@ def calculator(first_number: float, history_value: float) -> None:
         print(
             "Please, provide a valid choice between: 'y' to continue, 'n' to start a new calculation, 'close' to close the application."
         )
+        # recursion
         calculator(history_value, second_number)
