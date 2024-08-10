@@ -11,7 +11,7 @@ from random import sample
 # dynamically adjust the PYTHONPATH
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pkgs.helper import (
-    append_new_card,
+    draw_card,
     reset_card_list,
     player_lose,
     clear_screen,
@@ -47,8 +47,8 @@ while True:
         # hide the first element of the dealer cards
         hide_dealer_cards[0] = "*"
 
-        print("Dealer's cards: ", hide_dealer_cards, f"= {dealer_cards[1]}")
-        print("User's cards: ", user_cards, f"= {sum_user_cards}")
+        print(f"Dealer's cards: {hide_dealer_cards} = {dealer_cards[1]}")
+        print(f"User's cards: {user_cards} = {sum_user_cards}")
 
         if sum_user_cards > 21:
             decision = player_lose(sum_user_cards)
@@ -65,13 +65,13 @@ while True:
             decision_more_card = input(HIT_OR_STAY)
             if decision_more_card == "y":
                 print("#############################")
-                user_cards = append_new_card(cards, user_cards)
+                user_cards = draw_card(cards, user_cards)
 
                 sum_dealer_cards = sum(dealer_cards)
                 sum_user_cards = sum(user_cards)
 
-                print("Dealer's cards: ", hide_dealer_cards, f"= {dealer_cards[1]}")
-                print("User's cards: ", user_cards, f"= {sum_user_cards}")
+                print(f"Dealer's cards: {hide_dealer_cards} = {dealer_cards[1]}")
+                print(f"User's cards: {user_cards} = {sum_user_cards}")
 
                 if sum_user_cards > 21:
                     decision = player_lose(sum_user_cards)
@@ -91,35 +91,35 @@ while True:
                 while True:
                     if sum_dealer_cards == 21:
                         print(DEALER_WINS)
-                        print("Dealer's cards: ", dealer_cards, f"= {sum_dealer_cards}")
+                        print(f"Dealer's cards: {dealer_cards} = {sum_dealer_cards}")
                         # reset the card lists
                         dealer_cards, user_cards = reset_card_list()
                         break
                     elif sum_user_cards == sum_dealer_cards:
                         print(DRAW)
-                        print("Dealer's cards: ", dealer_cards, f"= {sum_dealer_cards}")
+                        print(f"Dealer's cards: {dealer_cards} = {sum_dealer_cards}")
                         number_of_games += 1
                         # reset the card lists
                         dealer_cards, user_cards = reset_card_list()
                         break
                     elif (sum_dealer_cards > sum_user_cards) and sum_dealer_cards < 21:
                         print(DEALER_WINS)
-                        print("Dealer's cards: ", dealer_cards, f"= {sum_dealer_cards}")
+                        print(f"Dealer's cards: {dealer_cards} = {sum_dealer_cards}")
                         number_of_games += 1
                         # reset the card lists
                         dealer_cards, user_cards = reset_card_list()
                         break
 
-                    dealer_cards = append_new_card(cards, dealer_cards)
+                    dealer_cards = draw_card(cards, dealer_cards)
                     # sum the card numbers
                     sum_dealer_cards = sum(dealer_cards)
                     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-                    print("Dealer's cards: ", dealer_cards, f"= {sum_dealer_cards}")
-                    print("User's cards: ", user_cards, f"= {sum_user_cards}")
+                    print(f"Dealer's cards: {dealer_cards} = {sum_dealer_cards}")
+                    print(f"User's cards: {user_cards} = {sum_user_cards}")
 
                     if sum_dealer_cards == 21:
                         print(DEALER_WINS)
-                        print("Dealer's cards: ", dealer_cards, f"= {sum_dealer_cards}")
+                        print(f"Dealer's cards: {dealer_cards} = {sum_dealer_cards}")
                         # reset the card lists
                         dealer_cards, user_cards = reset_card_list()
                         break
@@ -181,18 +181,18 @@ while True:
             decision_more_card = input(HIT_OR_STAY)
             if decision_more_card == "y":
                 print("#############################")
-                user_cards = append_new_card(cards, user_cards)
+                user_cards = draw_card(cards, user_cards)
 
                 # sum the card numbers
                 sum_dealer_cards = sum(dealer_cards)
                 sum_user_cards = sum(user_cards)
 
-                print("Dealer's cards: ", hide_dealer_cards, f"= {dealer_cards[1]}")
-                print("User's cards: ", user_cards, f"= {sum_user_cards}")
+                print(f"Dealer's cards: {hide_dealer_cards} = {dealer_cards[1]}")
+                print(f"User's cards: {user_cards} = {sum_user_cards}")
 
                 if sum_user_cards == sum_dealer_cards:
                     print(DRAW)
-                    print("Dealer's cards: ", dealer_cards, f"= {sum_dealer_cards}")
+                    print(f"Dealer's cards: {dealer_cards} = {sum_dealer_cards}")
                     number_of_games += 1
                     # reset the card lists
                     dealer_cards, user_cards = reset_card_list()
@@ -200,7 +200,7 @@ while True:
 
                 elif sum_user_cards > 21:
                     print(DEALER_WINS)
-                    print("Dealer's cards: ", dealer_cards, f"= {sum_dealer_cards}")
+                    print(f"Dealer's cards: {dealer_cards} = {sum_dealer_cards}")
                     decision = input(RESTART_APPLICATION)
                     if decision == "y":
                         number_of_games += 1
@@ -218,25 +218,25 @@ while True:
                 while True:
                     if sum_dealer_cards == 21:
                         print(DEALER_WINS)
-                        print("Dealer's cards: ", dealer_cards, f"= {sum_dealer_cards}")
+                        print(f"Dealer's cards: {dealer_cards} = {sum_dealer_cards}")
                         number_of_games += 1
                         # reset the card lists
                         dealer_cards, user_cards = reset_card_list()
                         break
                     elif sum_user_cards == sum_dealer_cards:
                         print(DRAW)
-                        print("Dealer's cards: ", dealer_cards, f"= {sum_dealer_cards}")
+                        print(f"Dealer's cards: {dealer_cards} = {sum_dealer_cards}")
                         number_of_games += 1
                         # reset the card lists
                         dealer_cards, user_cards = reset_card_list()
                         break
 
-                    dealer_cards = append_new_card(cards, dealer_cards)
+                    dealer_cards = draw_card(cards, dealer_cards)
                     # sum the card numbers
                     sum_dealer_cards = sum(dealer_cards)
 
-                    print("Dealer's cards: ", dealer_cards, f"= {sum_dealer_cards}")
-                    print("User's cards: ", user_cards, f"= {sum_user_cards}")
+                    print(f"Dealer's cards: {dealer_cards} = {sum_dealer_cards}")
+                    print(f"User's cards: {user_cards} = {sum_user_cards}")
 
                     if sum_dealer_cards == 21:
                         print(DEALER_WINS)
