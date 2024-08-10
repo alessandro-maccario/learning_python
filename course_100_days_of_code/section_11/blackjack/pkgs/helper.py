@@ -6,6 +6,14 @@ Helper file to store the main functionalities to be used in the app.py for the B
 import os
 from random import sample
 
+# CONSTANTS
+DEALER_WINS = "##### DEALER WINS, PLAYER GOT BUSTED! #####"
+PLAYER_WINS = "##### PLAYER WINS, DEALER GOT BUSTED! #####"
+RESTART_APPLICATION = "Another game? Insert 'y' to start a new game, insert 'n' to close the application: "
+HIT_OR_STAY = "HIT or STAY? Insert 'y' or 's': "
+DRAW = "##### DRAW ##### \n Restarting the game..."
+CHEERS = "Thanks for playing with us! Come back soon!"
+
 
 def append_new_card(original_card_list: list, player_list: list) -> list:
     """Append a new card to the user list (player, dealer)
@@ -39,6 +47,51 @@ def reset_card_list() -> tuple[list, list]:
     user_cards = list()
 
     return dealer_cards, user_cards
+
+
+def player_lose(sum_user_cards: int) -> str:
+    """The sum value of the player's card is over 21, therefore they lose.
+
+    Parameters
+    ----------
+    sum_user_cards : int
+        The sum value of the player's cards.
+
+    Returns
+    -------
+    str
+        Decision of the user if continue with the game or not.
+    """
+    print("The sum of your cards is: ", sum_user_cards)
+    print(DEALER_WINS)
+    decision = input(RESTART_APPLICATION)
+
+    return decision
+
+
+def stop_game(number_of_player_wins: int, number_of_games: int) -> str:
+    """If the user stops the game, the number of winning games over the number of games,
+    and a cheer message is returned.
+
+    Parameters
+    ----------
+    number_of_player_wins : int
+        Number of wins for the player
+    number_of_games : int
+        Number of games played until the game stops
+
+    Returns
+    -------
+    str
+        A cheerful message
+    """
+    print(
+        "Number of player's wins:",
+        number_of_player_wins,
+        "over",
+        number_of_games,
+    )
+    return CHEERS
 
 
 def clear_screen():
