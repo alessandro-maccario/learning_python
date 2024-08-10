@@ -15,7 +15,7 @@ DRAW = "##### DRAW ##### \n Restarting the game..."
 CHEERS = "Thanks for playing with us! Come back soon!"
 
 
-def append_new_card(original_card_list: list, player_list: list) -> list:
+def draw_card(original_card_list: list, player_list: list) -> list:
     """Append a new card to the user list (player, dealer)
 
     Parameters
