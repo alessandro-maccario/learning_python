@@ -24,7 +24,7 @@ from pkgs.helper import (
 )
 
 # possible card choices
-cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+deck = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 # reset the card lists
 dealer_cards, user_cards = reset_card_list()
 number_of_player_wins = 0
@@ -34,9 +34,9 @@ while True:
     if len(dealer_cards) == 0:
         # simplified list of available cards
         # draw two cards for the dealer
-        dealer_cards = sample(cards, 2)
+        dealer_cards = sample(deck, 2)
         # draw two cards for the user
-        user_cards = sample(cards, 2)
+        user_cards = sample(deck, 2)
 
         sum_dealer_cards = sum(dealer_cards)
         sum_user_cards = sum(user_cards)
@@ -65,7 +65,7 @@ while True:
             decision_more_card = input(HIT_OR_STAY)
             if decision_more_card == "y":
                 print("#############################")
-                user_cards = draw_card(cards, user_cards)
+                user_cards = draw_card(deck, user_cards)
 
                 sum_dealer_cards = sum(dealer_cards)
                 sum_user_cards = sum(user_cards)
@@ -110,7 +110,7 @@ while True:
                         dealer_cards, user_cards = reset_card_list()
                         break
 
-                    dealer_cards = draw_card(cards, dealer_cards)
+                    dealer_cards = draw_card(deck, dealer_cards)
                     # sum the card numbers
                     sum_dealer_cards = sum(dealer_cards)
                     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~")
@@ -181,7 +181,7 @@ while True:
             decision_more_card = input(HIT_OR_STAY)
             if decision_more_card == "y":
                 print("#############################")
-                user_cards = draw_card(cards, user_cards)
+                user_cards = draw_card(deck, user_cards)
 
                 # sum the card numbers
                 sum_dealer_cards = sum(dealer_cards)
@@ -231,7 +231,7 @@ while True:
                         dealer_cards, user_cards = reset_card_list()
                         break
 
-                    dealer_cards = draw_card(cards, dealer_cards)
+                    dealer_cards = draw_card(deck, dealer_cards)
                     # sum the card numbers
                     sum_dealer_cards = sum(dealer_cards)
 
