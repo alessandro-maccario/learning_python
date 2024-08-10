@@ -104,7 +104,7 @@ while True:
                         dealer_cards, user_cards = reset_card_list()
                         break
 
-        elif (sum_user_cards < 22) and (sum_user_cards > sum_dealer_cards):
+        elif (sum_user_cards == 21) and (sum_user_cards > sum_dealer_cards):
             print("##### PLAYER WINS, DEALER BUSTED! #####")
             # reset the card lists
             dealer_cards, user_cards = reset_card_list()
