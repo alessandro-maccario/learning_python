@@ -9,6 +9,8 @@ from pkgs.helper import (
     draw_initial_cards,
     calculate_total_cards,
     draw_card,
+    winning_dealer,
+    losing_dealer,
     HIT_OR_STAY,
 )
 
@@ -16,6 +18,8 @@ from pkgs.helper import (
 # --- CONSTANTS --- #
 DECK = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 BLACKJACK = 21
+
+# --- GLOBAL VARIABLES --- #
 number_of_player_wins = 0
 number_of_games = 0
 
@@ -93,6 +97,20 @@ def play_hand(
     return total_dealer_cards, total_player_cards
 
 
+def get_player_outcome(total_player_cards):
+    outcomes = {21: "player_wins"}
+
+    # if the total_player_cards value is == 21 then the player wins
+    if total_player_cards in outcomes:
+        return outcomes[total_player_cards]
+    # if the total_player_cards value is > 21 then the player loses and the dealer wins
+    elif total_player_cards > 21:
+        return "dealer_wins"
+    # otherwise, we continue asking the user what they want to do
+    else:
+        return "continue"
+
+
 def player_turn(dealer_cards: list, player_cards: list) -> str:
     """Player's turn.
 
@@ -118,14 +136,29 @@ def player_turn(dealer_cards: list, player_cards: list) -> str:
             total_dealer_cards, total_player_cards = play_hand(
                 dealer_cards, player_cards, hide_dealer_card=True
             )
-            if total_player_cards > 21:
-                print("PLAYER GOT BUSTED!\n")
-                return "dealer_wins"
-            elif total_player_cards < 21:
-                continue
-            elif total_player_cards == 21:
+
+            outcome = get_player_outcome(total_player_cards)
+
+            if outcome == "player_wins":
                 print("PLAYER WINS!\n")
+                print("~~~~~~~~~~~~~~~~~~~~~")
                 return "player_wins"
+            elif outcome == "dealer_wins":
+                print("PLAYER GOT BUSTED!\n")
+                print("~~~~~~~~~~~~~~~~~~~~~")
+                return "dealer_wins"
+            elif outcome == "continue":
+                continue
+
+            # if total_player_cards > 21:
+            #     print("PLAYER GOT BUSTED!\n")
+            #     return "dealer_wins"
+            # elif total_player_cards < 21:
+            #     continue
+            # elif total_player_cards == 21:
+            #     print("PLAYER WINS!\n")
+            #     return "player_wins"
+
         elif decision == "n":
             return "n"
         elif decision == "s":
@@ -155,14 +188,14 @@ def dealer_turn(dealer_cards: list, player_cards: list) -> str:
         )
 
         if total_dealer_cards > 21:
-            print("DEALER GOT BUSTED!\n")
+            losing_dealer()
             return "player_wins"
         elif total_dealer_cards == 21:
-            print("DEALER WINS!\n")
+            winning_dealer()
             return "dealer_wins"
         elif total_dealer_cards < 21 and total_dealer_cards > total_player_cards:
-            print("DEALER WINS!\n")
+            winning_dealer()
             return "dealer_wins"
         elif total_dealer_cards == 21:
-            print("DEALER WINS!")
+            winning_dealer()
             return "dealer_wins"
