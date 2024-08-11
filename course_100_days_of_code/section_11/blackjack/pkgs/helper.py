@@ -18,11 +18,47 @@ def draw_initial_cards(deck):
 
 
 def draw_card(deck, cards: list) -> list:
+    """Draw another card from the deck and add it to the other's dealer/player cards.
+
+    Parameters
+    ----------
+    deck : list
+        The original deck of cards
+    cards : list
+        Draw and append a new card from the deck to the dealer's/player's hand
+
+    Returns
+    -------
+    list
+        The new list of cards available either for the dealer or the user.
+    """
     return cards.append(sample(deck, 1)[0])
 
 
-def calculate_total_cards(cards):
+def calculate_total_cards(cards: list) -> int:
+    """Sum the values inside the card list.
+
+    Parameters
+    ----------
+    cards : list
+        List of cards from the dealer/player
+
+    Returns
+    -------
+    int
+        Return the total amount of the values inside the list of the dealer/player cards.
+    """
     return sum(cards)
+
+
+def winning_dealer():
+    print("DEALER WINS!\n")
+    print("~~~~~~~~~~~~~~~~~~~~~")
+
+
+def losing_dealer():
+    print("DEALER GOT BUSTED!\n")
+    print("~~~~~~~~~~~~~~~~~~~~~")
 
 
 def clear_screen():
