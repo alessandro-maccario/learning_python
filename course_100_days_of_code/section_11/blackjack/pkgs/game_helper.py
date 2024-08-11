@@ -150,15 +150,6 @@ def player_turn(dealer_cards: list, player_cards: list) -> str:
             elif outcome == "continue":
                 continue
 
-            # if total_player_cards > 21:
-            #     print("PLAYER GOT BUSTED!\n")
-            #     return "dealer_wins"
-            # elif total_player_cards < 21:
-            #     continue
-            # elif total_player_cards == 21:
-            #     print("PLAYER WINS!\n")
-            #     return "player_wins"
-
         elif decision == "n":
             return "n"
         elif decision == "s":
@@ -187,7 +178,10 @@ def dealer_turn(dealer_cards: list, player_cards: list) -> str:
             dealer_cards, player_cards, hide_dealer_card=False
         )
 
-        if total_dealer_cards > 21:
+        # if total_dealer_cards < 17 then the dealer MUST draw another card
+        if total_dealer_cards < 17:
+            continue
+        elif total_dealer_cards > 21:
             losing_dealer()
             return "player_wins"
         elif total_dealer_cards == 21:
