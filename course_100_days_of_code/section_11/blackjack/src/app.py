@@ -9,9 +9,11 @@ import sys
 # dynamically adjust the PYTHONPATH
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pkgs.game_helper import play_game, number_of_player_wins, number_of_games
+from pkgs.ascii_art import logo
 
 
 if __name__ == "__main__":
+    print(logo)
     while True:
         turn_outcome = play_game()
         if turn_outcome == "dealer_wins":
