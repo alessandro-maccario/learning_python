@@ -88,32 +88,19 @@ while True:
         decision = input("Who has more followers? Type 'A' or 'B': ")
         print()
 
-        # compare number of followers
-        # if decision == "A":
-        #     if comparison_a["follower_count"] > comparison_b["follower_count"]:
-        #         print("Correct answer!")
-        #         count_correct_answer += 1
-        #         previous_option = None
-        #         previous_option = comparison_a
-        #         print("###############")
-        #         continue
-        #     else:
-        #         print("Wrong answer!")
-        #         break
-        # elif decision == "B":
-        #     if comparison_b["follower_count"] > comparison_a["follower_count"]:
-        #         print("Correct answer!")
-        #         count_correct_answer += 1
-        #         previous_option = None
-        #         previous_option = comparison_b
-        #         print("###############")
-        #         continue
-        #     else:
-        #         print("Wrong answer!")
-        #         break
-        previous_option, count_correct_answer = compare_number_followers(
-            decision, comparison_a, comparison_b, count_correct_answer, previous_option
-        )
+        # if compare_number_followers is None, then give previous_option count_correct_answer a
+        # None value
+        try:
+            previous_option, count_correct_answer = compare_number_followers(
+                decision,
+                comparison_a,
+                comparison_b,
+                count_correct_answer,
+                previous_option,
+            )
+        except TypeError:
+            previous_option = None
+
         if previous_option is not None:
             continue
         else:
@@ -145,29 +132,6 @@ while True:
         decision = input("Who has more followers? Type 'A' or 'B': ")
         print()
 
-        # # compare number of followers
-        # if decision == "A":
-        #     if comparison_a["follower_count"] > comparison_b["follower_count"]:
-        #         print("Correct answer!")
-        #         count_correct_answer += 1
-        #         previous_option = None
-        #         previous_option = comparison_a
-        #         print("###############")
-        #         continue
-        #     else:
-        #         print("Wrong answer!")
-        #         break
-        # elif decision == "B":
-        #     if comparison_b["follower_count"] > comparison_a["follower_count"]:
-        #         print("Correct answer!")
-        #         count_correct_answer += 1
-        #         previous_option = None
-        #         previous_option = comparison_b
-        #         print("###############")
-        #         continue
-        #     else:
-        #         print("Wrong answer!")
-        #         break
         # if compare_number_followers is None, then give previous_option count_correct_answer a
         # None value
         try:
