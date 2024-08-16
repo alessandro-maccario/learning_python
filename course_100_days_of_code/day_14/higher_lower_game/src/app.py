@@ -15,40 +15,11 @@ from copy import deepcopy
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pkgs.ascii_art import main_logo, vs_logo
 from data.data import data
+from pkgs.game_logic import compare_number_followers, print_comparison
 
 # --- VARIABLES --- #
 count_correct_answer = 0
 previous_option = None
-
-
-def compare_number_followers(
-    decision: str,
-    comparison_a: int,
-    comparison_b: int,
-    count_correct_answer: int,
-    previous_option: list,
-):
-    # compare number of followers
-    if decision == "A":
-        if comparison_a["follower_count"] > comparison_b["follower_count"]:
-            print("Correct answer!")
-            count_correct_answer += 1
-            previous_option = None
-            previous_option = comparison_a
-            return previous_option, count_correct_answer
-        else:
-            print("Wrong answer!")
-            return
-    elif decision == "B":
-        if comparison_b["follower_count"] > comparison_a["follower_count"]:
-            print("Correct answer!")
-            count_correct_answer += 1
-            previous_option = None
-            previous_option = comparison_b
-            return previous_option, count_correct_answer
-        else:
-            print("Wrong answer!")
-            return
 
 
 # --- MAIN CODE --- #
@@ -77,13 +48,9 @@ while True:
         # # Need to get the index from the original list
         # idx_comparison_b = original_data.index(comparison_b)
 
-        print(
-            f"Comparison A: {comparison_a["name"]}, {comparison_a["description"]}, with {comparison_a["follower_count"]} followers, from {comparison_a["country"]}."
-        )
-        print(vs_logo)
-        print(
-            f"Against comparison b: {comparison_b["name"]}, {comparison_b["description"]}, from {comparison_b["country"]}."
-        )
+        # print the comparison between the first and the second element
+        print_comparison(comparison_a, comparison_b)
+
         # let the player decides which one between A and B is correct
         decision = input("Who has more followers? Type 'A' or 'B': ")
         print()
@@ -121,13 +88,9 @@ while True:
         idx_comparison_b = data.index(comparison_b)
         already_seen.append(data.pop(idx_comparison_b))
 
-        print(
-            f"Comparison A: {comparison_a["name"]}, {comparison_a["description"]}, with {comparison_a["follower_count"]} followers, from {comparison_a["country"]}."
-        )
-        print(vs_logo)
-        print(
-            f"Against comparison b: {comparison_b["name"]}, {comparison_b["description"]}, from {comparison_b["country"]}."
-        )
+        # print the comparison between the first and the second element
+        print_comparison(comparison_a, comparison_b)
+
         # let the player decides which one between A and B is correct
         decision = input("Who has more followers? Type 'A' or 'B': ")
         print()
