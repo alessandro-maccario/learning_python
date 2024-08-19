@@ -16,5 +16,5 @@ def display_report(money: float) -> None:
     print("Water:", resources["water"])
     print("Milk:", resources["milk"])
     print("Coffee:", resources["coffee"])
-    print("Money available: $", money)
+    print("Profit: $", money)
     return
