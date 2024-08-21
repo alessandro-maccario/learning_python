@@ -8,14 +8,8 @@ import sys
 
 # dynamically adjust the PYTHONPATH
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from pkgs.coffee_machine_logic import (
-    check_resource,
-    process_coin,
-    coffee_machine_working_logic,
-)
-from pkgs.helper import display_report, prepare_drink, give_change, user_input
-
-from pkgs.menu import MENU
+from pkgs.coffee_machine_logic import coffee_machine_working_logic
+from pkgs.helper import display_report, user_input
 from pkgs.resources import resources
 
 
