@@ -13,14 +13,13 @@ from pkgs.helper import display_report, user_input
 from pkgs.resources import resources
 
 
-# --- MAIN CODE --- #
-
 # --- VARIABLES --- #
 profit = 0
 decision = None
 current_resource_availability = resources
 
 
+# --- MAIN CODE --- #
 def main():
     global profit, decision, current_resource_availability  # get the global variables
 
