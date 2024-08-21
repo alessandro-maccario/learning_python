@@ -52,7 +52,6 @@ def check_resource(decision: str, menu: dict) -> bool:
         }
 
         if available_water > 0 and available_milk > 0 and available_coffee > 0:
-            print(f"Start pouring {decision} ☕...")
             return True
 
         else:
