@@ -29,7 +29,8 @@ def main():
         print()
         decision = user_input()  # collect the user's input
 
-        if decision == "espresso":
+        if decision in ("espresso", "latte", "cappuccino"):
+            # if decision == "espresso":
             # call the coffee machine logic
             logic = coffee_machine_working_logic(
                 decision, current_resource_availability, profit
@@ -37,28 +38,8 @@ def main():
             if logic is False:
                 break
             machine_profit += add_profit(decision, profit, MENU)
-
-        elif decision == "latte":
-            # call the coffee machine logic
-            logic = coffee_machine_working_logic(
-                decision, current_resource_availability, profit
-            )
-            if logic is False:
-                break
-            machine_profit += add_profit(decision, profit, MENU)
-
-        elif decision == "cappuccino":
-            # call the coffee machine logic
-            logic = coffee_machine_working_logic(
-                decision, current_resource_availability, profit
-            )
-            if logic is False:
-                break
-            machine_profit += add_profit(decision, profit, MENU)
-
         elif decision == "off":
             sys.exit("Turning off the machine...")
-
         else:  # the decision is report
             display_report(
                 machine_profit, current_resource_availability
