@@ -44,7 +44,7 @@ def check_resource(decision: str, menu: dict, resources: dict) -> bool:
             "coffee": available_coffee,
         }
 
-        if available_water > 0 and available_milk > 0 and available_coffee > 0:
+        if available_water >= 0 and available_milk >= 0 and available_coffee >= 0:
             return ingredient_availability
 
         else:  # grab only those ingredients that are equal to 0 or below
@@ -107,14 +107,15 @@ def coffee_machine_working_logic(
 ) -> tuple[None, bool]:
     print()
     ingredient_availability = check_resource(user_decision, MENU, resources)
+    # if not all the ingredients are available, close the application
     if ingredient_availability is False:
         return False
     decision_cost, payment_process = process_coin(user_decision, MENU)
-    profit += decision_cost  # Add decision_cost to the machine's profit
     if (
         payment_process > 0
     ):  # the user will get some change in return because they paid too much
         give_change(payment_process)
 
+    # deduct the current available resources with the one already used
     current_resource_availability.update(ingredient_availability)
     prepare_drink(user_decision)  # just a print statement
