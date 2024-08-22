@@ -40,3 +40,8 @@ def prepare_drink(decision):
 def give_change(payment_process):
     """Print a statement when you give money back to the user"""
     print(f">>> Here is ${payment_process} dollars in change!")
+
+
+def add_profit(decision: str, profit: float, menu: dict) -> float:
+    decision_cost = menu[decision]["cost"]  # amount of money needed to get the beverage
+    return profit + decision_cost
