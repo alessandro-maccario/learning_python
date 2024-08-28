@@ -24,7 +24,12 @@ for idx, question_and_answer in enumerate(question_data):
 
 quiz = QuizBrain(question_bank)
 
-print("#########################")
-print("#########################")
+#
 while quiz.still_has_question():
-    quiz.next_question()
+    question = quiz.next_question()
+
+# End of the game
+print("You have completed this challenge!")
+print(
+    f"Your final score is: {quiz.score}/ {len(quiz.question_list)} = {round(quiz.score/len(quiz.question_list), 2)*100}"
+)
