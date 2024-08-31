@@ -12,14 +12,8 @@ class Shape:
         """
         turtle.home()  # Move turtle to the origin – coordinates (0,0)
         # --- Draw a square --- #
-        turtle.forward(50)
-        turtle.left(90)
-        turtle.forward(50)
-        turtle.left(90)
-        turtle.forward(50)
-        turtle.left(90)
-        turtle.forward(50)
-        turtle.right(90)
-        turtle.up()
+        for turn in range(0, 4):
+            turtle.forward(50)
+            turtle.left(90)
 
         return
