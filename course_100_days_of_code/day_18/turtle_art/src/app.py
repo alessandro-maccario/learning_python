@@ -25,33 +25,8 @@ turtle = Turtle()
 # instantiate the shape object
 shape = Shape()
 
-# --- Draw a square --- #
-shape.square(turtle=turtle)
-# erase the screen
-# turtle.clear()
-
-# --- Draw a triangle --- #
-shape.triangle(turtle=turtle)
-# erase the screen
-# turtle.clear()
-
-# --- Draw a pentagon --- #
-shape.pentagon(turtle=turtle)
-
-# --- Draw a hexagon --- #
-shape.hexagon(turtle=turtle)
-
-# --- Draw a heptagon --- #
-shape.heptagon(turtle=turtle)
-
-# --- Draw a octagone --- #
-shape.octagone(turtle=turtle)
-
-# --- Draw a nonagone --- #
-shape.nonagone(turtle=turtle)
-
-# --- Draw a decagone --- #
-shape.decagone(turtle=turtle)
+for i in range(3, 11):
+    shape.geometric_shape(turtle=turtle, number_of_sides=i)
 
 # --- LINES --- #
 # shape.dashed_line(turtle=turtle)
