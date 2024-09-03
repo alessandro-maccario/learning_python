@@ -55,6 +55,17 @@ def random_walk(turtle: object, number_of_steps: int) -> None:
     Requisites:
         - the turtle must have a bigger thickness than the normal line
         - each line must be of a random color
+
+    Reference:
+        Simple random walk on Z:
+        - https://en.wikipedia.org/wiki/Random_walk
+
+    Parameters
+        ----------
+        turtle : object
+            The turtle object used to draw.
+        number_of_steps : int
+            Number of steps that the turtle will perform.
     """
     for i in range(number_of_steps):
         # choose a random color for the turtle
