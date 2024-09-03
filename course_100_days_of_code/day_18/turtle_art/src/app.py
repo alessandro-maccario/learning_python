@@ -5,14 +5,13 @@ This script will create a simple Turtle Art Paint in Python for the 100 Days of 
 
 import os
 import sys
-from random import randint
 
 # dynamically adjust the PYTHONPATH
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # --- IMPORT PACKAGES --- #
 from turtle import Turtle, Screen
-from pkgs.move import Shape
+from pkgs.move import Shape, random_walk
 
 # instanciate the turtle
 turtle = Turtle()
@@ -21,12 +20,15 @@ turtle = Turtle()
 # turtle.shape("circle")
 # turtle.color(randint(0, 255))
 
-# --- SHAPES --- #
-# instantiate the shape object
-shape = Shape()
+# # --- SHAPES --- #
+# # instantiate the shape object
+# shape = Shape()
 
-for i in range(3, 11):
-    shape.geometric_shape(turtle=turtle, number_of_sides=i)
+# for i in range(3, 11):
+#     shape.geometric_shape(turtle=turtle, number_of_sides=i)
+
+# --- Define a random walk for the turtle --- #
+random_walk(turtle=turtle, number_of_steps=30)
 
 # --- LINES --- #
 # shape.dashed_line(turtle=turtle)
