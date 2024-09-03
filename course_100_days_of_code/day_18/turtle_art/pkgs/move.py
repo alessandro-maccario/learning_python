@@ -1,4 +1,4 @@
-from random import randint
+from random import choice, randint, randrange
 
 
 class Shape:
@@ -6,10 +6,6 @@ class Shape:
 
     def __init__(self, turtle_color=None) -> None:
         pass
-
-    def random_color(self) -> str:
-        """Generate a random color in hex format."""
-        return "#%06x" % randint(0, 0xFFFFFF)
 
     def geometric_shape(
         self, turtle: object, number_of_sides: int, turtle_color: str = None
@@ -38,7 +34,7 @@ class Shape:
         """
         turtle.setheading(0)  # Move turtle to the origin – coordinates (0,0)
         # define a color for the turtle
-        turtle_color = self.random_color()
+        turtle_color = random_color()
         turtle.color(turtle_color)
 
         for _ in range(0, number_of_sides):
@@ -46,6 +42,41 @@ class Shape:
             turtle.left(360 / number_of_sides)
 
         return
+
+
+def random_color() -> str:
+    """Generate a random color in hex format."""
+    return "#%06x" % randint(0, 0xFFFFFF)
+
+
+def random_walk(turtle: object, number_of_steps: int) -> None:
+    """Let the turtle walk randomly on the screen.
+
+    Requisites:
+        - the turtle must have a bigger thickness than the normal line
+        - each line must be of a random color
+    """
+    for i in range(number_of_steps):
+        # choose a random color for the turtle
+        turtle_color = random_color()
+        turtle.color(turtle_color)
+
+        # randomly choose the movement value.
+        # This can be anything, just the logic to decide right or left
+        movement = choice([-1, 1])
+        # define a random angle to turn the turtle head
+        angle = choice([randrange(-360, 360)])
+        turtle.pensize(10)  # set the turtle thickness
+        turtle.hideturtle()  # hide the turtle icon
+
+        if movement == 1:
+            turtle.forward(50)
+            turtle.right(angle)
+        else:
+            turtle.backward(50)
+            turtle.left(angle)
+
+    return
 
 
 def dashed_line(turtle: object) -> None:
