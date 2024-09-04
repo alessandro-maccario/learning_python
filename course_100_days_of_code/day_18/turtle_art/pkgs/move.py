@@ -58,8 +58,8 @@ class Shape:
             # Draw the circle
             turtle.circle(radius)
 
-            turtle.setheading(angle_head)
-            angle_head += angle_head
+            turtle.setheading(degrees_of_change)
+            degrees_of_change += angle_head
 
         return
 
