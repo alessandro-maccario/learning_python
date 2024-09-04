@@ -1,4 +1,4 @@
-from random import choice, randint, randrange
+from random import choice, randint
 
 
 class Shape:
@@ -43,6 +43,33 @@ class Shape:
 
         return
 
+    def spirograph(
+        self, turtle: object, radius: int, angle_head: int, turtle_color: str = None
+    ) -> None:
+        turtle.speed(9)
+        for _ in range(
+            50
+        ):  # need to stop the turtle when it reaches the same initial angle or setheading as when it started
+            if _ == 0:
+                # define a color for the turtle
+                turtle_color = random_color()
+                turtle.color(turtle_color)
+
+                # Draw the circle
+                turtle.circle(radius)
+                turtle.setheading(angle_head)
+            else:
+                angle_head += 10
+                # define a color for the turtle
+                turtle_color = random_color()
+                turtle.color(turtle_color)
+
+                # Draw the circle
+                turtle.circle(radius)
+                turtle.setheading(angle_head)
+
+        return
+
 
 def random_color() -> str:
     """Generate a random color in hex format."""
@@ -67,25 +94,20 @@ def random_walk(turtle: object, number_of_steps: int) -> None:
         number_of_steps : int
             Number of steps that the turtle will perform.
     """
+    turtle.speed(9)
     for i in range(number_of_steps):
         # choose a random color for the turtle
         turtle_color = random_color()
         turtle.color(turtle_color)
 
-        # randomly choose the movement value.
-        # This can be anything, just the logic to decide right or left
-        movement = choice([-1, 1])
-        # define a random angle to turn the turtle head
-        angle = choice([randrange(-360, 360)])
+        # where the head of the turtle will be
+        direction = choice([0, 90, 180, 270])
         turtle.pensize(10)  # set the turtle thickness
         turtle.hideturtle()  # hide the turtle icon
 
-        if movement == 1:
-            turtle.forward(50)
-            turtle.right(angle)
-        else:
-            turtle.backward(50)
-            turtle.left(angle)
+        turtle.forward(30)
+        # turtle.right(angle)
+        turtle.setheading(direction)
 
     return
 
