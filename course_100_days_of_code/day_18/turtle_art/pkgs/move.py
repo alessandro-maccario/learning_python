@@ -46,27 +46,20 @@ class Shape:
     def spirograph(
         self, turtle: object, radius: int, angle_head: int, turtle_color: str = None
     ) -> None:
-        turtle.speed(9)
-        for _ in range(
-            50
-        ):  # need to stop the turtle when it reaches the same initial angle or setheading as when it started
-            if _ == 0:
-                # define a color for the turtle
-                turtle_color = random_color()
-                turtle.color(turtle_color)
+        turtle.speed(0)
+        total_circles = int(360 / angle_head)
+        degrees_of_change = angle_head
 
-                # Draw the circle
-                turtle.circle(radius)
-                turtle.setheading(angle_head)
-            else:
-                angle_head += 10
-                # define a color for the turtle
-                turtle_color = random_color()
-                turtle.color(turtle_color)
+        for _ in range(0, total_circles):
+            # define a color for the turtle
+            turtle_color = random_color()
+            turtle.color(turtle_color)
 
-                # Draw the circle
-                turtle.circle(radius)
-                turtle.setheading(angle_head)
+            # Draw the circle
+            turtle.circle(radius)
+
+            turtle.setheading(angle_head)
+            angle_head += angle_head
 
         return
 
