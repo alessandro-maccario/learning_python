@@ -11,7 +11,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # --- IMPORT PACKAGES --- #
 from turtle import Turtle, Screen
-from pkgs.move import Shape, random_walk
+from pkgs.move import Shape
 
 # instanciate the turtle
 turtle = Turtle(visible=False)
