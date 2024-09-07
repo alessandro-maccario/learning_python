@@ -17,6 +17,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # --- IMPORT PACKAGES --- #
 from turtle import Turtle, Screen
+from pkgs.move import TurtleMovement
 
 # Define the screen where the turtle will draw
 # instantiate the screen where the turtle will play
@@ -25,14 +26,18 @@ screen.listen()  # start listening to user inputs
 
 # instantiate a turtle object
 turtle = Turtle(visible=True)
-# instantiate the Movement class
 
+# instantiate the Turtle Movement Class
+turtle_controller = TurtleMovement(turtle=turtle)
 
-def going_forwards() -> None:
-    turtle.forward(10)
-
-
-screen.onkey(fun=going_forwards, key="w")
+# onkey pressed, the turtle will act accordingly
+screen.onkey(fun=turtle_controller.going_forwards, key="w")
+screen.onkey(fun=turtle_controller.going_backwards, key="s")
+screen.onkey(fun=turtle_controller.going_up, key="Up")
+screen.onkey(fun=turtle_controller.going_down, key="Down")
+screen.onkey(fun=turtle_controller.turn_left, key="Left")
+screen.onkey(fun=turtle_controller.turn_right, key="Right")
+screen.onkey(fun=turtle_controller.turtle_clean, key="c")
 
 # once the user clicks on the window, the window will close automatically
 screen.exitonclick()
