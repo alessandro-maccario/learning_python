@@ -56,16 +56,15 @@ while is_race_on:
     for each_turtle in turtle_list:
         # print("Turtle is: ", each_turtle.turtle.color()[0])
         each_turtle.turtle_racing()
-        if each_turtle.wall_checker() is False:
+        if (
+            each_turtle.wall_checker(screen_size=SCREEN_SIZE_WIDTH - 20) is False
+        ):  # where 20 is half of the length of the turtle body
             is_race_on = False
             if each_turtle.turtle.color()[0] == guessing_winner:
                 print(f"Congratulation, your {guessing_winner} turtle won the race!")
             else:
                 print(
-                    "Unfortunately, your tutle was not the fastest one. Try again next time!"
-                )
-                print(
-                    f"The winning turtle was the {each_turtle.turtle.color()[0]} one."
+                    f"Unfortunately, your turtle was not the fastest one. Try again next time! The winning turtle was the {each_turtle.turtle.color()[0]} one."
                 )
 
 
