@@ -57,7 +57,6 @@ class Snake:
             self.head.setheading(RIGHT)
 
     def extend(self):
-        print("POSITION -1 IS:", self.snake_bodies[-1].position())
         # add a segment to the snake after the last position
         self.add_segment(
             self.snake_bodies[-1].position()
