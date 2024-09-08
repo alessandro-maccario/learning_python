@@ -14,10 +14,10 @@ class TurtleMovement:
         self.turtle.goto(x=self.x_position, y=self.y_position)
 
     def turtle_racing(self) -> None:
+        """Move the turtle forward of an int between 1 and 5"""
         self.turtle.forward(randint(1, 5))  # choose a random value between 1 and 2
 
-    def wall_checker(self) -> None:
-        # print(self.turtle.xcor(), self.turtle.ycor())
-
-        if self.turtle.xcor() > 250:
+    def wall_checker(self, screen_size: int) -> bool:
+        """Check if the turtle reached the end of the screen size"""
+        if self.turtle.xcor() > screen_size / 2:
             return False
