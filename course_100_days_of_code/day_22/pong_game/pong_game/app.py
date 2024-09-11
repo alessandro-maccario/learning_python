@@ -22,4 +22,20 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # --- IMPORT PACKAGES --- #
-from turtle import Screen
+from turtle import Screen, Turtle
+
+# --- CONSTANTS --- #
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
+
+# instantiate the screen and the screen size
+screen = Screen()
+screen.setup(width=SCREEN_WIDTH, height=SCREEN_HEIGHT)
+screen.bgcolor("black")
+screen.title("Pong Game")
+
+# --- Create and move a paddle --- #
+
+
+# let the screen on until the user clicks on it
+screen.exitonclick()
