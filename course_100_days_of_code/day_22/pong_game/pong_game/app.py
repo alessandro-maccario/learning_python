@@ -52,5 +52,7 @@ screen.onkey(paddle.move_down, "Down")
 # --- Create and move a paddle --- #
 user_paddle = Paddle()
 
+# TODO: move the turtle on the right side of the screen and make it move on the side
+
 # let the screen on until the user clicks on it
 screen.exitonclick()
