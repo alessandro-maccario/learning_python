@@ -13,6 +13,12 @@ Problem Breakdown:
     6. Detect collision with a paddle to know when to bounce the ball back
     7. Detect when paddle misses the ball and score a point for one of the user
     8. Keep score using a Scoreboard as done in the Snake Game
+
+Requirements paddle:
+    - paddle: 20x100 (that means, width = 20 height=25, by 5 times)
+    - x_position = 350 on the right side, in a vertical position
+    - y_position = 0
+    - the paddle should answer to up and down key stroke arrows and it should move by 20px
 """
 
 import os
@@ -23,6 +29,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # --- IMPORT PACKAGES --- #
 from turtle import Screen, Turtle
+from pkgs.paddle import Paddle
 
 # --- CONSTANTS --- #
 SCREEN_WIDTH = 800
@@ -34,8 +41,16 @@ screen.setup(width=SCREEN_WIDTH, height=SCREEN_HEIGHT)
 screen.bgcolor("black")
 screen.title("Pong Game")
 
-# --- Create and move a paddle --- #
+# instantiate the Snake object
+paddle = Paddle()
 
+# start listening to the user's input
+screen.listen()
+screen.onkey(paddle.move_up, "Up")
+screen.onkey(paddle.move_down, "Down")
+
+# --- Create and move a paddle --- #
+user_paddle = Paddle()
 
 # let the screen on until the user clicks on it
 screen.exitonclick()
