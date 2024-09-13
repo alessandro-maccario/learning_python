@@ -41,18 +41,17 @@ screen.setup(width=SCREEN_WIDTH, height=SCREEN_HEIGHT)
 screen.bgcolor("black")
 screen.title("Pong Game")
 
-# instantiate the Snake object
-paddle = Paddle()
-
-# start listening to the user's input
-screen.listen()
-screen.onkey(paddle.move_up, "Up")
-screen.onkey(paddle.move_down, "Down")
-
 # --- Create and move a paddle --- #
 user_paddle = Paddle()
 
+# start listening to the user's input
+screen.listen()
+# make the paddle move forward and backward
+screen.onkey(user_paddle.move_up, "Up")
+screen.onkey(user_paddle.move_down, "Down")
+
 # TODO: move the turtle on the right side of the screen and make it move on the side
+
 
 # let the screen on until the user clicks on it
 screen.exitonclick()
