@@ -47,7 +47,7 @@ screen.listen()
 screen.onkey(user_paddle.move_up, "Up")
 screen.onkey(user_paddle.move_down, "Down")
 
-# TODO: move the turtle on the right side of the screen and make it move on the side
+# TODO: create another paddle and position it on the left of the screen and make it move up/down
 
 
 # let the screen on until the user clicks on it
