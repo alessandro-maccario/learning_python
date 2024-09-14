@@ -7,7 +7,6 @@ from turtle import Turtle
 MOVE_PADDLE = 30
 UP = 90
 DOWN = 270
-# STARTING_POSITIONS = [(0, 0), (0, -20), (0, -40), (0, -60), (0, -80)]
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 STARTING_POSITIONS = ((SCREEN_WIDTH / 2) - 30, 0)
