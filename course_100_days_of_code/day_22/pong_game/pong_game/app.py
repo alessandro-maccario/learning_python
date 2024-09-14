@@ -29,11 +29,8 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # --- IMPORT PACKAGES --- #
 from turtle import Screen
-from pkgs.paddle import Paddle
+from pkgs.paddle import Paddle, SCREEN_HEIGHT, SCREEN_WIDTH
 
-# --- CONSTANTS --- #
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
 
 # instantiate the screen and the screen size
 screen = Screen()
