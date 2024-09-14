@@ -28,7 +28,7 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # --- IMPORT PACKAGES --- #
-from turtle import Screen, Turtle
+from turtle import Screen
 from pkgs.paddle import Paddle
 
 # --- CONSTANTS --- #
