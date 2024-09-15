@@ -9,7 +9,7 @@ UP = 90
 DOWN = 270
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
-STARTING_POSITIONS = ((SCREEN_WIDTH / 2) - 30, 0)
+STARTING_POSITIONS = (350, 0)
 
 
 # --- CREATE PADDLE CLASS --- #
@@ -32,9 +32,11 @@ class Paddle:
         turtle.color("White")
         turtle.fillcolor("white")
         turtle.up()
+        turtle.hideturtle()
         turtle.goto(STARTING_POSITIONS)
         turtle.shapesize(stretch_len=5, stretch_wid=1)
-        turtle.setheading(90)
+        turtle.setheading(UP)
+        turtle.showturtle()
         self.paddle_pieces.append(turtle)
         self.starting_position -= 20
 
