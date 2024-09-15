@@ -32,11 +32,9 @@ class Paddle:
         turtle.color("White")
         turtle.fillcolor("white")
         turtle.up()
-        turtle.hideturtle()
         turtle.goto(STARTING_POSITIONS)
         turtle.shapesize(stretch_len=5, stretch_wid=1)
         turtle.setheading(UP)
-        turtle.showturtle()
         self.paddle_pieces.append(turtle)
         self.starting_position -= 20
 
