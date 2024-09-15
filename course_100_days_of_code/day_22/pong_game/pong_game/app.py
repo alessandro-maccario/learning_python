@@ -37,6 +37,7 @@ screen = Screen()
 screen.setup(width=SCREEN_WIDTH, height=SCREEN_HEIGHT)
 screen.bgcolor("black")
 screen.title("Pong Game")
+screen.tracer(0)  # turn off animation so the paddle directly goes into position
 
 # --- Create and move a paddle --- #
 user_paddle = Paddle()
@@ -48,6 +49,11 @@ screen.onkey(user_paddle.move_up, "Up")
 screen.onkey(user_paddle.move_down, "Down")
 
 # TODO: create another paddle and position it on the left of the screen and make it move up/down
+
+# after turning off the animation, we manually have to turn constantly the animation on
+game_is_on = True
+while game_is_on:
+    screen.update()  # after turning off the animation, you need to manually turn on the update
 
 
 # let the screen on until the user clicks on it
