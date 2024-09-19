@@ -51,7 +51,6 @@ screen.onkey(player_paddle.move_down, "Down")  # "Down" keyboard key
 screen.onkey(opponent_paddle.move_up, "w")  # "w" keyboard key
 screen.onkey(opponent_paddle.move_down, "s")  # "s" keyboard key
 
-# TODO: create another paddle and position it on the left of the screen and make it move up/down
 
 # after turning off the animation, we manually have to turn constantly the animation on
 game_is_on = True
