@@ -40,13 +40,16 @@ screen.title("Pong Game")
 screen.tracer(0)  # turn off animation so the paddle directly goes into position
 
 # --- Create and move a paddle --- #
-user_paddle = Paddle()
+player_paddle = Paddle(starting_position=(350, 0))
+opponent_paddle = Paddle(starting_position=(-350, 0))
 
 # start listening to the user's input
 screen.listen()
-# make the paddle move forward and backward
-screen.onkey(user_paddle.move_up, "Up")
-screen.onkey(user_paddle.move_down, "Down")
+# make the paddles move forward and backward
+screen.onkey(player_paddle.move_up, "Up")  # "Up" keyboard key
+screen.onkey(player_paddle.move_down, "Down")  # "Down" keyboard key
+screen.onkey(opponent_paddle.move_up, "w")  # "w" keyboard key
+screen.onkey(opponent_paddle.move_down, "s")  # "s" keyboard key
 
 # TODO: create another paddle and position it on the left of the screen and make it move up/down
 
