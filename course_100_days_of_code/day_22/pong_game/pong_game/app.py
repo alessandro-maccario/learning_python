@@ -40,8 +40,8 @@ screen.title("Pong Game")
 screen.tracer(0)  # turn off animation so the paddle directly goes into position
 
 # --- Create and move a paddle --- #
-player_paddle = Paddle(starting_position=(350, 0))
-opponent_paddle = Paddle(starting_position=(-350, 0))
+player_paddle = Paddle(starting_position=(350, 0))  # right side paddle
+opponent_paddle = Paddle(starting_position=(-350, 0))  # left side paddle
 
 # start listening to the user's input
 screen.listen()
