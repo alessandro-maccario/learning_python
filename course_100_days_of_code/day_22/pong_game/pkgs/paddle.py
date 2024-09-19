@@ -28,17 +28,16 @@ class Paddle(Turtle):
         self.shape("square")
         self.color("White")
         self.fillcolor("white")
+        self.shapesize(stretch_wid=5, stretch_len=1)
         self.up()
         self.goto(starting_position)
-        self.shapesize(stretch_len=5, stretch_wid=1)
-        self.setheading(UP)  # needed to set the orientation of the paddles
 
     def move_up(self):
         """Move the turtle UP using the key strokes"""
         # move the paddle
-        self.forward(MOVE_PADDLE)
+        self.goto(self.xcor(), self.ycor() + MOVE_PADDLE)
 
     def move_down(self):
         """Move the turtle DOWN using the key strokes"""
         # move the paddle
-        self.backward(MOVE_PADDLE)
+        self.goto(self.xcor(), self.ycor() - MOVE_PADDLE)
