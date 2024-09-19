@@ -5,15 +5,11 @@ from turtle import Turtle
 
 # --- CONSTANTS --- #
 MOVE_PADDLE = 30
-UP = 90
-DOWN = 270
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
 
 
 # --- CREATE PADDLE CLASS --- #
 class Paddle(Turtle):
-    def __init__(self, starting_position: str) -> None:
+    def __init__(self, starting_position: str, shape: str = "square") -> None:
         """Initialization method for the Paddle class.
 
         Parameters
@@ -23,9 +19,8 @@ class Paddle(Turtle):
         """
         # by using the super method, we are able to use the attributes and methods from the parent class in the child class;
         # This means that we are creating a turtle object by grabbing the attributes/methods from the parent class
-        super().__init__()
+        super().__init__(shape)
         # instantiate the turtle object by creating the starting body of the paddle
-        self.shape("square")
         self.color("White")
         self.fillcolor("white")
         self.shapesize(stretch_wid=5, stretch_len=1)
