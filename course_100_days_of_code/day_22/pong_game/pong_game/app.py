@@ -29,10 +29,14 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # --- IMPORT PACKAGES --- #
 from turtle import Screen
-from pkgs.paddle import Paddle, SCREEN_HEIGHT, SCREEN_WIDTH
+from pkgs.paddle import Paddle
+from pkgs.ball import Ball
 
+# --- CONSTANTS --- #
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
 
-# instantiate the screen and the screen size
+# Instantiate the screen and the screen size
 screen = Screen()
 screen.setup(width=SCREEN_WIDTH, height=SCREEN_HEIGHT)
 screen.bgcolor("black")
@@ -43,6 +47,9 @@ screen.tracer(0)  # turn off animation so the paddle directly goes into position
 player_paddle = Paddle(starting_position=(350, 0))  # right side paddle
 opponent_paddle = Paddle(starting_position=(-350, 0))  # left side paddle
 
+# --- Create the ball --- #
+ball = Ball()
+
 # start listening to the user's input
 screen.listen()
 # make the paddles move forward and backward
@@ -51,12 +58,13 @@ screen.onkey(player_paddle.move_down, "Down")  # "Down" keyboard key
 screen.onkey(opponent_paddle.move_up, "w")  # "w" keyboard key
 screen.onkey(opponent_paddle.move_down, "s")  # "s" keyboard key
 
+# TODO: detect collision of the ball with walls and bounce
 
 # after turning off the animation, we manually have to turn constantly the animation on
 game_is_on = True
 while game_is_on:
     screen.update()  # after turning off the animation, you need to manually turn on the update
-
+    ball.ball_movement()  # move the ball
 
 # let the screen on until the user clicks on it
 screen.exitonclick()
