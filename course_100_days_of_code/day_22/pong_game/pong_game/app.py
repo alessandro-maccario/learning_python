@@ -58,13 +58,50 @@ screen.onkey(player_paddle.move_down, "Down")  # "Down" keyboard key
 screen.onkey(opponent_paddle.move_up, "w")  # "w" keyboard key
 screen.onkey(opponent_paddle.move_down, "s")  # "s" keyboard key
 
-# TODO: detect collision of the ball with walls and bounce
+# TODO: detect collision of the ball with walls and bounce.
+# Only need to detect collision at the top and at the bottom of the screen.
+# If the ball goes out of the screen on the left/right, either the paddle catches the ball,
+# otherwise it is a point to the opponent.
+# Once the ball bounces, which xcor or ycor changes and which one stays the same? X stays the same
+# Y gets the opposite direction from the previous value.
+# The screen is 600px tall. Detect collisions with the top and bottom walls.
+# Change the ball's movement direction upon collision. -> DONE
 
 # after turning off the animation, we manually have to turn constantly the animation on
 game_is_on = True
 while game_is_on:
     screen.update()  # after turning off the animation, you need to manually turn on the update
     ball.ball_movement()  # move the ball
+
+    # --- DETECT WALL COLLISION --- #
+    # upper part or lower part of the screen. 10 is the size of half of the ball (ball width = 20px)
+    if (ball.ycor() > (SCREEN_HEIGHT / 2) - 10) or (
+        ball.ycor() < (-SCREEN_HEIGHT / 2) + 10
+    ):
+        # the ball must bounce
+        ball.wall_bouncing()
+
+    # --- DETECT COLLISION WITH RIGHT PADDLE --- #
+    # 60 represents the following:
+    # 20px is the width of the paddle;
+    # 20px is the width of the ball;
+    # 20px is the space between the paddle and the wall
+    if (
+        ball.distance(player_paddle) < 50 and ball.xcor() > (SCREEN_WIDTH / 2) - 60
+    ) or (
+        ball.distance(opponent_paddle) < 50 and ball.xcor() > (-SCREEN_WIDTH / 2) + 60
+    ):
+        ball.paddle_bouncing()
+
+    # --- DETECT RIGHT PADDLE MISSING --- #
+    if ball.xcor() > (SCREEN_WIDTH / 2):
+        ball.restart()
+
+    # --- DETECT LEFT PADDLE MISSING --- #
+    if ball.xcor() < (-SCREEN_WIDTH / 2):
+        ball.restart()
+
+    # TODO: score keeping
 
 # let the screen on until the user clicks on it
 screen.exitonclick()
