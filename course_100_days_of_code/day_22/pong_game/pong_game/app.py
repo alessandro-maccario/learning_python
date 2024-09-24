@@ -23,6 +23,7 @@ Requirements paddle:
 
 import os
 import sys
+import time
 
 # dynamically adjust the PYTHONPATH
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -31,6 +32,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from turtle import Screen
 from pkgs.paddle import Paddle
 from pkgs.ball import Ball
+from pkgs.scoreboard import ScoreBoard
 
 # --- CONSTANTS --- #
 SCREEN_WIDTH = 800
@@ -50,6 +52,9 @@ opponent_paddle = Paddle(starting_position=(-350, 0))  # left side paddle
 # --- Create the ball --- #
 ball = Ball()
 
+# --- Create the ScoreBoard --- #
+scoreboard = ScoreBoard()  # scoreboard to track the points
+
 # start listening to the user's input
 screen.listen()
 # make the paddles move forward and backward
@@ -57,15 +62,6 @@ screen.onkey(player_paddle.move_up, "Up")  # "Up" keyboard key
 screen.onkey(player_paddle.move_down, "Down")  # "Down" keyboard key
 screen.onkey(opponent_paddle.move_up, "w")  # "w" keyboard key
 screen.onkey(opponent_paddle.move_down, "s")  # "s" keyboard key
-
-# TODO: detect collision of the ball with walls and bounce.
-# Only need to detect collision at the top and at the bottom of the screen.
-# If the ball goes out of the screen on the left/right, either the paddle catches the ball,
-# otherwise it is a point to the opponent.
-# Once the ball bounces, which xcor or ycor changes and which one stays the same? X stays the same
-# Y gets the opposite direction from the previous value.
-# The screen is 600px tall. Detect collisions with the top and bottom walls.
-# Change the ball's movement direction upon collision. -> DONE
 
 # after turning off the animation, we manually have to turn constantly the animation on
 game_is_on = True
@@ -95,13 +91,17 @@ while game_is_on:
 
     # --- DETECT RIGHT PADDLE MISSING --- #
     if ball.xcor() > (SCREEN_WIDTH / 2):
+        scoreboard.left_increase_score()
         ball.restart()
 
     # --- DETECT LEFT PADDLE MISSING --- #
     if ball.xcor() < (-SCREEN_WIDTH / 2):
+        scoreboard.right_increase_score()
         ball.restart()
 
-    # TODO: score keeping
+    if scoreboard.left_score_count >= 10 or scoreboard.right_score_count >= 10:
+        scoreboard.game_over()
+        game_is_on = False
 
 # let the screen on until the user clicks on it
 screen.exitonclick()
