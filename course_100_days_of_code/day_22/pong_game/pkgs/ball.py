@@ -21,7 +21,7 @@ class Ball(Turtle):
 
         # Movement step size for x and y directions
         self.x_move = 0.3  # larger values will move the ball faster and viceversa
-        self.y_move = 0.3
+        self.y_move = 0.3  # larger values will move the ball faster and viceversa
 
     def ball_movement(self):
         """Keep the ball moving based on a certain amount"""
@@ -38,5 +38,7 @@ class Ball(Turtle):
     def restart(self):
         # send the ball to the homebase
         self.home()
+        self.x_move += 0.1
+        self.y_move += 0.1
         # start again the ball movement in reverse
         self.paddle_bouncing()
