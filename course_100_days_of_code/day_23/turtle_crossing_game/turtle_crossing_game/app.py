@@ -15,13 +15,15 @@ Requirements:
 
 import os
 import sys
-from random import random, randrange, randint
+import time
+from random import randrange
 from turtle import Turtle, Screen
 
 # dynamically adjust the PYTHONPATH
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pkgs.player import Player
 from pkgs.car import Car
+from pkgs.scoreboard import ScoreBoard
 from pkgs.helper import random_color
 
 
@@ -46,12 +48,14 @@ screen.title("Turtle Crossing Game")
 screen.tracer(0)  # turn off animation so the paddle directly goes into position
 
 # --- INSTANTIATE PLAYER TURTLE --- #
-turtle = Player(starting_position=(0, -200))
+player = Player(starting_position=(0, -200))
+# --- INSTANTIATE THE SCOREBOARD --- #
+score = ScoreBoard()
 
 # start listening to the user's input
 screen.listen()
 # make the turtle move forward and backward
-screen.onkey(turtle.move_up, "Up")  # "Up" keyboard key
+screen.onkey(player.move_up, "Up")  # "Up" keyboard key
 
 for turtle_index in range(len(colors)):
     # create the turtle instances
@@ -81,6 +85,15 @@ while game_is_on:
         if each_turtle.wall_checker(SCREEN_WIDTH):
             each_turtle.restart()
 
+    # if the turtle goes off screen at the top without being hit by a car, then end the game with a win
+    if player.ycor() > SCREEN_HEIGHT / 2:
+        score.increase_score()
+        score.game_win()
+        game_is_on = False
+
+
+# TODO: add game_over whenever a car hit the turtle
+# TODO: restart the game with the increased score whenever the turtle reaches the end of the screen
 
 # let the screen on until the user clicks on it
 screen.exitonclick()
