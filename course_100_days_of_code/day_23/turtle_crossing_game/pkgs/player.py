@@ -1,10 +1,13 @@
 """Class to create the player turtle and its movements"""
 
 # --- IMPORT PACKAGES --- #
+import time
 from turtle import Turtle
 
 # --- CONSTANTS --- #
 MOVE_PADDLE = 30
+ALIGNMENT = "center"
+FONT = "Courier New"
 
 
 # --- CREATE PADDLE CLASS --- #
