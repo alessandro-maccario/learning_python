@@ -15,23 +15,34 @@ Requirements:
 
 import os
 import sys
+from turtle import Turtle, Screen
 
 # dynamically adjust the PYTHONPATH
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from pkgs.player import Player
 
-from turtle import Turtle, Screen
 
 # --- CONSTANTS --- #
 SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 600
 
+
 # --- SCREEN --- #
 # Instantiate the screen and the screen size
 screen = Screen()
 screen.setup(width=SCREEN_WIDTH, height=SCREEN_HEIGHT)
-screen.bgcolor("black")
-screen.title("Pong Game")
+screen.bgcolor("white")
+screen.title("Turtle Crossing Game")
 screen.tracer(0)  # turn off animation so the paddle directly goes into position
+
+# --- INSTANTIATE TURTLE --- #
+turtle = Player(starting_position=(0, -200))
+
+# start listening to the user's input
+screen.listen()
+# make the turtle move forward and backward
+screen.onkey(turtle.move_up, "Up")  # "Up" keyboard key
+# screen.onkey(turtle.move_down, "Down")  # "Down" keyboard key
 
 
 # after turning off the animation, we manually have to turn constantly the animation on
