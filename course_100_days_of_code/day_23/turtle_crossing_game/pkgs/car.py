@@ -2,7 +2,7 @@ from turtle import Turtle
 from random import uniform, randint
 
 
-class TurtleMovement:
+class Car:
     def __init__(self, turtle: Turtle, x_position: int, y_position: int) -> None:
         self.turtle = turtle
         self.x_position = x_position
