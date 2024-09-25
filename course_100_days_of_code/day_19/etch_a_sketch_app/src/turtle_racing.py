@@ -35,8 +35,8 @@ guessing_winner = screen.textinput(
     title="Guess the turtle winner",
     prompt="Guess the winning turtle by typing the color:",
 )
-is_race_on = True
 
+is_race_on = True
 for turtle_index in range(5):
     # create the turtle instances
     new_turtle = Turtle(shape="turtle")
