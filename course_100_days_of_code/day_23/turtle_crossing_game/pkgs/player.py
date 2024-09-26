@@ -30,6 +30,7 @@ class Player(Turtle):
         self.up()
         # setheading north because it's where the turtle will go
         self.setheading(90)
+        self.start_position = starting_position
         self.goto(starting_position)
 
     def move_up(self):
@@ -41,3 +42,8 @@ class Player(Turtle):
         """Move the turtle DOWN using the key strokes"""
         # move the paddle
         self.goto(self.xcor(), self.ycor() - MOVE_PADDLE)
+
+    def player_restart(self):
+        # setheading north because it's where the turtle will go
+        self.setheading(90)
+        self.goto(self.start_position)
