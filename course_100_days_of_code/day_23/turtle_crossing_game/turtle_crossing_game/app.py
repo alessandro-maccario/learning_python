@@ -15,7 +15,6 @@ Requirements:
 
 import os
 import sys
-import time
 from random import randrange
 from turtle import Turtle, Screen
 
@@ -59,20 +58,17 @@ screen.onkey(player.move_up, "Up")  # "Up" keyboard key
 
 for turtle_index in range(len(colors)):
     # create the turtle instances
-    new_turtle = Turtle()
-    # form the colors list, grab one new color per each turtle
-    new_turtle.color(colors[turtle_index])
-
-    # define a function starting_position to send all the turtles in position immediately
-    turtle_movement = Car(
-        turtle=new_turtle,
+    new_turtle = Car(
         x_position=-280,
         y_position=randrange(-300, 300, 30),
     )
+    # form the colors list, grab one new color per each turtle
+    new_turtle.color(colors[turtle_index])
+
     # grab each turtle object and insert it into a list to be used to move each turtle afterwards
-    turtle_list.append(turtle_movement)
+    turtle_list.append(new_turtle)
     # send the turtles to a specific starting position
-    turtle_movement.starting_position()
+    new_turtle.starting_position()
 
 
 # after turning off the animation, we manually have to turn constantly the animation on
@@ -80,20 +76,22 @@ game_is_on = True
 while game_is_on:
     screen.update()  # after turning off the animation, you need to manually turn on the update
     for each_turtle in turtle_list:
+        # move the car forward
         each_turtle.turtle_racing()
+
+        # if the turtle goes off screen at the top without being hit by a car, then end the game with a win
+        if player.ycor() > SCREEN_HEIGHT / 2:
+            score.increase_score()
+            player.player_restart()
+            for each_turtle in turtle_list:
+                each_turtle.car_restart()
+
         # if the car goes out of the screen on the right, then push it back to the left side of the screen
         if each_turtle.wall_checker(SCREEN_WIDTH):
-            each_turtle.restart()
-
-    # if the turtle goes off screen at the top without being hit by a car, then end the game with a win
-    if player.ycor() > SCREEN_HEIGHT / 2:
-        score.increase_score()
-        score.game_win()
-        game_is_on = False
+            each_turtle.car_flow()
 
 
 # TODO: add game_over whenever a car hit the turtle
-# TODO: restart the game with the increased score whenever the turtle reaches the end of the screen
 
 # let the screen on until the user clicks on it
 screen.exitonclick()
