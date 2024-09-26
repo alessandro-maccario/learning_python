@@ -1,3 +1,4 @@
+import time
 from turtle import Turtle
 
 # --- CONSTANTS --- #
@@ -34,11 +35,4 @@ class ScoreBoard(Turtle):
         """Check if the turtle reached the end of the screen size"""
         self.home()
         self.write("Game Over", align=ALIGNMENT, font=(FONT, 15))
-        return
-
-    def game_win(self) -> bool:
-        """Check if the turtle reached the end of the upper screen size"""
-        self.home()
-        self.setheading(90)
-        self.write("You won!", align=ALIGNMENT, font=(FONT, 15))
         return
