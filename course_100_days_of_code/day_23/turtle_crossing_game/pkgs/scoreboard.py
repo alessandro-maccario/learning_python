@@ -32,7 +32,7 @@ class ScoreBoard(Turtle):
         self.update_scoreboard()
 
     def game_over(self) -> bool:
-        """Check if the turtle reached the end of the screen size"""
+        """Game over for the player either because hit by a car or they scored more then maximum amount of points"""
         self.home()
         self.write("Game Over", align=ALIGNMENT, font=(FONT, 15))
         return
