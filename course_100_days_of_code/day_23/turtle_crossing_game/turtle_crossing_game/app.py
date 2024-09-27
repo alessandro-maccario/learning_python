@@ -78,6 +78,9 @@ while game_is_on:
     for each_turtle in turtle_list:
         # move the car forward
         each_turtle.turtle_racing()
+        if each_turtle.distance(player) < 30 or score.score_count > 10:
+            score.game_over()
+            game_is_on = False
 
         # if the turtle goes off screen at the top without being hit by a car, then end the game with a win
         if player.ycor() > SCREEN_HEIGHT / 2:
@@ -89,9 +92,6 @@ while game_is_on:
         # if the car goes out of the screen on the right, then push it back to the left side of the screen
         if each_turtle.wall_checker(SCREEN_WIDTH):
             each_turtle.car_flow()
-
-
-# TODO: add game_over whenever a car hit the turtle
 
 # let the screen on until the user clicks on it
 screen.exitonclick()
