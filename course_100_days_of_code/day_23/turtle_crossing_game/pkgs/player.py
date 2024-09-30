@@ -1,7 +1,6 @@
 """Class to create the player turtle and its movements"""
 
 # --- IMPORT PACKAGES --- #
-import time
 from turtle import Turtle
 
 # --- CONSTANTS --- #

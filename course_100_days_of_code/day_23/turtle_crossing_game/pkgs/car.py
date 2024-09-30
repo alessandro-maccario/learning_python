@@ -2,19 +2,22 @@ from turtle import Turtle
 from random import uniform, randint
 
 
+# TODO: REFACTOR THIS CLASS
 class Car(Turtle):
-    # def __init__(self, turtle: Turtle, x_position: int, y_position: int) -> None:
     def __init__(self, x_position: int, y_position: int) -> None:
-        super().__init__()
-        # self.turtle = turtle
-        self.x_position = x_position
-        self.y_position = y_position
-        self.shape("square")
+        super().__init__(shape="square")
+        # self.shapesize(stretch_wid=1, stretch_len=3)
+        # # Movement step size for x and y directions
+        # self.x_move = (
+        #     uniform(0.09, 0.3)  # larger values will move the ball faster and viceversa
+        # )
         self.shapesize(stretch_wid=1, stretch_len=3)
         # Movement step size for x and y directions
         self.x_move = (
             uniform(0.09, 0.3)  # larger values will move the ball faster and viceversa
         )
+        self.x_position = x_position
+        self.y_position = y_position
 
     def starting_position(self) -> None:
         """Define the starting position of the turtle"""
@@ -22,7 +25,7 @@ class Car(Turtle):
         self.goto(x=self.x_position, y=self.y_position)
 
     def turtle_racing(self, random_y: int = 0) -> None:
-        """Move the turtle forward of an int between 1 and 5"""
+        """Move the car forward of an int between 1 and 5"""
         self.goto(
             self.xcor() + self.x_move,
             self.ycor() + random_y,
