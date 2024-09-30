@@ -71,3 +71,14 @@ class Snake:
         turtle_body.shapesize(stretch_len=0.5, stretch_wid=0.5)
         self.snake_bodies.append(turtle_body)
         self.starting_position -= 20
+
+    def reset(self):
+        """Initialize the snake again"""
+        for segments in self.snake_bodies:
+            # send the segments off the screen so they do not keep appearing after losing
+            segments.hideturtle()
+            segments.penup()
+            segments.goto(600, 600)
+        self.snake_bodies.clear()
+        self.create_snake()
+        self.head = self.snake_bodies[0]

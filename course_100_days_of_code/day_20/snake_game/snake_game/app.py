@@ -17,7 +17,6 @@ Steps:
 
 import os
 import sys
-import time
 
 # dynamically adjust the PYTHONPATH
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -56,7 +55,6 @@ screen.onkey(snake_body.move_right, "Right")
 is_game_on = True
 while is_game_on:
     # screen.update()  # update the screen only when all the segments of the body have moved forward
-    time.sleep(0.3)
 
     # make the snake move forward
     snake_body.snake_move()
@@ -75,16 +73,16 @@ while is_game_on:
         or (snake_body.head.xcor() < -SCREEN_WIDTH / 2)
         or (snake_body.head.ycor() < -SCREEN_WIDTH / 2)
     ):
-        snake_scoreboard.game_over()
-        is_game_on = False
+        snake_scoreboard.reset()
+        snake_body.reset()
 
     # Detect tail collision
     # if head collides with any segments of the tail:
     # then game_over sequence
     for body in snake_body.snake_bodies[1:]:
         if snake_body.head.distance(body) < 10:
-            snake_scoreboard.game_over()
-            is_game_on = False
+            snake_scoreboard.reset()
+            snake_body.reset()
 
 
 # close the screen only when the user clicks on it
