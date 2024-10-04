@@ -21,28 +21,16 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # --- IMPORT PACKAGES --- #
 from pkgs.scoreboard import ScoreBoard
 from pkgs.country_name import CountryName
+from pkgs.constants import (
+    SCREEN_HEIGHT,
+    SCREEN_WIDTH,
+    IMAGE_PATH,
+    CSV_PATH,
+    MAX_COUNT_STATES,
+    TEXTINPUT_TITLE,
+    TEXT_INPUT,
+)
 from turtle import Screen
-
-
-# --- CONSTANTS --- #
-SCREEN_WIDTH = 725
-SCREEN_HEIGHT = 491
-# dynamically get the absolute path to the image
-IMAGE_PATH = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)),
-    "..",
-    "attachments",
-    "blank_states_img.gif",
-)
-CSV_PATH = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)),
-    "..",
-    "attachments",
-    "50_states.csv",
-)
-TEXTINPUT_TITLE = "Guess Country Name"
-TEXT_INPUT = "Insert the name of a US State:"
-MAX_COUNT_STATES = 50
 
 # list to contain the states already guessed
 state_already_seen = []
