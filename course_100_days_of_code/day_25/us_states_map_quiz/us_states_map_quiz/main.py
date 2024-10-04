@@ -14,14 +14,14 @@ Requirements:
 
 import os
 import sys
-import pandas as pd
 
 # dynamically adjust the PYTHONPATH
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # --- IMPORT PACKAGES --- #
+from pkgs.scoreboard import ScoreBoard
 from pkgs.country_name import CountryName
-from turtle import Turtle, Screen
+from turtle import Screen
 
 
 # --- CONSTANTS --- #
@@ -40,9 +40,9 @@ CSV_PATH = os.path.join(
     "attachments",
     "50_states.csv",
 )
-
 TEXTINPUT_TITLE = "Guess Country Name"
 TEXT_INPUT = "Insert the name of a US State:"
+MAX_COUNT_STATES = 50
 
 # Instantiate the screen and the screen size
 screen = Screen()
@@ -50,11 +50,13 @@ screen.setup(width=SCREEN_WIDTH, height=SCREEN_HEIGHT)
 screen.title("US Map Quiz")
 # now set the background to our space image
 screen.bgpic(IMAGE_PATH)
-# instantiate turtle object
+# --- Instantiate the writing turtle object for the state names
 country_name = CountryName()
+# --- Instantiate the ScoreBoard object --- #
+scoreboard = ScoreBoard()
 
 game_is_on = True
-while True:
+while game_is_on:
     # ask for the input user
     user_input = screen.textinput(TEXTINPUT_TITLE, TEXT_INPUT)
 
@@ -70,8 +72,11 @@ while True:
             y_coord=country_name_match[1],
             state_name=user_input,
         )
-    else:
-        print("State not found!")
+        scoreboard.increase_score()
 
-# let the screen on until the user clicks on it
-screen.exitonclick()
+        if scoreboard.score_count == 1:
+            scoreboard.game_end()
+            game_is_on = False
+            screen.exitonclick()
+    else:
+        continue
