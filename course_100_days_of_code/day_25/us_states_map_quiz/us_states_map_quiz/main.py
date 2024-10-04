@@ -44,6 +44,9 @@ TEXTINPUT_TITLE = "Guess Country Name"
 TEXT_INPUT = "Insert the name of a US State:"
 MAX_COUNT_STATES = 50
 
+# list to contain the states already guessed
+state_already_seen = []
+
 # Instantiate the screen and the screen size
 screen = Screen()
 screen.setup(width=SCREEN_WIDTH, height=SCREEN_HEIGHT)
@@ -59,10 +62,12 @@ game_is_on = True
 while game_is_on:
     # ask for the input user
     user_input = screen.textinput(TEXTINPUT_TITLE, TEXT_INPUT)
-
+    if user_input in state_already_seen:
+        continue
     # read the country name dataframe
     try:
         country_name_match = country_name.match_name(user_input=user_input)
+        state_already_seen.append(user_input)
     except IndexError:
         continue
 
@@ -74,7 +79,7 @@ while game_is_on:
         )
         scoreboard.increase_score()
 
-        if scoreboard.score_count == 1:
+        if scoreboard.score_count == MAX_COUNT_STATES:
             scoreboard.game_end()
             game_is_on = False
             screen.exitonclick()
