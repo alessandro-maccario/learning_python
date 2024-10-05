@@ -5,7 +5,12 @@ Reference
     - https://www.sporcle.com/games/g/states
 
 Problem Breakdown:
-    1.
+    1. Convert the guess to Title Case (in this case, both the guessed state and the state in the csv file are lowercase)
+    2. Check if the guess is among the 50 states
+    3. Write correct guesses on the map
+    4. Use a loop to allow user to keep guessing
+    5. Record the correct guesses in a list
+    6. Keep track of the score
 
 Requirements:
     - The Turtle package works only with the .gif image format.
