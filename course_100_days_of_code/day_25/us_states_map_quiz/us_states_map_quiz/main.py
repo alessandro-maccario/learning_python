@@ -20,12 +20,11 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # --- IMPORT PACKAGES --- #
 from pkgs.scoreboard import ScoreBoard
-from pkgs.country_name import CountryName
+from pkgs.state_name import StateName
 from pkgs.constants import (
     SCREEN_HEIGHT,
     SCREEN_WIDTH,
     IMAGE_PATH,
-    CSV_PATH,
     MAX_COUNT_STATES,
     TEXTINPUT_TITLE,
     TEXT_INPUT,
@@ -42,7 +41,7 @@ screen.title("US Map Quiz")
 # now set the background to our space image
 screen.bgpic(IMAGE_PATH)
 # --- Instantiate the writing turtle object for the state names
-country_name = CountryName()
+country_name = StateName()
 # --- Instantiate the ScoreBoard object --- #
 scoreboard = ScoreBoard()
 

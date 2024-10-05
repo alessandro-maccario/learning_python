@@ -1,19 +1,13 @@
-import os
 import pandas as pd
 from turtle import Turtle
+from pkgs.constants import CSV_PATH
 
 # --- CONSTANTS --- #
 ALIGNMENT = "center"
 FONT = "Courier New"
-CSV_PATH = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)),
-    "..",
-    "attachments",
-    "50_states.csv",
-)
 
 
-class CountryName(Turtle):
+class StateName(Turtle):
     def __init__(self, shape: str = "classic") -> None:
         super().__init__(shape)
         self.color("Black")
@@ -21,6 +15,18 @@ class CountryName(Turtle):
         self.hideturtle()
 
     def match_name(self, user_input: str) -> tuple[float, float]:
+        """Check if the state name inserted by the user exists in the dataframe.
+
+        Parameters
+        ----------
+        user_input : str
+            The state that the user wants to guess.
+
+        Returns
+        -------
+        tuple[float, float]
+            Grab the x_coord and the y_coord.
+        """
         # read the file that contains the state names and the coordinates
         state_names = pd.read_csv(CSV_PATH)
         # convert lowercase column use str.lower()
@@ -36,6 +42,17 @@ class CountryName(Turtle):
         return get_x, get_y
 
     def mark_on_map(self, x_coord: float, y_coord: float, state_name: str):
+        """Mark on the map the state name.
+
+        Parameters
+        ----------
+        x_coord : float
+            Coordinate for the x value.
+        y_coord : float
+            Coordinate for the y value.
+        state_name : str
+            Name of the guessed state.
+        """
         self.goto(x_coord, y_coord)
         # write the state name on the map
-        self.write(state_name, align=ALIGNMENT, font=(FONT, 5))
+        self.write(state_name, align=ALIGNMENT, font=(FONT, 8))
