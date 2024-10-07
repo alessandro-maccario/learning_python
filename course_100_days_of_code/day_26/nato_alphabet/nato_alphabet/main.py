@@ -15,23 +15,17 @@ Requirements:
 # --- IMPORT PACKAGES --- #
 import pandas as pd
 
-# create a list to store all the conversion to the NATO Phonetic Alphabet
-list_nato_phonetic_alphabet = []
-
 # read the nato_phonetic_alphabet
 df = pd.read_csv("day_26/nato_alphabet/data/nato_phonetic_alphabet.csv")
 
 # ask for the user input
-user_input = input("Enter the word to be converted to NATO Phonetic Alphabet:")
+user_input = input("Enter the word to be converted to NATO Phonetic Alphabet:").upper()
 
 # create dictionary from the pandas dataframe
 dict_nato = {row["letter"]: row["code"] for (index, row) in df.iterrows()}
 
 # grab the NATO Phonetic Alphabet from the dictionary and store the conversion into the list
-for each_letter in user_input:
-    # convert to upper because the dict keys are uppercase
-    each_letter = each_letter.upper()
-    list_nato_phonetic_alphabet.append(dict_nato[each_letter])
+list_nato_phonetic_alphabet = [dict_nato[each_letter] for each_letter in user_input]
 
 # print the NATO Phonetic Alphabet for the user
 print("The NATO Phonetic Alphabet is: ", list_nato_phonetic_alphabet)
