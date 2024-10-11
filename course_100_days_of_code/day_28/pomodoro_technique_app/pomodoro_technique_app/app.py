@@ -36,6 +36,7 @@ from pkgs.constants import (
 
 # --- GLOBAL VARIABLES --- #
 repetitions = 0
+complete_work = -1
 
 # ---------------------------- TIMER RESET ------------------------------- #
 
@@ -44,7 +45,7 @@ repetitions = 0
 
 def start_countdown():
     """This function is called by the button "Start" to start the countdown"""
-    global repetitions
+    global repetitions, complete_work
     # update the reps to mirror the amount of repetitions passed
     repetitions += 1
 
@@ -59,21 +60,29 @@ def start_countdown():
         countdown(long_break_sec)
         # update the TIMER label to be RED
         timer_label.config(
-            text="Timer", font=(FONT_NAME, 32, "bold"), fg=RED, bg=YELLOW
+            text="Break", font=(FONT_NAME, 32, "bold"), fg=RED, bg=YELLOW
         )
     elif repetitions % 2 == 0:
         # take a short break
         countdown(short_break_sec)
         # update the TIMER label to be PINK
         timer_label.config(
-            text="Timer", font=(FONT_NAME, 32, "bold"), fg=PINK, bg=YELLOW
+            text="Break", font=(FONT_NAME, 32, "bold"), fg=PINK, bg=YELLOW
         )
     else:
         # working time
         countdown(work_sec)
         # update the TIMER label to be GREEN
         timer_label.config(
-            text="Timer", font=(FONT_NAME, 32, "bold"), fg=GREEN, bg=YELLOW
+            text="Work", font=(FONT_NAME, 32, "bold"), fg=GREEN, bg=YELLOW
+        )
+        complete_work += 1
+        # add the counter to the label again with the increase completed work
+        checkmark_label.config(
+            text=f"{complete_work} x ✓",
+            fg=GREEN,
+            bg=YELLOW,
+            font=(FONT_NAME, 15),
         )
 
 
@@ -132,7 +141,7 @@ reset_button = tk.Button(text="Reset", font=FONT_NAME)
 reset_button.grid(row=3, column=3)
 
 # checkmark component
-checkmark_label = tk.Label(text="✓", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 15))
+checkmark_label = tk.Label(text="", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 15))
 checkmark_label.grid(row=3, column=1)
 
 # wait up to a certain amount of time, then call the function by passing parameter arguments
