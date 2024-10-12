@@ -5,14 +5,6 @@ References
     1. https://docs.python.org/3/library/tk.html
     2. https://www.tcl.tk/man/tcl8.5/TkCmd/event.htm
 
-Problem Breakdown:
-    1.
-    2.
-
-
-Requirements:
-    -
-
 """
 
 # --- IMPORT PACKAGES --- #
