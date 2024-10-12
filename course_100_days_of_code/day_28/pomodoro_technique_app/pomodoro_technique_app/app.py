@@ -36,9 +36,34 @@ from pkgs.constants import (
 
 # --- GLOBAL VARIABLES --- #
 repetitions = 0
-complete_work = -1
+after_id = None
+
 
 # ---------------------------- TIMER RESET ------------------------------- #
+
+
+def reset_timer():
+    """Reset the timer and stop the countdown."""
+    global after_id, repetitions
+
+    if after_id:
+        window.after_cancel(after_id)  # Cancel the ongoing countdown
+    after_id = None
+
+    # Reset the timer display
+    canvas.itemconfig(text_timer_label, text="00:00")
+    # Reset the checkmarks
+    checkmark_label.config(
+        text="",
+        fg=GREEN,
+        bg=YELLOW,
+        font=(FONT_NAME, 15),
+    )
+    # Reset the timer label
+    timer_label.config(text="Timer", font=(FONT_NAME, 32, "bold"), fg=GREEN, bg=YELLOW)
+    # Reset repetitions so that when the "Start" button is pressed again it increases from the beginning
+    repetitions = 0
+
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
 
@@ -76,14 +101,18 @@ def start_countdown():
         timer_label.config(
             text="Work", font=(FONT_NAME, 32, "bold"), fg=GREEN, bg=YELLOW
         )
-        complete_work += 1
-        # add the counter to the label again with the increase completed work
-        checkmark_label.config(
-            text=f"{complete_work} x ✓",
-            fg=GREEN,
-            bg=YELLOW,
-            font=(FONT_NAME, 15),
-        )
+        print("Repetitions:", repetitions)
+        mark = ""
+        work_session = repetitions // 2
+        for i in range(work_session):
+            # add the counter to the label again with the increase completed work
+            mark += "✓"
+            checkmark_label.config(
+                text=f"{mark}",
+                fg=GREEN,
+                bg=YELLOW,
+                font=(FONT_NAME, 15),
+            )
 
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
@@ -95,6 +124,8 @@ def countdown(count):
     count : int
         Number of seconds from which you cound down
     """
+    global after_id  # Reference the global variable
+
     # convert seconds to minutes
     minutes, seconds = divmod(count, 60)
     minutes = int(minutes)
@@ -107,7 +138,7 @@ def countdown(count):
     # need to change the time that is in the Canvas
     canvas.itemconfig(text_timer_label, text=f"{minutes}:{seconds}")
     if count > 0:
-        window.after(1000, countdown, count - 1)
+        after_id = window.after(1000, countdown, count - 1)
     else:
         start_countdown()
 
@@ -137,15 +168,12 @@ start_button = tk.Button(text="Start", font=FONT_NAME, command=start_countdown)
 start_button.grid(row=3, column=0)
 
 # create the reset button
-reset_button = tk.Button(text="Reset", font=FONT_NAME)
+reset_button = tk.Button(text="Reset", font=FONT_NAME, command=reset_timer)
 reset_button.grid(row=3, column=3)
 
 # checkmark component
-checkmark_label = tk.Label(text="", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 15))
+checkmark_label = tk.Label(fg=GREEN, bg=YELLOW, font=(FONT_NAME, 15))
 checkmark_label.grid(row=3, column=1)
-
-# wait up to a certain amount of time, then call the function by passing parameter arguments
-# time delay: works in milliseconds (1 s = 1000 ms)
 
 
 # keep the window open
