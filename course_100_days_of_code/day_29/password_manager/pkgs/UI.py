@@ -6,6 +6,7 @@ import tkinter as tk
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from pkgs.constants import PINK, RED, GREEN, YELLOW, WHITE, FONT_NAME
+from pkgs.save_data import Add2CSV
 
 
 class PasswordManagerUI:
@@ -53,6 +54,7 @@ class PasswordManagerUI:
         # Input component for website
         self.website_input_component = tk.Entry(width=51)
         self.website_input_component.grid(row=1, column=1, columnspan=2)
+        self.website_input_component.focus()
 
         # Input component for email/username
         self.email_username_input_component = tk.Entry(width=51)
@@ -67,5 +69,11 @@ class PasswordManagerUI:
         self.generate_passwd_button = tk.Button(text="Generate Password")
         self.generate_passwd_button.grid(row=3, column=2)
 
-        self.add_button = tk.Button(text="Add", width=43)
+        # instantiate the class Add2CSV to save the data once the add button is clicked
+        save_data = Add2CSV(
+            self.website_input_component,
+            self.email_username_input_component,
+            self.password_input_component,
+        )
+        self.add_button = tk.Button(text="Add", width=43, command=save_data.save2csv)
         self.add_button.grid(row=4, column=1, columnspan=2)
