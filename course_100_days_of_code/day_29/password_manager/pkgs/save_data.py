@@ -32,6 +32,12 @@ class Add2CSV:
         else:
             return website, email_username, password
 
+    def clear_entries(self):
+        """Clear the entries to be able to insert new ones"""
+        self.website_input_component.delete(0, tk.END)  # Clear website field
+        self.email_username_input_component.delete(0, tk.END)  # Clear email field
+        self.password_input_component.delete(0, tk.END)  # Clear password field
+
     def save2csv(self):
         """Save the input to the csv"""
 
@@ -42,4 +48,6 @@ class Add2CSV:
 
             # append to csv
             with open("day_29/password_manager/data/passwords.csv", "a") as pass_csv:
-                pass_csv.write(website + "," + email_username + "," + password)
+                pass_csv.write("\n" + website + "," + email_username + "," + password)
+
+        self.clear_entries()
