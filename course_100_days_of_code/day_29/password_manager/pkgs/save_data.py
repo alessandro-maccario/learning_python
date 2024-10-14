@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import messagebox
-from tkinter.messagebox import askyesno
 
 
 class Add2CSV:
@@ -42,8 +41,8 @@ class Add2CSV:
         """Save the input to the csv"""
 
         # ask the user if they are sure that they want to save this data
-        ask_user_confirmation = askyesno(
-            title="confirmation", message="Do you want to save the data?"
+        ask_user_confirmation = messagebox.askyesno(
+            title="Saving confirmation", message="Do you want to save the data?"
         )
         print(ask_user_confirmation)
 
