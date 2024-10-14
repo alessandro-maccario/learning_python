@@ -24,6 +24,15 @@ class PasswordManagerUI:
         self.window.title("Password Manager")
         self.window.config(padx=50, pady=50, bg=WHITE)
 
+        # position the Tkinter window at the center of the screen
+        w = self.window.winfo_reqwidth()
+        h = self.window.winfo_reqheight()
+        ws = self.window.winfo_screenwidth()
+        hs = self.window.winfo_screenheight()
+        x = (ws / 2.5) - (w / 2.5)
+        y = (hs / 4) - (h / 4)
+        self.window.geometry("+%d+%d" % (x, y))
+
     def setup_canvas(self):
         """Initializes the canvas and adds the image."""
         # instantiate a Canvas where the image will be laid out
