@@ -43,7 +43,7 @@ class Add2CSV:
 
         # ask the user if they are sure that they want to save this data
         ask_user_confirmation = askyesno(
-            title="confirmation", message="Are you sure that you want to quit?"
+            title="confirmation", message="Do you want to save the data?"
         )
         print(ask_user_confirmation)
 
