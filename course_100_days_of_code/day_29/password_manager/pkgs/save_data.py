@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+from tkinter.messagebox import askyesno
 
 
 class Add2CSV:
@@ -13,7 +14,6 @@ class Add2CSV:
         self.email_username_input_component = email_username_input_component
         self.password_input_component = password_input_component
 
-    # TODO: create another method to actually save the data to a csv
     def check_input_validity(self) -> tuple[str, str, str]:
         """Check the input validity"""
         website = self.website_input_component.get()
@@ -41,13 +41,21 @@ class Add2CSV:
     def save2csv(self):
         """Save the input to the csv"""
 
-        if (
-            self.check_input_validity()
-        ):  # if something has been inserted in website, email/username and password
+        # ask the user if they are sure that they want to save this data
+        ask_user_confirmation = askyesno(
+            title="confirmation", message="Are you sure that you want to quit?"
+        )
+        print(ask_user_confirmation)
+
+        # if something has been inserted in website, email/username and password AND the confirmation is true
+        if (self.check_input_validity()) and (ask_user_confirmation):
             website, email_username, password = self.check_input_validity()
 
             # append to csv
             with open("day_29/password_manager/data/passwords.csv", "a") as pass_csv:
-                pass_csv.write("\n" + website + "," + email_username + "," + password)
+                pass_csv.write(f"\n{website}, {email_username}, {password}")
 
-        self.clear_entries()
+            self.clear_entries()
+            messagebox.showinfo("Saved", "Saved successfully!")
+        else:
+            pass
