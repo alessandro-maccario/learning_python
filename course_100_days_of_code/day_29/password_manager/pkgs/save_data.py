@@ -19,9 +19,6 @@ class Add2CSV:
         email_username = self.email_username_input_component.get()
         password = self.password_input_component.get()
 
-        # TODO: add a validation checker to see if the entered email contains a @
-        # TODO: check this Stack: https://stackoverflow.com/questions/23718229/tkinter-entry-validation-check-for-a-valid-color-or-portion-of-a-color
-        # TODO: https://stackoverflow.com/questions/4140437/interactively-validating-entry-widget-content-in-tkinter
         if not website:
             messagebox.showerror("Invalid Input", "Please, insert website!")
             return
@@ -42,8 +39,6 @@ class Add2CSV:
 
     def save2csv(self):
         """Save the input to the csv"""
-
-        # BUG: need to move the ask confirmation right after the check_input_validity!
 
         # if something has been inserted in website, email/username and password AND the confirmation is true
         if self.check_input_validity():
