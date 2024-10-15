@@ -19,6 +19,9 @@ class Add2CSV:
         email_username = self.email_username_input_component.get()
         password = self.password_input_component.get()
 
+        # TODO: add a validation checker to see if the entered email contains a @
+        # TODO: check this Stack: https://stackoverflow.com/questions/23718229/tkinter-entry-validation-check-for-a-valid-color-or-portion-of-a-color
+        # TODO: https://stackoverflow.com/questions/4140437/interactively-validating-entry-widget-content-in-tkinter
         if not website:
             messagebox.showerror("Invalid Input", "Please, insert website!")
             return
@@ -40,21 +43,24 @@ class Add2CSV:
     def save2csv(self):
         """Save the input to the csv"""
 
-        # ask the user if they are sure that they want to save this data
-        ask_user_confirmation = messagebox.askyesno(
-            title="Saving confirmation", message="Do you want to save the data?"
-        )
-        print(ask_user_confirmation)
+        # BUG: need to move the ask confirmation right after the check_input_validity!
 
         # if something has been inserted in website, email/username and password AND the confirmation is true
-        if (self.check_input_validity()) and (ask_user_confirmation):
-            website, email_username, password = self.check_input_validity()
+        if self.check_input_validity():
+            # ask the user if they are sure that they want to save this data
+            ask_user_confirmation = messagebox.askyesno(
+                title="Saving confirmation", message="Do you want to save the data?"
+            )
+            if ask_user_confirmation:
+                website, email_username, password = self.check_input_validity()
 
-            # append to csv
-            with open("day_29/password_manager/data/passwords.csv", "a") as pass_csv:
-                pass_csv.write(f"\n{website}, {email_username}, {password}")
+                # append to csv
+                with open(
+                    "day_29/password_manager/data/passwords.csv", "a"
+                ) as pass_csv:
+                    pass_csv.write(f"\n{website}, {email_username}, {password}")
 
-            self.clear_entries()
-            messagebox.showinfo("Saved", "Saved successfully!")
+                self.clear_entries()
+                messagebox.showinfo("Saved", "Saved successfully!")
         else:
             pass
