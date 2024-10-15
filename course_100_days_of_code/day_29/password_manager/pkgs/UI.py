@@ -22,6 +22,8 @@ class PasswordManagerUI:
     def setup_window(self):
         """Initializes the main window settings."""
         self.window = tk.Tk()
+        # self.window.clipboard_clear()
+        # self.window.clipboard_append('i can has clipboardz?')
         self.window.title("Password Manager")
         self.window.config(padx=50, pady=50, bg=WHITE)
 
@@ -78,7 +80,10 @@ class PasswordManagerUI:
         """Create the Generate password button and the Add button"""
 
         # instantiate the password generator class as an attribute to be able to use the output
-        self.passwd_generator = GeneratePassword(self.password_input_component)
+        self.passwd_generator = GeneratePassword(
+            main_window=self.window,
+            password_input_component=self.password_input_component,
+        )
 
         self.generate_passwd_button = tk.Button(
             text="Generate Password", command=self.passwd_generator.fill_password_entry
