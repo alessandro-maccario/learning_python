@@ -7,6 +7,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from pkgs.constants import PINK, RED, GREEN, YELLOW, WHITE, FONT_NAME
 from pkgs.save_data import Add2CSV
+from pkgs.generate_password import GeneratePassword
 
 
 class PasswordManagerUI:
@@ -75,7 +76,13 @@ class PasswordManagerUI:
 
     def setup_buttons(self):
         """Create the Generate password button and the Add button"""
-        self.generate_passwd_button = tk.Button(text="Generate Password")
+
+        # instantiate the password generator class as an attribute to be able to use the output
+        self.passwd_generator = GeneratePassword(self.password_input_component)
+
+        self.generate_passwd_button = tk.Button(
+            text="Generate Password", command=self.passwd_generator.fill_password_entry
+        )
         self.generate_passwd_button.grid(row=3, column=2)
 
         # instantiate the class Add2CSV to save the data once the add button is clicked
