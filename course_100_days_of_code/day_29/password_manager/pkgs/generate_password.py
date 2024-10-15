@@ -42,20 +42,20 @@ class GeneratePassword:
         return pwd
 
     def fill_password_entry(self):
-        """Generate a new password and"""
+        """Generate a new password and place it into the Entry space"""
         # Generate a new password
         self.button_generated_password = self.generate_password()
 
         # Set the new password in the password input component
-        self.password_input_component.delete(0, tk.END)  # Clear any previous text
-        self.password_input_component.insert(
-            0, self.button_generated_password
-        )  # Insert the new password
+        # Clear any previous text
+        self.password_input_component.delete(0, tk.END)
+        # Insert the new password
+        self.password_input_component.insert(0, self.button_generated_password)
 
         # call the clipboard functionality
         self.clip_password_to_clipboard()
 
     def clip_password_to_clipboard(self):
-        # save the generated password to clipboard
+        """Save the generated password to clipboard (NOTE: not the reference to the widget, but the actual password!)"""
         self.main_window.clipboard_clear()
         self.main_window.clipboard_append(f"{self.button_generated_password}")
