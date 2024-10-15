@@ -6,8 +6,11 @@ import string  # https://docs.python.org/3/library/string.html#string.ascii_lowe
 
 
 class GeneratePassword:
-    def __init__(self, password_input_component: str) -> None:
+    def __init__(self, main_window: tk.Tk, password_input_component: tk.Entry) -> None:
         self.password_input_component = password_input_component
+        self.main_window = (
+            main_window  # Reference to the main window for clipboard access
+        )
         self.generate_password()
 
     # --- Password generator function --- #
@@ -41,10 +44,18 @@ class GeneratePassword:
     def fill_password_entry(self):
         """Generate a new password and"""
         # Generate a new password
-        button_generated_password = self.generate_password()
+        self.button_generated_password = self.generate_password()
 
         # Set the new password in the password input component
         self.password_input_component.delete(0, tk.END)  # Clear any previous text
         self.password_input_component.insert(
-            0, button_generated_password
+            0, self.button_generated_password
         )  # Insert the new password
+
+        # call the clipboard functionality
+        self.clip_password_to_clipboard()
+
+    def clip_password_to_clipboard(self):
+        # save the generated password to clipboard
+        self.main_window.clipboard_clear()
+        self.main_window.clipboard_append(f"{self.button_generated_password}")
