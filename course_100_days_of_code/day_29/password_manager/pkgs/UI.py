@@ -96,5 +96,6 @@ class PasswordManagerUI:
             self.email_username_input_component,
             self.password_input_component,
         )
-        self.add_button = tk.Button(text="Add", width=43, command=save_data.save2csv)
+        # self.add_button = tk.Button(text="Add", width=43, command=save_data.save2csv)
+        self.add_button = tk.Button(text="Add", width=43, command=save_data.save2json)
         self.add_button.grid(row=4, column=1, columnspan=2)
