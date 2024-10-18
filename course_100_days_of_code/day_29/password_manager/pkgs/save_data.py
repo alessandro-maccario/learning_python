@@ -66,7 +66,7 @@ class Add2CSV:
         else:
             pass
 
-    def save2json(self):
+    def OLDsave2json(self):
         """Save the input to the json"""
 
         # if something has been inserted in website, email/username and password AND the confirmation is true
@@ -106,7 +106,7 @@ class Add2CSV:
         else:
             pass
 
-    def TEMPsave2json(self):
+    def save2json(self):
         """Save the input to the json"""
 
         # if something has been inserted in website, email/username and password AND the confirmation is true
@@ -130,18 +130,19 @@ class Add2CSV:
                     with open(SAVE_PATH, "r") as feedsjson:
                         # 1. reading existing data. If no file exists, what happens?
                         feeds = json.load(feedsjson)
+                except (ValueError, FileNotFoundError):
+                    # Write the entire updated list back to the file (dump = write)
+                    with open(SAVE_PATH, mode="w") as f:
+                        # 3. Write the file to json (dump, not dumps, to write to a file)
+                        json.dump(dictionary, f, indent=4)
+                else:
+                    # 2. Update the json file with the new data
+                    feeds.update(dictionary)
 
-                except FileNotFoundError:
-                    # if the file does not exist, initialize the feed to be dumped in the json
-                    feeds = {}
-
-                # 2. Update the json file with the new data
-                feeds.update(dictionary)
-
-                # Write the entire updated list back to the file (dump = write)
-                with open(SAVE_PATH, mode="w") as f:
-                    # 3. Write the file to json (dump, not dumps, to write to a file)
-                    json.dump(feeds, f, indent=4)
+                    # Write the entire updated list back to the file (dump = write)
+                    with open(SAVE_PATH, mode="w") as f:
+                        # 3. Write the file to json (dump, not dumps, to write to a file)
+                        json.dump(feeds, f, indent=4)
 
                 self.clear_entries()
                 messagebox.showinfo("Saved", "Saved successfully!")
