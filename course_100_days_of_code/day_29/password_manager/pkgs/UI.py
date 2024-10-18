@@ -8,6 +8,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from pkgs.constants import PINK, RED, GREEN, YELLOW, WHITE, FONT_NAME
 from pkgs.save_data import Add2CSV
 from pkgs.generate_password import GeneratePassword
+from pkgs.find_data import FindData
 
 
 class PasswordManagerUI:
@@ -51,15 +52,15 @@ class PasswordManagerUI:
         """Creates and places labels."""
         # website label
         self.website_label = tk.Label(text="Website", bg=WHITE)
-        self.website_label.grid(row=1, column=0, sticky="w")
+        self.website_label.grid(row=1, column=0, sticky="w", pady=2)
 
         # email/username label
         self.email_username = tk.Label(text="Email/Username", bg=WHITE)
-        self.email_username.grid(row=2, column=0, sticky="w")
+        self.email_username.grid(row=2, column=0, sticky="w", pady=2)
 
         # password label
         self.password = tk.Label(text="Password", bg=WHITE)
-        self.password.grid(row=3, column=0, sticky="w")
+        self.password.grid(row=3, column=0, sticky="w", pady=2)
 
     def setup_input_components(self):
         """Creates and places input components."""
@@ -99,6 +100,11 @@ class PasswordManagerUI:
         self.add_button = tk.Button(text="Add", width=43, command=save_data.save2json)
         self.add_button.grid(row=4, column=1, columnspan=2)
 
-        # search button
-        self.add_button = tk.Button(text="Search", width=15)
-        self.add_button.grid(row=1, column=2)
+        # instantiate the class FindData to search in the json for the requested Website
+        # search_term = self.website_input_component.get()  # Get the website from input
+        search_data = FindData(self.website_input_component)
+
+        self.search_button = tk.Button(
+            text="Search", width=15, command=search_data.find_password
+        )
+        self.search_button.grid(row=1, column=2)
