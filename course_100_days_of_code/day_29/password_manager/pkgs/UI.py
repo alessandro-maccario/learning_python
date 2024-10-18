@@ -64,8 +64,8 @@ class PasswordManagerUI:
     def setup_input_components(self):
         """Creates and places input components."""
         # Input component for website
-        self.website_input_component = tk.Entry(width=51)
-        self.website_input_component.grid(row=1, column=1, columnspan=2)
+        self.website_input_component = tk.Entry(width=32)
+        self.website_input_component.grid(row=1, column=1)
         self.website_input_component.focus()
 
         # Input component for email/username
@@ -96,6 +96,9 @@ class PasswordManagerUI:
             self.email_username_input_component,
             self.password_input_component,
         )
-        # self.add_button = tk.Button(text="Add", width=43, command=save_data.save2csv)
         self.add_button = tk.Button(text="Add", width=43, command=save_data.save2json)
         self.add_button.grid(row=4, column=1, columnspan=2)
+
+        # search button
+        self.add_button = tk.Button(text="Search", width=15)
+        self.add_button.grid(row=1, column=2)
