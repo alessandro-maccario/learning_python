@@ -58,9 +58,7 @@ class Add2CSV:
                 website, email_username, password = self.check_input_validity()
 
                 # append to csv
-                with open(
-                    "day_29/password_manager/data/passwords.csv", "a"
-                ) as pass_csv:
+                with open("day_29/password_manager/data/data.csv", "a") as pass_csv:
                     pass_csv.write(f"\n{website}, {email_username}, {password}")
 
                 self.clear_entries()
@@ -80,29 +78,70 @@ class Add2CSV:
             if ask_user_confirmation:
                 website, email_username, password = self.check_input_validity()
 
-                # TODO: recheck the code to be sure to understand it
                 # Check if the file exists and is not empty: ensures that json.load() is only called if the file has content.
-                """Appending the JSON: Instead of appending directly using mode="a", you should open the file in write mode (mode="w") and overwrite it with the updated JSON. JSON needs to be written as a whole object, not appended line-by-line like in plain text files."""
                 if not os.path.isfile(SAVE_PATH) or os.stat(SAVE_PATH).st_size == 0:
                     feeds = []
-
                 else:
                     with open(SAVE_PATH, "r") as feedsjson:
-                        feeds = json.load(feedsjson)  # Load existing data
+                        # 1. reading existing data
+                        feeds = json.load(feedsjson)
 
                 # Data to be written
                 dictionary = {
-                    "Website": website,
-                    "Email/Username": email_username,
-                    "Password": password,
+                    website: {
+                        "Email/Username": email_username,
+                        "Password": password,
+                    }
                 }
 
                 # Append new entry to the feeds list
                 feeds.append(dictionary)
 
-                # Write the updated list back to the file
+                # Write the entire updated list back to the file (dump = write)
                 with open(SAVE_PATH, mode="w") as f:
                     json.dump(feeds, f, indent=4)  # dump, not dumps, to write to a file
+
+                self.clear_entries()
+                messagebox.showinfo("Saved", "Saved successfully!")
+        else:
+            pass
+
+    def TEMPsave2json(self):
+        """Save the input to the json"""
+
+        # if something has been inserted in website, email/username and password AND the confirmation is true
+        if self.check_input_validity():
+            # ask the user if they are sure that they want to save this data
+            ask_user_confirmation = messagebox.askyesno(
+                title="Saving confirmation", message="Do you want to save the data?"
+            )
+
+            if ask_user_confirmation:
+                website, email_username, password = self.check_input_validity()
+                # Data to be written
+                dictionary = {
+                    website: {
+                        "Email/Username": email_username,
+                        "Password": password,
+                    }
+                }
+
+                try:
+                    with open(SAVE_PATH, "r") as feedsjson:
+                        # 1. reading existing data. If no file exists, what happens?
+                        feeds = json.load(feedsjson)
+
+                except FileNotFoundError:
+                    # if the file does not exist, initialize the feed to be dumped in the json
+                    feeds = {}
+
+                # 2. Update the json file with the new data
+                feeds.update(dictionary)
+
+                # Write the entire updated list back to the file (dump = write)
+                with open(SAVE_PATH, mode="w") as f:
+                    # 3. Write the file to json (dump, not dumps, to write to a file)
+                    json.dump(feeds, f, indent=4)
 
                 self.clear_entries()
                 messagebox.showinfo("Saved", "Saved successfully!")
