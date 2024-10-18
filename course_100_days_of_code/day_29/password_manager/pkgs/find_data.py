@@ -11,4 +11,30 @@ from pkgs.constants import SAVE_PATH
 
 
 class FindData:
-    pass
+    def __init__(self, search_entry: str) -> None:
+        self.search_entry = search_entry
+
+    def find_password(self) -> None:
+        """Search through the JSON to find the right entry"""
+        website = self.search_entry.get()  # string
+        try:
+            with open(SAVE_PATH, "r") as feedsjson:
+                # reading existing data
+                feeds = json.load(feedsjson)
+
+                if website in feeds:
+                    messagebox.showinfo(
+                        f"{website}",
+                        f"Email/Username:\n{feeds[website]["Email/Username"]} \n\nPassword:\n{feeds[website]["Password"]}",
+                    )
+                else:
+                    messagebox.showinfo(
+                        "Error",
+                        "No details for the website found",
+                    )
+        except (ValueError, FileNotFoundError):
+            # add a popup that says "Entry not found!"
+            messagebox.showinfo(
+                "Error",
+                "No Data file found",
+            )
