@@ -36,5 +36,5 @@ class FindData:
             else:
                 messagebox.showinfo(
                     "Error",
-                    f"No details for the {website} found",
+                    f"No details for {website} found",
                 )
