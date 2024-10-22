@@ -30,6 +30,21 @@ files = [
 macos-listener = ["pyobjc-framework-Cocoa"]
 
 [[package]]
+name = "hupper"
+version = "1.12.1"
+description = "Integrated process monitor for developing and reloading daemons."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "hupper-1.12.1-py3-none-any.whl", hash = "sha256:e872b959f09d90be5fb615bd2e62de89a0b57efc037bdf9637fb09cdf8552b19"},
+    {file = "hupper-1.12.1.tar.gz", hash = "sha256:06bf54170ff4ecf4c84ad5f188dee3901173ab449c2608ad05b9bfd6b13e32eb"},
+]
+
+[package.extras]
+docs = ["Sphinx", "pylons-sphinx-themes", "setuptools", "watchdog"]
+testing = ["mock", "pytest", "pytest-cov", "watchdog"]
+
+[[package]]
 name = "packaging"
 version = "24.1"
 description = "Core utilities for Python packages"
@@ -135,4 +150,4 @@ xmp = ["defusedxml"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "262987d186fcaa15e2eb289518f24837a8d45715642b0fe919d99fcaf3c247f9"
+content-hash = "9697243137ae5fdfd94773129e0c2ce4f596e649285c151b4e98f9bab08b66a7"
