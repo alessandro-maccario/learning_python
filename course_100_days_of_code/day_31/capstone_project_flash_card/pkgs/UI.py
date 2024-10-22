@@ -28,7 +28,7 @@ class FlashCardUI:
         """Initializes the main window settings."""
         self.window = tk.Tk()
         self.window.title("Flash Cards")
-        self.window.config(padx=10, pady=25)
+        self.window.config(padx=50, pady=50)
         self.window.configure(background=BACKGROUND)
 
         # position the Tkinter window at the center of the screen
@@ -55,7 +55,7 @@ class FlashCardUI:
             CANVAS_HEIGHT / 2,
             image=self.flashcard_pic,
         )
-        self.canvas.grid(row=0, column=1)
+        self.canvas.grid(row=0, column=0, columnspan=2)
 
     def setup_buttons(self):
         """Create the Accept and Refuse buttons"""
@@ -72,7 +72,7 @@ class FlashCardUI:
             bg_color=BACKGROUND,
             hover_color=BACKGROUND,
         )
-        self.accept_button.grid(row=3, column=2)
+        self.accept_button.grid(row=2, column=0)
 
         # refuse button
         # refuse_button_image = ctk.CTkImage(Image.open(REFUSE_BUTTON_IMAGE))
@@ -86,4 +86,4 @@ class FlashCardUI:
             bg_color=BACKGROUND,
             hover_color=BACKGROUND,
         )
-        self.refuse_button.grid(row=3, column=0)
+        self.refuse_button.grid(row=2, column=1)
