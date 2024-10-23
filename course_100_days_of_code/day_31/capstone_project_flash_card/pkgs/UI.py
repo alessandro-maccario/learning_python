@@ -13,7 +13,10 @@ from pkgs.constants import (
     ACCEPT_BUTTON_IMAGE,
     REFUSE_BUTTON_IMAGE,
     CARD_FRONT,
-    YELLOW,
+    X_GERMAN_WORD_PLACE,
+    Y_GERMAN_WORD_PLACE,
+    X_ENGLISH_WORD_PLACE,
+    Y_ENGLISH_WORD_PLACE,
 )
 
 
@@ -21,6 +24,7 @@ class FlashCardUI:
     def __init__(self) -> None:
         self.setup_window()
         self.setup_canvas()
+        self.setup_labels()
         self.setup_buttons()
         self.window.mainloop()
 
@@ -43,7 +47,7 @@ class FlashCardUI:
     def setup_canvas(self):
         """Initializes the canvas and adds the image."""
         # instantiate a Canvas where the image will be laid out
-        self.canvas = tk.Canvas(
+        self.canvas = ctk.CTkCanvas(
             width=CANVAS_WIDTH,
             height=CANVAS_HEIGHT,
             highlightthickness=0,
@@ -57,13 +61,25 @@ class FlashCardUI:
         )
         self.canvas.grid(row=0, column=0, columnspan=2)
 
+    def setup_labels(self):
+        """Creates and place the translated text on the canvas."""
+        # do not need to use grid, because you are already placing the text by using x and y
+        self.german_word = self.canvas.create_text(
+            CANVAS_WIDTH / 2, CANVAS_HEIGHT / 4, text="COD"
+        )
+        self.english_word = self.canvas.create_text(
+            CANVAS_WIDTH / 2, CANVAS_HEIGHT / 1.5, text="COD"
+        )
+
     def setup_buttons(self):
         """Create the Accept and Refuse buttons"""
-
         # accept button
-        # accept_button_image = ctk.CTkImage(Image.open(ACCEPT_BUTTON_IMAGE))
+        accept_button_image = ctk.CTkImage(
+            light_image=Image.open(ACCEPT_BUTTON_IMAGE),
+            dark_image=Image.open(ACCEPT_BUTTON_IMAGE),
+            size=(80, 80),
+        )
 
-        accept_button_image = ImageTk.PhotoImage(file=ACCEPT_BUTTON_IMAGE)
         self.accept_button = ctk.CTkButton(
             master=self.window,
             image=accept_button_image,
@@ -75,9 +91,12 @@ class FlashCardUI:
         self.accept_button.grid(row=2, column=0)
 
         # refuse button
-        # refuse_button_image = ctk.CTkImage(Image.open(REFUSE_BUTTON_IMAGE))
+        refuse_button_image = ctk.CTkImage(
+            light_image=Image.open(REFUSE_BUTTON_IMAGE),
+            dark_image=Image.open(REFUSE_BUTTON_IMAGE),
+            size=(80, 80),
+        )
 
-        refuse_button_image = ImageTk.PhotoImage(file=REFUSE_BUTTON_IMAGE)
         self.refuse_button = ctk.CTkButton(
             master=self.window,
             image=refuse_button_image,
