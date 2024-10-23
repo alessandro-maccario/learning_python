@@ -65,10 +65,10 @@ class FlashCardUI:
         """Creates and place the translated text on the canvas."""
         # do not need to use grid, because you are already placing the text by using x and y
         self.german_word = self.canvas.create_text(
-            CANVAS_WIDTH / 2, CANVAS_HEIGHT / 4, text="COD"
+            X_GERMAN_WORD_PLACE, Y_GERMAN_WORD_PLACE, text="ist", font=("Arial", 40)
         )
         self.english_word = self.canvas.create_text(
-            CANVAS_WIDTH / 2, CANVAS_HEIGHT / 1.5, text="COD"
+            X_ENGLISH_WORD_PLACE, Y_ENGLISH_WORD_PLACE, text="is", font=("Arial", 60)
         )
 
     def setup_buttons(self):
