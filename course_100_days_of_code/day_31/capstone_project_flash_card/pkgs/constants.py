@@ -16,3 +16,4 @@ X_GERMAN_WORD_PLACE = 200
 Y_GERMAN_WORD_PLACE = 80
 X_ENGLISH_WORD_PLACE = 200
 Y_ENGLISH_WORD_PLACE = 150
+DE_EN_DATA = "day_31/capstone_project_flash_card/data/de_100_words.txt"
