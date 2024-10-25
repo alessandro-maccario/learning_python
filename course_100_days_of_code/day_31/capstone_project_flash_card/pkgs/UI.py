@@ -18,6 +18,7 @@ from pkgs.constants import (
     X_ENGLISH_WORD_PLACE,
     Y_ENGLISH_WORD_PLACE,
 )
+from pkgs.data_reading import GermanEnglishTranslation
 
 
 class FlashCardUI:
@@ -63,12 +64,27 @@ class FlashCardUI:
 
     def setup_labels(self):
         """Creates and place the translated text on the canvas."""
+
+        # delete previous displayed word before generating the new random one
+        self.canvas.delete("tag_english_word")
+        # Instantiate the GermanEnglishTranslation class from where to get the random words
+        german_english_translation = GermanEnglishTranslation()
+        # grab the original and the translated word
+        german_word, english_word = german_english_translation.dict_2_list()
+
         # do not need to use grid, because you are already placing the text by using x and y
         self.german_word = self.canvas.create_text(
-            X_GERMAN_WORD_PLACE, Y_GERMAN_WORD_PLACE, text="ist", font=("Arial", 40)
+            X_GERMAN_WORD_PLACE,
+            Y_GERMAN_WORD_PLACE,
+            text="German",
+            font=("Arial", 20),
         )
         self.english_word = self.canvas.create_text(
-            X_ENGLISH_WORD_PLACE, Y_ENGLISH_WORD_PLACE, text="is", font=("Arial", 60)
+            X_ENGLISH_WORD_PLACE,
+            Y_ENGLISH_WORD_PLACE,
+            text=f"{german_word}",
+            font=("Arial", 50),
+            tag="tag_english_word",  # assign a tag to be used for deletion
         )
 
     def setup_buttons(self):
@@ -87,6 +103,7 @@ class FlashCardUI:
             fg_color="transparent",
             bg_color=BACKGROUND,
             hover_color=BACKGROUND,
+            command=self.setup_labels,
         )
         self.accept_button.grid(row=2, column=0)
 
@@ -104,5 +121,6 @@ class FlashCardUI:
             fg_color="transparent",
             bg_color=BACKGROUND,
             hover_color=BACKGROUND,
+            command=self.setup_labels,
         )
         self.refuse_button.grid(row=2, column=1)
