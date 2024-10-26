@@ -24,16 +24,12 @@ import os
 import sys
 
 # import hupper  # for interactive update of the tkinter window after every changes to the code
-import tkinter as tk
 import hupper  # for interactive update of the tkinter window after every changes to the code
 
 # dynamically adjust the PYTHONPATH
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from pkgs.UI import FlashCardUI
-
-# CONSTANTS
-BACKGROUND_COLOR = "#B1DDC6"
 
 
 def start_reloader():
