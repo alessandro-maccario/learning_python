@@ -13,10 +13,11 @@ from pkgs.constants import (
     ACCEPT_BUTTON_IMAGE,
     REFUSE_BUTTON_IMAGE,
     CARD_FRONT,
-    X_GERMAN_WORD_PLACE,
-    Y_GERMAN_WORD_PLACE,
-    X_ENGLISH_WORD_PLACE,
-    Y_ENGLISH_WORD_PLACE,
+    CARD_BACK,
+    X_TITLE_PLACE,
+    Y_TITLE_PLACE,
+    X_WORD_PLACE,
+    Y_WORD_PLACE,
 )
 from pkgs.data_reading import GermanEnglishTranslation
 
@@ -44,6 +45,7 @@ class FlashCardUI:
         x = (ws / 4) - (w / 4)
         y = (hs / 4) - (h / 4)
         self.window.geometry("+%d+%d" % (x, y))
+        self.flashcard_picture_back = tk.PhotoImage(file=CARD_BACK)
 
     def setup_canvas(self):
         """Initializes the canvas and adds the image."""
@@ -54,41 +56,67 @@ class FlashCardUI:
             highlightthickness=0,
             bg=BACKGROUND,
         )
-        self.flashcard_pic = tk.PhotoImage(file=CARD_FRONT)
+        self.flashcard_picture_front = tk.PhotoImage(file=CARD_FRONT)
         self.canvas.create_image(
             CANVAS_WIDTH / 2,
             CANVAS_HEIGHT / 2,
-            image=self.flashcard_pic,
+            image=self.flashcard_picture_front,
+            tags=(
+                "card_front"
+            ),  # give a tag to be referenced when flipping to the back card
         )
         self.canvas.grid(row=0, column=0, columnspan=2)
 
     def setup_labels(self):
         """Creates and place the translated text on the canvas."""
 
-        # delete previous displayed word before generating the new random one
-        self.canvas.delete("tag_english_word")
+        # delete previous displayed word/title before generating the new random one
+        self.canvas.delete("tag_word")
+        self.canvas.delete("card_title")
         # Instantiate the GermanEnglishTranslation class from where to get the random words
         german_english_translation = GermanEnglishTranslation()
         # grab the original and the translated word
-        german_word, english_word = german_english_translation.dict_2_list()
+        self.german_word, self.english_word = german_english_translation.dict_2_list()
 
         # do not need to use grid, because you are already placing the text by using x and y
-        self.german_word = self.canvas.create_text(
-            X_GERMAN_WORD_PLACE,
-            Y_GERMAN_WORD_PLACE,
+        self.title_word = self.canvas.create_text(
+            X_TITLE_PLACE,
+            Y_TITLE_PLACE,
             text="German",
             font=("Arial", 20),
+            tags=("card_title"),
         )
-        self.english_word = self.canvas.create_text(
-            X_ENGLISH_WORD_PLACE,
-            Y_ENGLISH_WORD_PLACE,
-            text=f"{german_word}",
+        self.translated_word = self.canvas.create_text(
+            X_WORD_PLACE,
+            Y_WORD_PLACE,
+            text=f"{self.german_word}",
             font=("Arial", 50),
-            tag="tag_english_word",  # assign a tag to be used for deletion
+            tag="tag_word",  # assign a tag to be used for deletion
         )
+        self.flip_card()
+        self.canvas.itemconfig(
+            tag_or_id="card_front", image=self.flashcard_picture_front
+        )
+
+    def flip_card(self):
+        """After 3 seconds (3000ms), flip the card and show the translation"""
+        self.waiting_to_flip = self.window.after(3000, func=self.show_back)
+
+    def show_back(self):
+        """Show the back side of the flashcard with the translation."""
+        self.canvas.itemconfig(
+            tag_or_id="card_front", image=self.flashcard_picture_back
+        )
+        self.canvas.itemconfig(tag_or_id="card_title", text="English", fill="white")
+        self.canvas.itemconfig(
+            tag_or_id="tag_word", text=f"{self.english_word}", fill="red"
+        )
+        # need to restart the 3 seconds counter
+        self.window.after_cancel(self.waiting_to_flip)
 
     def setup_buttons(self):
         """Create the Accept and Refuse buttons"""
+
         # accept button
         accept_button_image = ctk.CTkImage(
             light_image=Image.open(ACCEPT_BUTTON_IMAGE),
