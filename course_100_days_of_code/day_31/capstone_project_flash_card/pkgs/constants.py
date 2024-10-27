@@ -17,3 +17,4 @@ Y_TITLE_PLACE = 50
 X_WORD_PLACE = 200
 Y_WORD_PLACE = 150
 DE_EN_DATA = "day_31/capstone_project_flash_card/data/de_100_words.txt"
+WORDS_TO_LEARN = "day_31/capstone_project_flash_card/data/words_to_learn.csv"
