@@ -26,6 +26,9 @@ class FlashCardUI:
     def __init__(self) -> None:
         self.setup_window()
         self.setup_canvas()
+        self.current_word_pair = None  # Initialize the current word pair and create an instance of the GermanEnglishTranslation class to be able to save the current word seen by the user before another random one is then call
+        # Instantiate the GermanEnglishTranslation class from where to get the random words
+        self.german_english_translation = GermanEnglishTranslation()
         self.setup_labels()
         self.setup_buttons()
         self.window.mainloop()
@@ -67,16 +70,25 @@ class FlashCardUI:
         )
         self.canvas.grid(row=0, column=0, columnspan=2)
 
-    def setup_labels(self):
+    def setup_labels(self, save_word=False):
         """Creates and place the translated text on the canvas."""
 
         # delete previous displayed word/title before generating the new random one
         self.canvas.delete("tag_word")
         self.canvas.delete("card_title")
-        # Instantiate the GermanEnglishTranslation class from where to get the random words
-        german_english_translation = GermanEnglishTranslation()
-        # grab the original and the translated word
-        self.german_word, self.english_word = german_english_translation.dict_2_list()
+
+        # Save current word pair to CSV if save_word is True
+        if save_word and self.current_word_pair:
+            self.german_english_translation.words_2_learn(self.current_word_pair)
+
+        # grab a new original and translated word
+        self.german_word, self.english_word = (
+            self.german_english_translation.dict_2_list()
+        )
+        self.current_word_pair = [
+            self.german_word,
+            self.english_word,
+        ]  # Store as current pair
 
         # do not need to use grid, because you are already placing the text by using x and y
         self.title_word = self.canvas.create_text(
@@ -93,6 +105,7 @@ class FlashCardUI:
             font=("Arial", 50),
             tag="tag_word",  # assign a tag to be used for deletion
         )
+
         self.flip_card()
         self.canvas.itemconfig(
             tag_or_id="card_front", image=self.flashcard_picture_front
@@ -104,6 +117,7 @@ class FlashCardUI:
 
     def show_back(self):
         """Show the back side of the flashcard with the translation."""
+
         self.canvas.itemconfig(
             tag_or_id="card_front", image=self.flashcard_picture_back
         )
@@ -131,7 +145,8 @@ class FlashCardUI:
             fg_color="transparent",
             bg_color=BACKGROUND,
             hover_color=BACKGROUND,
-            command=self.setup_labels,
+            # if save_word = True, save the pair of words into the csv
+            command=lambda: self.setup_labels(save_word=True),
         )
         self.accept_button.grid(row=2, column=0)
 
@@ -149,6 +164,7 @@ class FlashCardUI:
             fg_color="transparent",
             bg_color=BACKGROUND,
             hover_color=BACKGROUND,
-            command=self.setup_labels,
+            # once the refuse button is clicked, do not save the data into the csv
+            command=lambda: self.setup_labels(save_word=False),
         )
         self.refuse_button.grid(row=2, column=1)
