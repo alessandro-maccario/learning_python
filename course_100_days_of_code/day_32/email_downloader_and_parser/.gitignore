@@ -1,3 +1,5 @@
 *.pyc
 tokens/clientID.json
 tokens/token.json
+data/test_gmail.json
+data/test_gmail.csv
