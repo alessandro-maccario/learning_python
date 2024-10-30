@@ -19,7 +19,6 @@ def main():
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
-    # TODO: the path should be moved to constants
     if os.path.exists(TOKEN_JSON):
         creds = Credentials.from_authorized_user_file(TOKEN_JSON, SCOPES)
     # If there are no (valid) credentials available, let the user log in.
@@ -37,7 +36,7 @@ def main():
         # Call the Gmail API
         gmail_fetching = EmailFetching()
         gmail_fetching.fetch_emails_with_subject(
-            creds, user_id=USER_ID, subject="LinkedIn", num_results=10
+            creds, user_id=USER_ID, sender="linkedin.com", num_results=3
         )
 
     except HttpError as error:
