@@ -8,3 +8,9 @@ I was more intersted in learning how to fetch, parse and extract information (li
 - Read and fetch the email content
 - Parse the email content and extract links in it
 - Save the content in a JSON file
+
+### References
+
+- https://developers.google.com/gmail/api/quickstart/python
+- https://github.com/abhishekchhibber/Gmail-Api-through-Python
+- https://github.com/abhishekchhibber/Gmail-Api-through-Python/blob/master/gmail_read.py
