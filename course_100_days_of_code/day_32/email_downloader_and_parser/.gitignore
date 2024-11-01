@@ -3,3 +3,5 @@ tokens/clientID.json
 tokens/token.json
 data/test_gmail.json
 data/test_gmail.csv
+data/linkedin_gmail_clean_links_*.json
+data/linkedin_gmail_email.json
