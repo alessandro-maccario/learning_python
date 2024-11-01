@@ -1,17 +1,17 @@
 # --- IMPORT PACKAGES --- #
-import re
 import os
 import sys
 import json
 import base64
 import pandas as pd
+from bs4 import BeautifulSoup
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 # dynamically adjust the PYTHONPATH
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from pkgs.constants import PATH_SAVE_DATA_CSV, PATH_SAVE_DATA_JSON
+from pkgs.constants import PATH_SAVE_DATA_JSON
 
 
 class EmailFetching:
@@ -35,7 +35,6 @@ class EmailFetching:
                     userId=user_id, q=query, labelIds=["INBOX"], maxResults=num_results
                 )
             ).execute()
-            # print("RESULT IS:", results)
 
             messages = results.get("messages", [])
 
@@ -52,14 +51,20 @@ class EmailFetching:
                     .get(userId=user_id, id=message["id"])
                     .execute()
                 )
-                # print("\nMESSAGE IS:\n", msg)
 
                 # Extract the Date header from the email's headers
                 headers = msg["payload"]["headers"]
+                # in which date the message has been received?
                 date_received = next(
                     (header["value"] for header in headers if header["name"] == "Date"),
                     "Date not found",
                 )
+                # who is the sender?
+                received_from = next(
+                    (header["value"] for header in headers if header["name"] == "From"),
+                    "Date not found",
+                )
+                print("SENDER IS:", received_from, "ON", date_received)
 
                 # Extracting the full message content
                 parts = msg.get("payload").get("parts")
@@ -74,42 +79,27 @@ class EmailFetching:
                             data = part["body"].get("data")
                             if data:
                                 decoded_data = base64.urlsafe_b64decode(data).decode(
-                                    "utf-8"
+                                    "latin-1"
                                 )
+
+                                # If it's HTML, optionally parse it to text
+                                if mime_type == "text/html":
+                                    # Convert HTML to readable text using BeautifulSoup
+                                    soup = BeautifulSoup(decoded_data, "html.parser")
+                                    # Extract only the text content
+                                    decoded_data = soup.get_text(separator="\n").strip()
+
                                 email_body += (
-                                    decoded_data + "\n\n"
-                                )  # Append with newline for readability
-                        ################################
-                        # save the data to csv
-                        self.save_to_csv(self.convert_to_dict(sender, email_body))
-                        self.save_to_json(
-                            self.convert_to_dict(
-                                sender, self.clean_message_body(email_body)
-                            )
-                        )
-                        ################################
+                                    decoded_data  # Append with newline for readability
+                                )
                 else:
                     # If no parts, sometimes the body is directly in the payload
                     body_data = msg.get("payload").get("body").get("data")
                     if body_data:
-                        email_body = base64.urlsafe_b64decode(body_data).decode("utf-8")
+                        email_body = base64.urlsafe_b64decode(body_data)
 
-                    ################################
-                    # save the data to csv
-                    self.save_to_csv(self.convert_to_dict(sender, email_body))
-                    self.save_to_json(
-                        self.convert_to_dict(
-                            sender, self.clean_message_body(email_body)
-                        )
-                    )
-                    ################################
-
-                # Print the full email content
-                # print(f"\nFull email content:\n{email_body}")
-
-                # Print the date and a snippet of the message
-                print(f"\nDate received: {date_received}")
-                print(f"Message snippet: {msg['snippet']}\n")
+                # save the data to json
+                self.save_to_json(self.convert_to_dict(sender, email_body))
 
         except HttpError as error:
             print(f"An error occurred: {error}")
@@ -117,24 +107,6 @@ class EmailFetching:
     def convert_to_dict(self, sender, message) -> pd.DataFrame:
         d = {"sender": [sender], "message": [message]}
         return d
-
-    def save_to_csv(self, sender_message: dict) -> pd.DataFrame:
-        # Define file path
-        file_path = PATH_SAVE_DATA_CSV
-
-        # Check if file exists
-        file_exists = os.path.isfile(file_path)
-
-        # Create a DataFrame with the new word to append
-        new_to_append = pd.DataFrame(data=sender_message)
-
-        # If the file doesn't exist, write with header; if it does, append without header
-        if not file_exists:
-            new_to_append.to_csv(
-                file_path, mode="w", header=["sender", "message"], index=False
-            )
-        else:
-            new_to_append.to_csv(file_path, mode="a", header=False, index=False)
 
     def save_to_json(self, sender_message: dict) -> None:
         # Define the file path for the JSON file
@@ -149,18 +121,13 @@ class EmailFetching:
             # Start with an empty list if file doesn't exist
             data = []
 
-        # Clean the message body before saving
-        # sender_message["message"] = self.clean_message_body(sender_message["message"])
         # Append the new data to the existing list
         data.append(sender_message)
 
         # Save the updated data back to the JSON file
         with open(file_path, "w") as file:
-            json.dump(data, file, indent=4)
-
-    def clean_message_body(self, message_body):
-        # Remove newline/carriage return sequences
-        message_body = re.sub(r"\r\n|\n|\r", " ", message_body)
-        # Optionally, replace \u00a9 with an actual © symbol or remove it
-        message_body = message_body.replace("\u00a9", "")
-        return message_body
+            json.dump(
+                data,
+                file,
+                indent=4,
+            )
