@@ -4,33 +4,19 @@ import sys
 # dynamically adjust the PYTHONPATH
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from pkgs.constants import TIMEDELTA_DATE
 from pkgs.data_fetching import DataFetching
-import plotly.graph_objects as go
+from pkgs.plots import PlotlyPlot
 
 
 def main():
-    df = DataFetching()
-    print(df.open_weather_request())
+    data_fetching = DataFetching()
+    df = data_fetching.open_weather_request_forecast()
+    print(df)
+    df.to_csv("day_33/weather_forecast/data/out.csv", index=False)
 
-    # # Data Plotting using graph objects in Plotly
-    # fig = go.Figure(
-    #     [
-    #         go.Scatter(
-    #             x=df.open_weather_request()["time"],
-    #             y=df.open_weather_request()["temperature"],
-    #         )
-    #     ]
-    # )
-
-    # fig.update_layout(
-    #     title=f"Temperature Forecast - Next {TIMEDELTA_DATE} days",
-    #     xaxis_title="Time",
-    #     yaxis_title="Temperature",
-    #     font=dict(family="Courier New, monospace", size=18, color="RebeccaPurple"),
-    # )
-
-    # fig.show()
+    # # plot the forecast up to n days
+    # plotly_plot = PlotlyPlot()
+    # plotly_plot.forecast_n_days(df=df)
 
 
 if __name__ == "__main__":
