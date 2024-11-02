@@ -4,8 +4,13 @@ The project available in the 100 Days of Code is more focused on creating an ISS
 
 I was more interested in learning how to fetch weather forecast data, therefore this application will be focus more on it.
 
+### Acronym
+
+- OSWAPI = Open Source Weather API
+
 ### References
 
 - https://open-meteo.com/
 - https://github.com/open-meteo/open-meteo
 - https://developer.accuweather.com/
+- https://openweathermap.org/current
