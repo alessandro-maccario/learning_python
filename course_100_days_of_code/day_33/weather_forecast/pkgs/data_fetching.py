@@ -9,11 +9,12 @@ from datetime import datetime, timedelta
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from pkgs.constants import LAT_ARN, LONG_ARN, TIMEDELTA_DATE, GEOGRAPHICAL_COORDINATES
+from pkgs.time_conversion import TimeConversion
 
 
 class DataFetching:
     def __init__(self) -> None:
-        pass
+        self.time_converter = TimeConversion()
 
     def open_weather_request(self) -> pd.DataFrame:
         """Request the data to https://open-meteo.com/en/docs.
@@ -125,6 +126,14 @@ class DataFetching:
             name="city",
         )
 
+        # convert sunshine_duration from seconds to minutes and to hours and add it to the dataframe
+        minutes = self.time_converter.seconds2minutes(
+            seconds=oswapi_content_sunshine_duration
+        ).rename("minutes_sunshine_duration")
+        hours = self.time_converter.minutes2hours(minutes=minutes).rename(
+            "hours_sunshine_duration"
+        )
+
         # combine the multiple series into one
         df = pd.concat(
             [
@@ -137,6 +146,8 @@ class DataFetching:
                 oswapi_content_temperature_max,
                 oswapi_content_temperature_min,
                 oswapi_content_sunshine_duration,
+                minutes,
+                hours,
                 oswapi_content_rain_sum,
                 oswapi_content_snowfall_sum,
             ],
