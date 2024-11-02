@@ -223,8 +223,7 @@ class DataFetching:
         # send a request to the weather API
         oswapi_request_historical = requests.get(API_OSWAPI_HISTORICAL, params=params)
         # grab the content of the request in a dict/json format
-        oswapi_content_historical = oswapi_request_historical.json()[0]
+        oswapi_content_historical = oswapi_request_historical.json()
 
-        # NOTE: continue from here. You need create another method
-        # NOTE: for building the dataset for the past, in case it differs a lot!
-        pass
+        # return the dataframe with the requested data from the API
+        return self.build_dataframe_forecast(oswapi_content_historical)
