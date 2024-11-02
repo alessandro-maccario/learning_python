@@ -8,7 +8,14 @@ from datetime import datetime, timedelta
 # dynamically adjust the PYTHONPATH
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from pkgs.constants import LAT_ARN, LONG_ARN, TIMEDELTA_DATE, GEOGRAPHICAL_COORDINATES
+from pkgs.constants import (
+    LAT_ARN,
+    LONG_ARN,
+    TIMEDELTA_DATE_FORECAST,
+    TIMEDELTA_DATE_PAST,
+    GEOGRAPHICAL_COORDINATES,
+    PAST_DAYS_FORECAST,
+)
 from pkgs.time_conversion import TimeConversion
 
 
@@ -24,14 +31,10 @@ class DataFetching:
         pd.DataFrame
             Dataframe containing the requested data from the Weather API about the forecasts.
         """
-        # today_date_formatted, future_date_formatted = (
-        #     self.time_definition(timedelta_date=TIMEDELTA_DATE)[0],
-        #     self.time_definition(timedelta_date=TIMEDELTA_DATE)[1],
-        # )
 
         # API URL request
         # API_OSWAPI = f"https://api.open-meteo.com/v1/forecast?latitude={LAT_ARN}&longitude={LONG_ARN}&hourly=temperature_2m&timezone=Europe%2FBerlin"
-        API_OSWAPI = f"https://api.open-meteo.com/v1/forecast?latitude={LAT_ARN}&longitude={LONG_ARN}&daily=weather_code,sunshine_duration,rain_sum,snowfall_sum&forecast_days={TIMEDELTA_DATE}"
+        API_OSWAPI = f"https://api.open-meteo.com/v1/forecast?latitude={LAT_ARN}&longitude={LONG_ARN}&daily=weather_code,sunshine_duration,rain_sum,snowfall_sum&past_days={PAST_DAYS_FORECAST}&forecast_days={TIMEDELTA_DATE_FORECAST}"
         # define required parameters for the API call
         params = {
             "latitude": LAT_ARN,
@@ -179,8 +182,49 @@ class DataFetching:
             today_date and future_date formatted to be YYY-MM-DD
         """
         today_date = datetime.today()
-        future_date = timedelta(days=timedelta_date)
+        past_date = timedelta(days=timedelta_date)
         today_date_formatted = today_date.strftime("%Y-%m-%d")
-        future_date_formatted = (today_date + future_date).strftime("%Y-%m-%d")
+        past_date_formatted = (today_date - past_date).strftime("%Y-%m-%d")
 
-        return today_date_formatted, future_date_formatted
+        return today_date_formatted, past_date_formatted
+
+    def open_weather_request_historical(self) -> pd.DataFrame:
+        """Request the data to https://open-meteo.com/en/docs/historical-weather-api regarding historical data.
+
+        Returns
+        -------
+        pd.DataFrame
+            Dataframe containing the requested data from the Weather API about the past.
+        """
+        # API URL request
+        API_OSWAPI_HISTORICAL = f"https://archive-api.open-meteo.com/v1/archive?daily=weather_code,temperature_2m_max,temperature_2m_min,temperature_2m_mean,sunshine_duration,rain_sum,snowfall_sum"
+
+        today_date_formatted, past_date_formatted = (
+            self.time_definition(timedelta_date=TIMEDELTA_DATE_PAST)[0],
+            self.time_definition(timedelta_date=TIMEDELTA_DATE_PAST)[1],
+        )
+
+        params = {
+            "latitude": LAT_ARN,
+            "longitude": LONG_ARN,
+            "start_date": past_date_formatted,  # from date
+            "end_date": today_date_formatted,  # to date
+            "daily": [
+                "weather_code",
+                # "temperature_2m_mean",
+                "temperature_2m_max",
+                "temperature_2m_min",
+                "sunshine_duration",
+                "rain_sum",
+                "snowfall_sum",
+            ],
+        }
+
+        # send a request to the weather API
+        oswapi_request_historical = requests.get(API_OSWAPI_HISTORICAL, params=params)
+        # grab the content of the request in a dict/json format
+        oswapi_content_historical = oswapi_request_historical.json()[0]
+
+        # NOTE: continue from here. You need create another method
+        # NOTE: for building the dataset for the past, in case it differs a lot!
+        pass
