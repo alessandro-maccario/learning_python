@@ -17,7 +17,7 @@ class TimeConversion:
         """
         return seconds / 60
 
-    def minutes2hours(self) -> float:
+    def minutes2hours(self, minutes: float) -> float:
         """Convert the minutes to hours
 
         Returns
@@ -25,4 +25,4 @@ class TimeConversion:
         float
             Return the converted minutes to hours
         """
-        return self.seconds2minutes / 60
+        return minutes / 60
