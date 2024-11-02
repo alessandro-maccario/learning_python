@@ -16,13 +16,13 @@ class DataFetching:
     def __init__(self) -> None:
         self.time_converter = TimeConversion()
 
-    def open_weather_request(self) -> pd.DataFrame:
-        """Request the data to https://open-meteo.com/en/docs.
+    def open_weather_request_forecast(self) -> pd.DataFrame:
+        """Request the data to https://open-meteo.com/en/docs regarding future data.
 
         Returns
         -------
         pd.DataFrame
-            Dataframe containing the requested data from the Weather API.
+            Dataframe containing the requested data from the Weather API about the forecasts.
         """
         # today_date_formatted, future_date_formatted = (
         #     self.time_definition(timedelta_date=TIMEDELTA_DATE)[0],
@@ -55,9 +55,9 @@ class DataFetching:
         oswapi_content = oswapi_request.json()[0]
 
         # return the dataframe with the requested data from the API
-        return self.build_dataframe(oswapi_content)
+        return self.build_dataframe_forecast(oswapi_content)
 
-    def build_dataframe(self, data_json: dict) -> pd.DataFrame:
+    def build_dataframe_forecast(self, data_json: dict) -> pd.DataFrame:
         """Grab the elevation, time and temperature from the JSON dict and build a df out of it
 
         Parameters
@@ -158,6 +158,10 @@ class DataFetching:
         df["latitude"] = df["latitude"].fillna(data_json["latitude"])
         df["longitude"] = df["longitude"].fillna(data_json["longitude"])
         df["city"] = df["city"].fillna(city.values[0])
+        # add the average temperature for each row based on max and min
+        df["temperature_average"] = df[
+            ["temperature_2m_min", "temperature_2m_max"]
+        ].mean(axis=1)
 
         return df
 
