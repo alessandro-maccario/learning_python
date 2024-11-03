@@ -6,11 +6,12 @@ authors = ["alessandro-maccario <a.maccario1@campus.unimib.it>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = ">=3.10,<4.0"
 requests = "^2.32.3"
 plotly = "^5.24.1"
 pandas = "^2.2.3"
 openmeteo-requests = "^1.3.0"
+numpy = "^2.1.3"
 
 
 [build-system]
