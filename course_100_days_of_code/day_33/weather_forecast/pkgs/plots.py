@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 # dynamically adjust the PYTHONPATH
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from pkgs.constants import TIMEDELTA_DATE
+from pkgs.constants import TIMEDELTA_DATE_FORECAST
 
 
 class PlotlyPlot:
@@ -33,7 +33,7 @@ class PlotlyPlot:
         )
 
         fig.update_layout(
-            title=f"Temperature Forecast - Next {TIMEDELTA_DATE} days",
+            title=f"Temperature Forecast - Next {TIMEDELTA_DATE_FORECAST} days",
             xaxis_title="Time",
             yaxis_title="Temperature",
             font=dict(family="Courier New, monospace", size=18, color="RebeccaPurple"),
