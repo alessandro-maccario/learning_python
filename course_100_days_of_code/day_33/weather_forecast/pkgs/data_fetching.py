@@ -16,6 +16,8 @@ from pkgs.constants import (
     LONG_KL,
     LAT_VIH,
     LONG_VIH,
+    LAT_FINK,
+    LONG_FINK,
     TIMEDELTA_DATE_FORECAST,
     TIMEDELTA_DATE_PAST,
     GEOGRAPHICAL_COORDINATES,
@@ -39,28 +41,32 @@ class DataFetching:
 
         # API URL request
         # API_OSWAPI = f"https://api.open-meteo.com/v1/forecast?latitude={LAT_ARN}&longitude={LONG_ARN}&hourly=temperature_2m&timezone=Europe%2FBerlin"
-        API_OSWAPI = f"https://api.open-meteo.com/v1/forecast?latitude={LAT_ARN}&longitude={LONG_ARN}&daily=weather_code,sunshine_duration,rain_sum,snowfall_sum&past_days={PAST_DAYS_FORECAST}&forecast_days={TIMEDELTA_DATE_FORECAST}"
+        # API_OSWAPI = f"https://api.open-meteo.com/v1/forecast?daily=weather_code,sunshine_duration,rain_sum,snowfall_sum&past_days={PAST_DAYS_FORECAST}&forecast_days={TIMEDELTA_DATE_FORECAST}&timezone=auto"
+        API_OSWAPI = "https://api.open-meteo.com/v1/forecast"
         # define required parameters for the API call
         params = {
-            "latitude": LAT_ARN,
-            "longitude": LONG_ARN,
-            # "start_date": today_date_formatted,
-            # "end_date": future_date_formatted,
+            "latitude": [LAT_KL],
+            "longitude": [LONG_KL],
             "daily": [
                 "weather_code",
-                # "temperature_2m_mean",
                 "temperature_2m_max",
                 "temperature_2m_min",
                 "sunshine_duration",
                 "rain_sum",
                 "snowfall_sum",
             ],
+            "timezone": "auto",
+            "past_days": 31,
         }
 
         # send a request to the weather API
         oswapi_request = requests.get(API_OSWAPI, params=params)
-        # grab the content of the request in a dict/json format
-        oswapi_content = oswapi_request.json()[0]
+        if len(params["latitude"]) > 1:
+            # grab the content of the request in a dict/json format
+            oswapi_content = oswapi_request.json()[0]
+        else:
+            # grab the content of the request in a dict/json format
+            oswapi_content = [oswapi_request.json()]
 
         # return the dataframe with the requested data from the API
         return self.build_dataframe(oswapi_content)
@@ -247,34 +253,34 @@ class DataFetching:
         API_OSWAPI_HISTORICAL = "https://archive-api.open-meteo.com/v1/archive"
 
         params = {
-            "latitude": [46.5461, 46.6103, 46.6247],
-            "longitude": [13.71, 13.8558, 14.3053],
+            # "latitude": [LAT_VIH, LAT_ARN, LAT_KL, LAT_FINK],
+            # "longitude": [LONG_VIH, LONG_ARN, LONG_KL, LONG_FINK],
+            "latitude": [LAT_KL],
+            "longitude": [LONG_KL],
             "start_date": past_date_formatted,  # from date
             "end_date": today_date_formatted,  # to date
             "daily": [
                 "weather_code",
-                # "temperature_2m_mean",
                 "temperature_2m_max",
                 "temperature_2m_min",
                 "sunshine_duration",
                 "rain_sum",
                 "snowfall_sum",
             ],
-            "timezone": "Europe/Berlin",
+            "timezone": "auto",
         }
 
         # send a request to the weather API
-        oswapi_request_historical = requests.get(API_OSWAPI_HISTORICAL, params=params)
+        oswapi_request = requests.get(API_OSWAPI_HISTORICAL, params=params)
         # print the full URL with all parameters
-        URL = oswapi_request_historical.url
-        # oswapi_request = openmeteo_requests.Client()
-        # oswapi_request_historical = oswapi_request.weather_api(
-        #     url=API_OSWAPI_HISTORICAL, params=params
-        # )
+        # URL = oswapi_request.url
 
-        # grab the content of the request in a dict/json format
-        # test = oswapi_request_historical[0]
-        oswapi_content_historical = oswapi_request_historical.json()
+        if len(params["latitude"]) > 1:
+            # grab the content of the request in a dict/json format
+            oswapi_content_historical = oswapi_request.json()[0]
+        else:
+            # grab the content of the request in a dict/json format
+            oswapi_content_historical = [oswapi_request.json()]
 
         # return the dataframe with the requested data from the API
         return self.build_dataframe(oswapi_content_historical)
