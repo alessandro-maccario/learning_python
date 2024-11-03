@@ -6,15 +6,25 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from pkgs.data_fetching import DataFetching
 from pkgs.plots import PlotlyPlot
-from pkgs.constants import TIMEDELTA_DATE_FORECAST, PAST_DAYS_FORECAST
+from pkgs.constants import (
+    TIMEDELTA_DATE_FORECAST,
+    PAST_DAYS_FORECAST,
+    TIMEDELTA_DATE_PAST,
+)
 
 
 def main():
     data_fetching = DataFetching()
-    df = data_fetching.open_weather_request_forecast()
-    # print(df)
-    df.to_csv(
-        f"day_33/weather_forecast/data/forecast_past_{PAST_DAYS_FORECAST}_future_{TIMEDELTA_DATE_FORECAST}.csv",
+    df_forecast = data_fetching.open_weather_request_forecast()
+    df_historical = data_fetching.open_weather_request_historical()
+
+    # save the data to a csv
+    df_forecast.to_csv(
+        "data/forecast_data.csv",
+        index=False,
+    )
+    df_historical.to_csv(
+        "data/historical_data.csv",
         index=False,
     )
 
