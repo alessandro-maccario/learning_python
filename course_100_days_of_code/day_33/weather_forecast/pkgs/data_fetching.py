@@ -18,10 +18,7 @@ from pkgs.constants import (
     LONG_VIH,
     LAT_FINK,
     LONG_FINK,
-    TIMEDELTA_DATE_FORECAST,
     TIMEDELTA_DATE_PAST,
-    GEOGRAPHICAL_COORDINATES,
-    PAST_DAYS_FORECAST,
 )
 from pkgs.time_conversion import TimeConversion
 
@@ -40,8 +37,6 @@ class DataFetching:
         """
 
         # API URL request
-        # API_OSWAPI = f"https://api.open-meteo.com/v1/forecast?latitude={LAT_ARN}&longitude={LONG_ARN}&hourly=temperature_2m&timezone=Europe%2FBerlin"
-        # API_OSWAPI = f"https://api.open-meteo.com/v1/forecast?daily=weather_code,sunshine_duration,rain_sum,snowfall_sum&past_days={PAST_DAYS_FORECAST}&forecast_days={TIMEDELTA_DATE_FORECAST}&timezone=auto"
         API_OSWAPI = "https://api.open-meteo.com/v1/forecast"
         # define required parameters for the API call
         params = {
@@ -85,11 +80,6 @@ class DataFetching:
             Dataframe that contains the JSON data needed into a dataframe format.
         """
         # grab the data from the JSON dict and construct pd.Series and then the final dataframe
-        # oswapi_content_elevation = pd.Series(data_json["elevation"], name="elevation")
-        # oswapi_content_time = pd.Series(data_json["hourly"]["time"], name="time")
-        # oswapi_content_temperature = pd.Series(
-        #     data_json["hourly"]["temperature_2m"], name="temperature"
-        # )
 
         oswapi_content_latitude = pd.Series(
             [location["latitude"] for location in data_json], name="latitude"
@@ -127,67 +117,27 @@ class DataFetching:
             name="snowfall_sum",
         )
 
-        # create the city columns that holds the city for which you are fetching the data:
-        # Take the latitude, longitude from the dataframe and search the GEOGRAPHICAL_COORDINATES dict to see if we have a key for it
-        lower_bound_lat, lower_bound_long = (
-            round(
-                oswapi_content_latitude.values[0]
-                - oswapi_content_latitude.values[0] * 0.009,
-                4,
-            ),
-            round(
-                oswapi_content_longitude.values[0]
-                - oswapi_content_longitude.values[0] * 0.009,
-                4,
-            ),
-        )
-        upper_bound_lat, upper_bound_long = (
-            round(
-                oswapi_content_latitude.values[0]
-                + oswapi_content_latitude.values[0] * 0.009,
-                4,
-            ),
-            round(
-                oswapi_content_longitude.values[0]
-                + oswapi_content_longitude.values[0] * 0.009
-            ),
-        )
-        # check if the value[0] = lat, value[1] = long that we get from the get request is in between the lower and upper lat/long values
-        city = pd.Series(
-            [
-                key
-                for key, value in GEOGRAPHICAL_COORDINATES.items()
-                if lower_bound_lat <= value[0] <= upper_bound_lat
-                and lower_bound_long <= value[1] <= upper_bound_long
-            ],
-            name="city",
-        )
+        # TODO: to add the city information you can tap into openstreetmap to fetch the city name
+        # TODO: based on the coordinates that the request gives you back
 
         # combine the multiple series into one
         df = pd.concat(
             [
                 oswapi_content_latitude,
                 oswapi_content_longitude,
-                # city,
                 oswapi_content_elevation,
                 oswapi_content_time,
                 oswapi_content_weather_code,
                 oswapi_content_temperature_max,
                 oswapi_content_temperature_min,
                 oswapi_content_sunshine_duration,
-                # minutes,
-                # hours,
                 oswapi_content_rain_sum,
                 oswapi_content_snowfall_sum,
             ],
             axis=1,
         )
-        # # fill the nan in the columns elevation, latitude, longitude with the same contant value
-        # df["elevation"] = df["elevation"].fillna(data_json["elevation"])
-        # df["latitude"] = df["latitude"].fillna(data_json["latitude"])
-        # df["longitude"] = df["longitude"].fillna(data_json["longitude"])
-        # # df["city"] = df["city"].fillna(city.values[0])
 
+        # explode the dataframe so each row gets its own result
         df = df.explode(
             column=[
                 "time",
@@ -253,8 +203,6 @@ class DataFetching:
         API_OSWAPI_HISTORICAL = "https://archive-api.open-meteo.com/v1/archive"
 
         params = {
-            # "latitude": [LAT_VIH, LAT_ARN, LAT_KL, LAT_FINK],
-            # "longitude": [LONG_VIH, LONG_ARN, LONG_KL, LONG_FINK],
             "latitude": [LAT_KL],
             "longitude": [LONG_KL],
             "start_date": past_date_formatted,  # from date
