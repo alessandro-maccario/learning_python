@@ -15,3 +15,4 @@ I was more interested in learning how to fetch weather forecast data, therefore 
 - https://developer.accuweather.com/
 - https://openweathermap.org/current
 - https://gist.github.com/stellasphere/9490c195ed2b53c707087c8c2db4ec0c
+- https://www.npmjs.com/package/@akaguny/open-meteo-wmo-to-emoji?activeTab=code
