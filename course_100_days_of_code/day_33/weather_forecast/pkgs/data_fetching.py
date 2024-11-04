@@ -16,8 +16,6 @@ from pkgs.constants import (
     LONG_KL,
     LAT_VIH,
     LONG_VIH,
-    LAT_FINK,
-    LONG_FINK,
     TIMEDELTA_DATE_PAST,
 )
 from pkgs.time_conversion import TimeConversion
