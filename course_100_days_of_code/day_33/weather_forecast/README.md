@@ -2,7 +2,16 @@
 
 The project available in the 100 Days of Code is more focused on creating an ISS Overhead Notifier Project: based on the latitude and longitude of the ISS (International Space Station), if the position is exactly above where you live, you should receive an email that says "Look at the Ski!".
 
-I was more interested in learning how to fetch weather forecast data, therefore this application will be focus more on it.
+I was more interested in learning how to fetch weather forecast data, therefore this application will be focus on this task.
+In the end, we want to have:
+
+- forecasted data
+- historical data
+- wmo codes (World Meteorological Organization) data for most of the weather conditions
+- emojis related to each wmo code
+- a side-by-side barplot that compares the forecasted data with the historical one and show the corresponding emoji on top.
+
+The main goal here is to understand if the forecasted data is very similar to the historical one.
 
 ### Acronym
 
