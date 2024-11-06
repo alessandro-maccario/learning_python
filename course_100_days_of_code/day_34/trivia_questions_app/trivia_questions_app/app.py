@@ -20,7 +20,9 @@ otapi_content = otapi_request.json()["results"]
 
 # TODO:
 # 1. create a dictionary where the key is the question and the value is the answer
-# TODO: 2. pick one random question at a time and pass it inside the text to be shown in the canvas
+# 2. pick one random question at a time and pass it inside the text to be shown in the canvas
+# TODO: 3. need to check if the answer is correct once the buttons are pressed. If yes,
+# TODO: need to update the score and show it inside the window
 
 # 1. create a dictionary where the key is the question and the value is the answer
 question_dict = {}
