@@ -13,7 +13,7 @@ from pkgs.constants import (
     CANVAS_WIDTH,
     TRUE_BUTTON_IMAGE,
     FALSE_BUTTON_IMAGE,
-    CARD_FRONT,
+    # CARD_FRONT,
     X_WORD_PLACE,
     Y_WORD_PLACE,
 )
@@ -36,8 +36,7 @@ class TriviaQuizUI:
         """Initializes the main window settings."""
         self.window = tk.Tk()
         self.window.title("Trivia Quiz Game")
-        self.window.config(padx=10, pady=0)
-        self.window.configure(background=BACKGROUND)
+        self.window.configure(background=BACKGROUND, padx=20, pady=20)
 
         # position the Tkinter window at the center of the screen
         w = self.window.winfo_reqwidth()
@@ -47,7 +46,7 @@ class TriviaQuizUI:
         x = (ws / 2.5) - (w / 2.5)
         y = (hs / 6) - (h / 6)
         self.window.geometry("+%d+%d" % (x, y))
-        self.flashcard_picture_front = tk.PhotoImage(file=CARD_FRONT)
+        # self.flashcard_picture_front = tk.PhotoImage(file=CARD_FRONT)
 
     def setup_canvas(self):
         """Initializes the canvas and adds the image."""
@@ -56,18 +55,9 @@ class TriviaQuizUI:
             width=CANVAS_WIDTH,
             height=CANVAS_HEIGHT,
             highlightthickness=0,
-            bg=BACKGROUND,
+            bg="white",
         )
-        self.flashcard_picture_front = tk.PhotoImage(file=CARD_FRONT)
-        self.canvas.create_image(
-            CANVAS_WIDTH / 2,
-            CANVAS_HEIGHT / 2,
-            image=self.flashcard_picture_front,
-            tags=(
-                "card_front"
-            ),  # give a tag to be referenced when flipping to the back card
-        )
-        self.canvas.grid(row=0, column=0, columnspan=2)
+        self.canvas.grid(row=1, column=0, padx=25, pady=25, columnspan=2)
 
     def setup_labels(self):
         """Creates and place the translated text on the canvas."""
@@ -120,8 +110,7 @@ class TriviaQuizUI:
                 self.setup_labels(),
             ],
         )
-        self.accept_button.grid(row=1, column=0)
-        # print(self.accept_button.cget("text"))
+        self.accept_button.grid(row=2, column=0)
 
         # FALSE button
         false_button_image = ctk.CTkImage(
@@ -144,7 +133,7 @@ class TriviaQuizUI:
                 self.setup_labels(),
             ],
         )
-        self.refuse_button.grid(row=1, column=1)
+        self.refuse_button.grid(row=2, column=1)
 
     def pick_random_question(self, question_list: dict) -> str:
         """Return a random question picked from the Open Trivia API.
@@ -176,14 +165,14 @@ class TriviaQuizUI:
             )  # Or handle incorrect answer (e.g., show feedback)
 
         # Update the score label on the window
-        self.display_points.configure(text=f"Current score points: {self.score_point}")
+        self.display_points.configure(text=f"Score points: {self.score_point}")
 
     def display_score(self):
         self.display_points = ctk.CTkLabel(
             master=self.window,
-            text=f"Current score points: {self.score_point}",
-            bg_color="white",
+            text=f"Score points: {self.score_point}",
+            bg_color=BACKGROUND,
             text_color="black",
             font=("Courier New", 15, "bold"),
         )
-        self.display_points.grid(row=0, column=0, ipadx=3, pady=40, sticky="n")
+        self.display_points.grid(row=0, column=0, ipadx=3, sticky="n")
