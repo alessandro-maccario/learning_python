@@ -6,6 +6,7 @@ YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
 WHITE = "#FFFFFF"
 BACKGROUND = "#b1ddc6"
+BACKGROUND_DARK = "#003161"
 CANVAS_WIDTH = 350
 CANVAS_HEIGHT = 450
 TRUE_BUTTON_IMAGE = "day_34/trivia_questions_app/attachments/true.png"
