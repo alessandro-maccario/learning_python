@@ -10,7 +10,7 @@ import hupper  # for interactive update of the tkinter window after every change
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from pkgs.UI import TriviaQuizUI
-from pkgs.constants import BASE_API_URL, QUESTION_TEST
+from pkgs.constants import BASE_API_URL
 
 # define the parameter for the query (currently, only True/False)
 params = {"amount": 10, "difficulty": "easy", "type": "boolean"}
@@ -18,11 +18,6 @@ params = {"amount": 10, "difficulty": "easy", "type": "boolean"}
 otapi_request = requests.get(BASE_API_URL, params=params)
 otapi_content = otapi_request.json()["results"]
 
-# TODO:
-# 1. create a dictionary where the key is the question and the value is the answer
-# 2. pick one random question at a time and pass it inside the text to be shown in the canvas
-# TODO: 3. need to check if the answer is correct once the buttons are pressed. If yes,
-# TODO: need to update the score and show it inside the window
 
 # 1. create a dictionary where the key is the question and the value is the answer
 question_dict = {}
@@ -43,11 +38,6 @@ def start_reloader():
 def main():
     # Instantiate the TriviaQuizUI
     trivia_quiz_ui = TriviaQuizUI(question_dict=question_dict)
-
-    is_game_on = True
-    while is_game_on:
-        # stop the game when reached the end of the list of question
-        is_game_on = False
 
 
 if __name__ == "__main__":
