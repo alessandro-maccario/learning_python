@@ -16,7 +16,6 @@ from pkgs.constants import (
     CARD_FRONT,
     X_WORD_PLACE,
     Y_WORD_PLACE,
-    QUESTION_TEST,
 )
 
 
@@ -30,6 +29,7 @@ class TriviaQuizUI:
         self.setup_canvas()
         self.setup_labels()
         self.setup_buttons()
+        self.display_score()
         self.window.mainloop()
 
     def setup_window(self):
@@ -76,21 +76,25 @@ class TriviaQuizUI:
         self.canvas.delete("tag_word")
 
         # Fetch a new question each time
-        new_question, answer = self.pick_random_question(self.questions)
-        self.current_answer = answer  # Save the current answer for validation
+        try:
+            new_question, answer = self.pick_random_question(self.questions)
+            self.current_answer = answer  # Save the current answer for validation
 
-        # once selected the question is selected, remove it from the dictionary
-        removed_value = self.questions.pop(new_question)
+            # once selected the question is selected, remove it from the dictionary
+            removed_value = self.questions.pop(new_question)
 
-        # do not need to use grid, because you are already placing the text by using x and y
-        self.canvas.create_text(
-            X_WORD_PLACE,
-            Y_WORD_PLACE,
-            text=new_question,  # add the new question as test into the canvas
-            font=("Arial", 15),
-            tag="tag_word",  # assign a tag to be used for deletion
-            width=300,
-        )
+            # do not need to use grid, because you are already placing the text by using x and y
+            self.canvas.create_text(
+                X_WORD_PLACE,
+                Y_WORD_PLACE,
+                text=new_question,  # add the new question as test into the canvas
+                font=("Arial", 15),
+                tag="tag_word",  # assign a tag to be used for deletion
+                width=300,
+            )
+        except (ValueError, UnboundLocalError, IndexError):
+            pick_random_question = "No more card left."
+            self.canvas.itemconfig(tag_or_id="tag_word", text=pick_random_question)
 
     def setup_buttons(self):
         """Create the Accept and Refuse buttons"""
@@ -105,12 +109,12 @@ class TriviaQuizUI:
             master=self.window,
             image=true_button_image,
             # define the text to be retrieved when the button is pressed
-            text="TRUE",
+            text="True",
             text_color=BACKGROUND,
             fg_color="transparent",
             bg_color=BACKGROUND,
             hover_color=BACKGROUND,
-            # command=lambda: self.setup_labels(),
+            # use multiple functions in sequence by clicking the button
             command=lambda: [
                 self.validate_answer(self.accept_button),
                 self.setup_labels(),
@@ -129,12 +133,12 @@ class TriviaQuizUI:
             master=self.window,
             image=false_button_image,
             # define the text to be retrieved when the button is pressed
-            text="FALSE",
+            text="False",
             text_color=BACKGROUND,
             fg_color="transparent",
             bg_color=BACKGROUND,
             hover_color=BACKGROUND,
-            # command=lambda: self.setup_labels(),
+            # use multiple functions in sequence by clicking the button
             command=lambda: [
                 self.validate_answer(self.refuse_button),
                 self.setup_labels(),
@@ -155,7 +159,8 @@ class TriviaQuizUI:
         str
             One random question picked from the list.
         """
-        return choice(list(question_list.items()))
+        pick_random_question = choice(list(question_list.items()))
+        return pick_random_question
 
     def validate_answer(self, button):
         """Validates the user's answer by comparing button text with the correct answer."""
@@ -169,3 +174,16 @@ class TriviaQuizUI:
             print(
                 f"Incorrect! Current score is: {self.score_point}"
             )  # Or handle incorrect answer (e.g., show feedback)
+
+        # Update the score label on the window
+        self.display_points.configure(text=f"Current score points: {self.score_point}")
+
+    def display_score(self):
+        self.display_points = ctk.CTkLabel(
+            master=self.window,
+            text=f"Current score points: {self.score_point}",
+            bg_color="white",
+            text_color="black",
+            font=("Courier New", 15, "bold"),
+        )
+        self.display_points.grid(row=0, column=0, ipadx=3, pady=40, sticky="n")
