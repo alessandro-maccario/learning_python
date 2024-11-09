@@ -13,3 +13,5 @@ FALSE_BUTTON_IMAGE = "day_34/trivia_questions_app/attachments/false.png"
 X_WORD_PLACE = 150
 Y_WORD_PLACE = 100
 BASE_API_URL = "https://opentdb.com/api.php"
+# Set to 500ms before the white background of the Canvas appear again
+USER_FEEDBACK_BG_TIME = 500
