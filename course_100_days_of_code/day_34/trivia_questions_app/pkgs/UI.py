@@ -86,6 +86,14 @@ class TriviaQuizUI:
                 tags="tag_word",  # assign a tag to be used for deletion
                 width=300,
             )
+            self.accept_button.configure(
+                state="disabled",
+                text="",
+            )
+            self.refuse_button.configure(
+                state="disabled",
+                text="",
+            )
             self.window.after(5000, func=self.window.destroy)
         else:
             self.canvas.create_text(
