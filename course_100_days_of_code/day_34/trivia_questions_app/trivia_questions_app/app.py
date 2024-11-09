@@ -2,8 +2,6 @@ import os
 import sys
 import html
 import requests
-
-# import hupper  # for interactive update of the tkinter window after every changes to the code
 import hupper  # for interactive update of the tkinter window after every changes to the code
 
 # dynamically adjust the PYTHONPATH
