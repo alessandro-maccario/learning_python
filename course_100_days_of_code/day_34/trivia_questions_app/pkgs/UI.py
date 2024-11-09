@@ -1,7 +1,7 @@
 import os
 import sys
 import tkinter as tk
-from PIL import Image, ImageTk
+from PIL import Image
 import customtkinter as ctk
 from random import choice
 
@@ -13,9 +13,9 @@ from pkgs.constants import (
     CANVAS_WIDTH,
     TRUE_BUTTON_IMAGE,
     FALSE_BUTTON_IMAGE,
-    # CARD_FRONT,
     X_WORD_PLACE,
     Y_WORD_PLACE,
+    USER_FEEDBACK_BG_TIME,
 )
 
 
@@ -155,14 +155,11 @@ class TriviaQuizUI:
         """Validates the user's answer by comparing button text with the correct answer."""
         user_answer = button.cget("text")  # Retrieve text from button
         if user_answer == self.current_answer:
-            self.score_point += 1
-            print(
-                f"Correct! Current score is: {self.score_point}"
-            )  # Or handle correct answer (e.g., update score)
+            self.correct_answer_canvas_bg("correct")
+            self.window.after(USER_FEEDBACK_BG_TIME, func=self.revert_canvas_bg)
         else:
-            print(
-                f"Incorrect! Current score is: {self.score_point}"
-            )  # Or handle incorrect answer (e.g., show feedback)
+            self.correct_answer_canvas_bg("incorrect")
+            self.window.after(USER_FEEDBACK_BG_TIME, func=self.revert_canvas_bg)
 
         # Update the score label on the window
         self.display_points.configure(text=f"Score points: {self.score_point}")
@@ -176,3 +173,34 @@ class TriviaQuizUI:
             font=("Courier New", 15, "bold"),
         )
         self.display_points.grid(row=0, column=0, ipadx=3, sticky="n")
+
+    def correct_answer_canvas_bg(self, answer: str) -> None:
+        """If the answer is correct, then turn the Canvas background to green and score a point for the user.
+        Otherwise, turn the Canvas background to red.
+
+        Parameters
+        ----------
+        answer : str
+            _description_
+        """
+        if answer == "correct":
+            self.score_point += 1
+            print(
+                f"Correct! Current score is: {self.score_point}"
+            )  # Or handle correct answer (e.g., update score)
+            self.canvas.configure(
+                bg="green",
+            )
+        elif answer == "incorrect":
+            print(
+                f"Incorrect! Current score is: {self.score_point}"
+            )  # Or handle incorrect answer (e.g., show feedback)
+            self.canvas.configure(
+                bg="red",
+            )
+
+    def revert_canvas_bg(self) -> None:
+        """Revert the Canvas background color back to white"""
+        self.canvas.configure(
+            bg="white",
+        )
