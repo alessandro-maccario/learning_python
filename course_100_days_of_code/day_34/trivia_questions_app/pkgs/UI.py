@@ -69,22 +69,33 @@ class TriviaQuizUI:
         try:
             new_question, answer = self.pick_random_question(self.questions)
             self.current_answer = answer  # Save the current answer for validation
-
             # once selected the question is selected, remove it from the dictionary
             removed_value = self.questions.pop(new_question)
+        except (ValueError, UnboundLocalError):
+            # the number of questions are ended, therefore close the application.
+            new_question = "No more card left. Thanks for playing with us!"
+            # self.window.after(10000, func=exit())
 
-            # do not need to use grid, because you are already placing the text by using x and y
+        # do not need to use grid, because you are already placing the text by using x and y
+        if new_question == "No more card left. Thanks for playing with us!":
             self.canvas.create_text(
                 X_WORD_PLACE,
                 Y_WORD_PLACE,
                 text=new_question,  # add the new question as test into the canvas
                 font=("Arial", 15),
-                tag="tag_word",  # assign a tag to be used for deletion
+                tags="tag_word",  # assign a tag to be used for deletion
                 width=300,
             )
-        except (ValueError, UnboundLocalError, IndexError):
-            pick_random_question = "No more card left."
-            self.canvas.itemconfig(tag_or_id="tag_word", text=pick_random_question)
+            self.window.after(5000, func=self.window.destroy)
+        else:
+            self.canvas.create_text(
+                X_WORD_PLACE,
+                Y_WORD_PLACE,
+                text=new_question,  # add the new question as test into the canvas
+                font=("Arial", 15),
+                tags="tag_word",  # assign a tag to be used for deletion
+                width=300,
+            )
 
     def setup_buttons(self):
         """Create the Accept and Refuse buttons"""
@@ -148,8 +159,12 @@ class TriviaQuizUI:
         str
             One random question picked from the list.
         """
-        pick_random_question = choice(list(question_list.items()))
-        return pick_random_question
+        try:
+            pick_random_question = choice(list(question_list.items()))
+            return pick_random_question
+        except IndexError:
+            pick_random_question = ()
+            return pick_random_question
 
     def validate_answer(self, button):
         """Validates the user's answer by comparing button text with the correct answer."""
