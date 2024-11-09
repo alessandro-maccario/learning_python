@@ -185,16 +185,12 @@ class TriviaQuizUI:
         """
         if answer == "correct":
             self.score_point += 1
-            print(
-                f"Correct! Current score is: {self.score_point}"
-            )  # Or handle correct answer (e.g., update score)
+            print(f"Correct! Current score is: {self.score_point}")
             self.canvas.configure(
                 bg="green",
             )
         elif answer == "incorrect":
-            print(
-                f"Incorrect! Current score is: {self.score_point}"
-            )  # Or handle incorrect answer (e.g., show feedback)
+            print(f"Incorrect! Current score is: {self.score_point}")
             self.canvas.configure(
                 bg="red",
             )
