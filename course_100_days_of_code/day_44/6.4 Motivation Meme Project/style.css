@@ -15,12 +15,14 @@ h1 {
     font-size: 2rem;
 }
 
-#text-content {
+#main-content {
     width: 50%;
     margin-left: 25%;
+    margin-top: 80px;
     color: white;
     background-color: black;
     text-align: center;
+
 }
 
 img {
