@@ -9,29 +9,22 @@ body {
     background-color: black;
 }
 
-div {
-    width: 50%;
-    margin-left: 25%;
-}
-
-p {
+h1 {
+    text-transform: uppercase;
     color: white;
-    background-color: black;
+    font-size: 2rem;
 }
 
 #text-content {
+    width: 50%;
+    margin-left: 25%;
+    color: white;
+    background-color: black;
     text-align: center;
 }
 
 img {
-    border-width: 5px 5px;
-    border-style: solid;
-    border-color: white;
+    border: 5px solid white;
     width: 100%;
     height: auto;
-}
-
-#h1-text {
-    text-transform: uppercase;
-    color: white;
 }
