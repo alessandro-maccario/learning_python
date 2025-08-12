@@ -1,10 +1,3 @@
-/*Baskerville Google font: https://fonts.google.com/selection/embed*/
-.libre-baskerville-regular {
-    font-family: "Libre Baskerville", serif;
-    font-weight: 400;
-    font-style: normal;
-}
-
 body {
     background-color: black;
 }
@@ -22,6 +15,9 @@ h1 {
     color: white;
     background-color: black;
     text-align: center;
+    font-family: "Libre Baskerville", serif;
+    font-weight: 400;
+    font-style: normal;
 
 }
 
