@@ -67,7 +67,7 @@ list_elements = soup.find_all(
     {"class": SPAN_ANCHOR_TAG_CLASS},
 )
 
-
+# find all artists and related songs
 lists_artists_songs = soup.find_all(
     "li",
     {"class": LIST_ARTISTS_SONGS_CLASS},
@@ -95,10 +95,6 @@ sp = spotipy.Spotify(
     )
 )
 
-# TEST: only one song to be checked against the billboard
-# artists_songs_list = artists_songs_list[5:6]
-
-
 # Collect the URIs
 if __name__ == "__main__":
     # collect the uris
@@ -124,9 +120,6 @@ if __name__ == "__main__":
                 f"The song {song_name} with artist {artist_name} doesn't exist on Spotify. Skipped."
             )
             continue
-
-    # check the uris
-    # print(uris)
 
     #####################################################
     ### CREATE SPOTIFY PRIVATE PLAYLIST BASED ON URIS ###
