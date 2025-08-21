@@ -1,5 +1,5 @@
 [project]
-name = "day-46"
+name = "day-54"
 version = "0.1.0"
 description = ""
 authors = [
@@ -8,17 +8,10 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "beautifulsoup4 (>=4.13.4,<5.0.0)",
-    "requests (>=2.32.4,<3.0.0)",
-    "pandas (>=2.3.1,<3.0.0)",
-    "python-dotenv (>=1.1.1,<2.0.0)",
-    "spotipy (>=2.25.1,<3.0.0)",
-    "tqdm (>=4.67.1,<5.0.0)",
-    "flask (>=3.1.2,<4.0.0)"
 ]
 
 [tool.poetry]
-packages = [{include = "day_46", from = "src"}]
+packages = [{include = "day_54", from = "src"}]
 
 
 [build-system]
