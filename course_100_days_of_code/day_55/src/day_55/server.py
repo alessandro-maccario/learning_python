@@ -30,6 +30,7 @@ def homepage_guess_a_number():
 
 # create a random number each run of the server
 random_number = random.randint(0, 9)
+print(random_number)
 
 
 @app.route("/<guess_user_input>")
