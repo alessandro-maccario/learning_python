@@ -1,0 +1,58 @@
+/* Global page styles */
+body {
+  background-color: rgb(155, 134, 240);
+  /* Background color of the page */
+  font-family: Arial, sans-serif;
+  /* Font family for all text */
+}
+
+/* Paragraph spacing */
+p {
+  margin: 5px 0;
+  /* Vertical spacing for paragraphs */
+}
+
+/* Link styles */
+a {
+  text-decoration: none;
+  /* Remove underline from links */
+}
+
+a:hover {
+  text-decoration: underline;
+  /* Underline links on hover */
+}
+
+/* Main card layout */
+.business-card {
+  /* Box model */
+  width: 300px;
+  /* Fixed width */
+  padding: 20px;
+  /* Padding around content */
+  margin-top: 100px;
+  /* Top margin */
+  margin-left: auto;
+  /* Center horizontally */
+  margin-right: auto;
+
+  /* Layout and appearance */
+  text-align: center;
+  /* Center text */
+  background-color: #FFF5EE;
+  /* Soft background color */
+
+  /* Typography */
+  font-size: 16px;
+}
+
+/* Responsive image */
+.profile-image {
+  max-width: 100%;
+  /* Prevent image from overflowing card */
+}
+
+/* Placeholder for social-media section styling */
+.social-media {
+  /* You can add spacing, colors, or font styles here if desired */
+}
