@@ -44,6 +44,10 @@ a:hover {
 
   /* Typography */
   font-size: 16px;
+
+  /* Add a black line border around the business card */
+  border: 5px solid black;
+  border-radius: 25px;
 }
 
 /* Responsive image */
