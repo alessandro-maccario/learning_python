@@ -23,14 +23,12 @@ def home():
 
 @app.route("/guess/<name>")
 def guess_name(name: str):
-    # first letter of the name must be capitalized
-    capitalized_name = name.capitalize()
     # return the name to be displayed and to be used to guess the gender
     gender_name = requests.get(f"https://api.genderize.io?name={name}").json()["gender"]
     # send the variable to jinja in the html page
     return render_template(
         "guess_name.html",
-        name=capitalized_name,
+        name=name,
         gender_name=gender_name,
         current_year=current_year,
     )
