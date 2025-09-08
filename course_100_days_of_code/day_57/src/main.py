@@ -13,12 +13,12 @@ def home():
     return render_template("index.html", posts=all_posts)
 
 
-@app.route("/post")
-def get_blog():
+@app.route("/post/<int:id>")
+def get_blog(id: int):
     blog_url = "https://api.npoint.io/c790b4d5cab58020d391"
     response = requests.get(blog_url)
     all_posts = response.json()
-    return render_template("post.html", posts=all_posts)
+    return render_template("post.html", posts=all_posts, post_id=id)
 
 
 if __name__ == "__main__":

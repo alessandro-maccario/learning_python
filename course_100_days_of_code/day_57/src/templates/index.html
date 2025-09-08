@@ -24,9 +24,9 @@
                 {% if blog_post["id"] == 1: %}
                 <h1>{{ blog_post["title"] }}</h1>
                 <p class="text">{{ blog_post["subtitle"] }}</p>
+                <a href="{{ url_for('get_blog', id=1) }}">Read</a>
                 {% endif %}
                 {% endfor %}
-                <a href="{{ url_for('get_blog') }}">Read</a>
 
             </div>
         </div>
@@ -39,9 +39,9 @@
                 {% if blog_post["id"] == 2: %}
                 <h1>{{ blog_post["title"] }}</h1>
                 <p class="text">{{ blog_post["subtitle"] }}</p>
+                <a href="{{ url_for('get_blog', id=2) }}">Read</a>
                 {% endif %}
                 {% endfor %}
-                <a href="{{ url_for('get_blog') }}">Read</a>
             </div>
         </div>
     </div>
