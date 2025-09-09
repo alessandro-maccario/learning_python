@@ -5,37 +5,25 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="https://fonts.googleapis.com/css2?family=Raleway" rel="stylesheet">
-    <link rel="stylesheet" href="../static/css/styles.css">
+    <link rel="stylesheet" href="static/css/styles.css">
 </head>
 
 <body>
     <div class="wrapper">
         <div class="top">
             <div class="title">
-                <h1>My Blog</h1>
+                <h1>My Wonderful Blog</h1>
             </div>
         </div>
         <div class="content">
+            <!-- One content section containing many cards -->
+            {% for blog_post in posts %}
             <div class="card">
-                {% for blog_post in posts: %}
-                {% if blog_post["id"] == 1: %}
                 <h1>{{ blog_post["title"] }}</h1>
                 <p class="text">{{ blog_post["subtitle"] }}</p>
-                <a href="{{ url_for('get_blog', id=1) }}">Read</a>
-                {% endif %}
-                {% endfor %}
+                <a href="{{ url_for('get_blog', id=blog_post['id']) }}">Read</a>
             </div>
-        </div>
-        <div class="content">
-            <div class="card">
-                {% for blog_post in posts: %}
-                {% if blog_post["id"] == 2: %}
-                <h1>{{ blog_post["title"] }}</h1>
-                <p class="text">{{ blog_post["subtitle"] }}</p>
-                <a href="{{ url_for('get_blog', id=2) }}">Read</a>
-                {% endif %}
-                {% endfor %}
-            </div>
+            {% endfor %}
         </div>
     </div>
 </body>

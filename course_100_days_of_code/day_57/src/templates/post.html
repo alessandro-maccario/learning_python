@@ -16,8 +16,8 @@
             </div>
         </div>
         <div class="content">
-            {% for blog_post in posts: %}
-            {% if blog_post["id"] == post_id: %}
+            {% for blog_post in posts %}
+            {% if blog_post["id"] == post_id %}
             <div class="card">
                 <h1>{{ blog_post["title"] }}</h1>
                 <p class="text">{{ blog_post["body"] }}</p>
