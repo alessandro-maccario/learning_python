@@ -1,11 +1,14 @@
-"""
-Build a blog website with these features:
-- multi-page website with an interactive navigation bar:
-- dynamically generated blog post pages with full screen titles:
-- Fully mobile responsive with an adaptive navigation bar:
+from flask import Flask
+from flask import render_template
 
-References:
-- https://bootstrapmade.com/
-- https://getbootstrap.com/docs/5.0/examples/
-- https://www.creative-tim.com/bootstrap-themes/free
-"""
+app = Flask(__name__)
+
+
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+
+if __name__ == "__main__":
+    # run the app in debug mode to auto-reload the server
+    app.run(debug=True)
