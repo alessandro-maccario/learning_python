@@ -7,7 +7,23 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    # Import the npoint.io json blog data
+    blog_url = "https://api.npoint.io/12dbc378eab2f22b5542"
+    response = requests.get(blog_url)
+    all_posts = response.json()
+    return render_template("index.html", posts=all_posts)
+
+
+# Route to reach the post based on the ID of the post
+@app.route("/post/<int:id>")
+def get_blog(id: int):
+    blog_url = "https://api.npoint.io/12dbc378eab2f22b5542"
+    response = requests.get(blog_url)
+    all_posts = response.json()
+    return render_template("post.html", posts=all_posts, post_id=id)
+
+
+# missing href links for each post!
 
 
 @app.route("/about")
@@ -18,13 +34,6 @@ def about_page():
 @app.route("/contact")
 def contact_page():
     return render_template("contact.html")
-
-
-# Import the npoint.io json blog data
-blog_posts = requests.get(
-    "https://api.npoint.io/12dbc378eab2f22b5542", auth=("user", "pass")
-)
-print(blog_posts.json())
 
 
 if __name__ == "__main__":
