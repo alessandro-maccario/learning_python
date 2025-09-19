@@ -49,10 +49,10 @@ def contact():
 
         msg = Message(
             "Hello Friend...",
-            sender=email,  # email of the sende
+            sender=email,  # email of the sender
             recipients=["bebinih317@anysilo.com"],  #
         )
-        msg.body = "Hello Flask message sent from Flask-Mail"
+        msg.body = message
         mail.send(msg)
         successful_message_sent = "Message sent!"
     # return f"<h1>Successfully sent your message</h1>"
