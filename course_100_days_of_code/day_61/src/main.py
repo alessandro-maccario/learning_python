@@ -1,7 +1,12 @@
 from flask import Flask, render_template
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, EmailField
-from wtforms.validators import DataRequired, InputRequired
+from wtforms import PasswordField, EmailField, SubmitField
+from wtforms.validators import (
+    DataRequired,
+    InputRequired,
+    Email,
+    Length,
+)
 import os
 from dotenv import load_dotenv
 
@@ -12,8 +17,18 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 
 
 class MyForm(FlaskForm):
-    userEmail = StringField("Email")
-    userPassword = StringField("Password")
+    userEmail = EmailField(
+        label="Email",
+        validators=[
+            DataRequired(),
+            Email(message="The email must contain a @ and a '.'"),
+        ],
+    )  # The validators parameter accepts a List of validator Objects
+    userPassword = PasswordField(
+        label="Password",
+        validators=[DataRequired(), Length(min=8)],
+    )
+    submit = SubmitField(label="Log In")
 
 
 @app.route("/")
@@ -24,6 +39,7 @@ def home():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     form = MyForm()
+    form.validate_on_submit()
     return render_template("login.html", form=form)
 
 
