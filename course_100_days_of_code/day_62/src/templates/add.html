@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 <!--Don't forget your import here-->
+{% from 'bootstrap5/form.html' import render_form %}
 {% block title %}Add A New Cafe{% endblock %}
 
 {% block content %}
@@ -12,14 +13,15 @@
       <!-- This is where your WTForm will go -->
       <form action="/add" method="post">
         {{ form.csrf_token }}
-        <p>{{ form.cafe_name.label }} {{ form.cafe_name() }}</p>
+        {{ render_form(form) }}
+        <!-- <p>{{ form.cafe_name.label }} {{ form.cafe_name() }}</p>
         <p>{{ form.location_url.label }} {{ form.location_url() }}</p>
-        <p>{{ form.opening_time() }} {{ form.opening_time.label }}</p>
+        <p>{{ form.opening_time.label }} {{ form.opening_time() }}</p>
         <p>{{ form.closing_time.label }} {{ form.closing_time() }}</p>
         <p>{{ form.coffee_rating.label }} {{ form.coffee_rating() }}</p>
         <p>{{ form.wifi_rating.label }} {{ form.wifi_rating() }}</p>
         <p>{{ form.power_outlet_rating.label }} {{ form.power_outlet_rating() }}</p>
-        <p><input type="submit" value="Submit"></p>
+        <p><input type="submit" value="Submit"></p> -->
       </form>
 
       <p class="space-above"><a href="{{ url_for('cafes') }}">See all cafes</a></p>
