@@ -12,7 +12,7 @@ Bootstrap5(app)
 
 
 class CafeForm(FlaskForm):
-    cafe = StringField("Cafe name", validators=[DataRequired()])
+    cafe_name = StringField("Cafe name", validators=[DataRequired()])
     location_url = StringField("URL", validators=[DataRequired(), URL()])
     opening_time = StringField("Opening Time", validators=[DataRequired()])
     closing_time = StringField("Closing Time", validators=[DataRequired()])
@@ -53,13 +53,6 @@ class CafeForm(FlaskForm):
         validators=[DataRequired()],
     )
     submit = SubmitField("Submit")
-
-
-# Exercise:
-# add: Location URL, open time, closing time, coffee rating, wifi rating, power outlet rating fields
-# make coffee/wifi/power a select element with choice of 0 to 5.
-# e.g. You could use emojis ☕️/💪/✘/🔌
-# ---------------------------------------------------------------------------
 
 
 # all Flask routes below
