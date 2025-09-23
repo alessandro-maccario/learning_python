@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap5
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField
@@ -61,11 +61,17 @@ def home():
     return render_template("index.html")
 
 
-@app.route("/add")
+@app.route("/add", methods=["GET", "POST"])
 def add_cafe():
     form = CafeForm()
     if form.validate_on_submit():
+        # TODO: 1. grab the form data for each column
+        # TODO: 2. append the new row the already existing csv file
         print("True")
+        print(
+            request.form["cafe_name"]
+        )  # TODO: In this way you can extract for each variable, the correct value inserted by the user in the form. You need to write this to the csv. You can either collect all of this into a list or dict and then dump the list or dict into the csv
+
     # Exercise:
     # Make the form write a new row into cafe-data.csv
     # with   if form.validate_on_submit()
