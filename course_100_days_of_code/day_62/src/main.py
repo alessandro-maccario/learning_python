@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from flask_bootstrap import Bootstrap5
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField
@@ -19,36 +19,36 @@ class CafeForm(FlaskForm):
     coffee_rating = SelectField(
         "Coffee Rating",
         choices=[
-            ("0", "❌"),
-            ("1", "☕"),
-            ("2", "☕☕"),
-            ("3", "☕☕☕"),
-            ("4", "☕☕☕☕"),
-            ("5", "☕☕☕☕☕"),
+            ("❌", "❌"),
+            ("☕", "☕"),
+            ("☕☕", "☕☕"),
+            ("☕☕☕", "☕☕☕"),
+            ("☕☕☕☕", "☕☕☕☕"),
+            ("☕☕☕☕☕", "☕☕☕☕☕"),
         ],
         validators=[DataRequired()],
     )
     wifi_rating = SelectField(
         "Wifi Rating",
         choices=[
-            ("0", "❌"),
-            ("1", "🛜"),
-            ("2", "🛜🛜"),
-            ("3", "🛜🛜🛜"),
-            ("4", "🛜🛜🛜🛜"),
-            ("5", "🛜🛜🛜🛜🛜"),
+            ("❌", "❌"),
+            ("🛜", "🛜"),
+            ("🛜🛜", "🛜🛜"),
+            ("🛜🛜🛜", "🛜🛜🛜"),
+            ("🛜🛜🛜🛜", "🛜🛜🛜🛜"),
+            ("🛜🛜🛜🛜🛜", "🛜🛜🛜🛜🛜"),
         ],
         validators=[DataRequired()],
     )
     power_outlet_rating = SelectField(
         "Power Outlet Rating",
         choices=[
-            ("0", "❌"),
-            ("1", "🔌"),
-            ("2", "🔌🔌"),
-            ("3", "🔌🔌🔌"),
-            ("4", "🔌🔌🔌🔌🔌"),
-            ("5", "🔌🔌🔌🔌🔌🔌"),
+            ("❌", "❌"),
+            ("🔌", "🔌"),
+            ("🔌🔌", "🔌🔌"),
+            ("🔌🔌🔌🔌", "🔌🔌🔌"),
+            ("🔌🔌🔌🔌🔌", "🔌🔌🔌🔌🔌"),
+            ("🔌🔌🔌🔌🔌🔌", "🔌🔌🔌🔌🔌🔌"),
         ],
         validators=[DataRequired()],
     )
@@ -67,14 +67,27 @@ def add_cafe():
     if form.validate_on_submit():
         # TODO: 1. grab the form data for each column
         # TODO: 2. append the new row the already existing csv file
-        print("True")
-        print(
-            request.form["cafe_name"]
-        )  # TODO: In this way you can extract for each variable, the correct value inserted by the user in the form. You need to write this to the csv. You can either collect all of this into a list or dict and then dump the list or dict into the csv
+        with open(
+            "day_62/src/cafe-data.csv", "a", newline="", encoding="utf-8"
+        ) as csv_file:
+            fieldnames = [
+                "cafe_name",
+                "location_url",
+                "opening_time",
+                "closing_time",
+                "coffee_rating",
+                "wifi_rating",
+                "power_outlet_rating",
+            ]
 
-    # Exercise:
-    # Make the form write a new row into cafe-data.csv
-    # with   if form.validate_on_submit()
+            writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+            new_row_cafe = {
+                key: value
+                for key, value in request.form.items()
+                if key not in ["csrf_token", "submit"]
+            }
+            writer.writerow(new_row_cafe)
+        return redirect(url_for("cafes"))
     return render_template("add.html", form=form)
 
 
