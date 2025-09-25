@@ -13,6 +13,22 @@ files = [
 ]
 
 [[package]]
+name = "bootstrap-flask"
+version = "2.5.0"
+description = "Bootstrap 4 & 5 helper for your Flask projects."
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "bootstrap_flask-2.5.0-py3-none-any.whl", hash = "sha256:dd76203fe4d46062bf1e7fd2a25aaccdc54affde9acc282f6aa4da4f4bbf2a5a"},
+    {file = "bootstrap_flask-2.5.0.tar.gz", hash = "sha256:b6e5ea1ce40616fb289c9e85d4beedd43fea2048b4032f4abc83a582db494978"},
+]
+
+[package.dependencies]
+Flask = "*"
+WTForms = "*"
+
+[[package]]
 name = "click"
 version = "8.3.0"
 description = "Composable command line interface toolkit"
@@ -417,4 +433,4 @@ email = ["email-validator"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12"
-content-hash = "0e17c12797c0c312218b7a9711e2416a7b77fb7fc20a125592ba81014b8f0878"
+content-hash = "5eba42942ba1965f367adac4065710cce706930af28007867f15d30beccf185e"
