@@ -25,19 +25,21 @@ db = SQLAlchemy(model_class=Base)
 # Subclass db.Model to create a model class. Define the model to create the table
 class Book(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    title: Mapped[str] = mapped_column(String)
-    author: Mapped[str] = mapped_column(String)
-    rating: Mapped[str] = mapped_column(String)
+    title: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
+    author: Mapped[str] = mapped_column(String(250), nullable=False)
+    rating: Mapped[float] = mapped_column(Float, nullable=False)
 
 
 #################
+# get current file path for project folder and define location for saving the db
+file_path = os.path.abspath(os.getcwd()) + "/day_63/src/instance/"
 
 # create the app
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 Bootstrap5(app)
 # configure the SQLite database, relative to the app instance folder
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///new-books-collection.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{file_path}new-books-collection.db"
 # initialize the app with the extension
 db.init_app(app)
 
@@ -57,8 +59,8 @@ class AddBook(FlaskForm):
 
 @app.route("/")
 def home():
-    books = Book.query.all()
-    print(books)
+    # query the book table and select all the entries ordered by book title
+    books = db.session.execute(db.select(Book).order_by(Book.title)).scalars()
     return render_template("index.html", book_list=books)
 
 
