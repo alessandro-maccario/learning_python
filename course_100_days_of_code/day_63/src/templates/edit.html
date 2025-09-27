@@ -1,0 +1,20 @@
+{% from 'bootstrap5/form.html' import render_form %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Add Book</title>
+</head>
+
+<body>
+  <form action="/add" method="post">
+    {{ form.csrf_token }}
+    {{ render_form(form) }}
+  </form>
+
+  <p class="space-above"><a href="{{ url_for('home') }}">Go to main</a></p>
+</body>
+
+</html>
