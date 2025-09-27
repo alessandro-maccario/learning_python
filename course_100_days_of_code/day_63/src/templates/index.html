@@ -14,7 +14,7 @@
   <ul>
     <!--Add list of books in the list of dictionary-->
     {%- for book in book_list %}
-    <li>{{ book.title }} - {{ book.author }} - {{ book.rating }}</li>
+    <li>{{ book.title }} - {{ book.author }} - {{ book.rating }} - <a href="{{ url_for('') }}">Edit Rating</a></li>
     {% endfor %}
   </ul>
   <a href=" {{url_for('add')}} ">Add New Book</a>
