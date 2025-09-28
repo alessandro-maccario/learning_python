@@ -1,2 +1,3 @@
 *.env
 src/instance/new-books-collection.db
+__pycache__
