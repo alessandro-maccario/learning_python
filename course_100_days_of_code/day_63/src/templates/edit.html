@@ -5,11 +5,11 @@
 
 <head>
   <meta charset="UTF-8" />
-  <title>Add Book</title>
+  <title>Add a new rating</title>
 </head>
 
 <body>
-  <form action="/add" method="post">
+  <form action="{{ url_for('edit', book_id=book_id) }}" method="post">
     {{ form.csrf_token }}
     {{ render_form(form) }}
   </form>
