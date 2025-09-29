@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Float, Text
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, IntegerField
+from wtforms import StringField, SubmitField, IntegerField, FloatField
 from wtforms.validators import DataRequired
 import requests
 import os
@@ -71,7 +71,7 @@ class AddMovie(FlaskForm):
     title = StringField("Movie Name", validators=[DataRequired()])
     year = IntegerField("Year", validators=[DataRequired()])
     description = StringField("Description", validators=[DataRequired()])
-    rating = IntegerField("Rating", validators=[DataRequired()])
+    rating = FloatField("Rating", validators=[DataRequired()])
     ranking = IntegerField("Ranking")
     review = StringField("Review")
     img_url = StringField("Image URL")
