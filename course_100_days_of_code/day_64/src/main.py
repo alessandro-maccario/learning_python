@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-from sqlalchemy import Integer, String, Float, Text
+from sqlalchemy import Integer, String, Float, Text, desc
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField, FloatField
 from wtforms.validators import DataRequired
@@ -79,12 +79,17 @@ class AddMovie(FlaskForm):
     submit = SubmitField("Add a New Movie")
 
 
+class EditRating(FlaskForm):
+    edit_rating = StringField("New Rating", validators=[DataRequired()])
+    submit = SubmitField("Edit Rating")
+
+
 ############
 # ROUTES
 @app.route("/")
 def home():
     # query the book table and select all the entries ordered by book title
-    movies = db.session.execute(db.select(Movie).order_by(Movie.rating)).scalars()
+    movies = db.session.execute(db.select(Movie).order_by(desc(Movie.rating))).scalars()
     return render_template("index.html", movie_list=list(movies))
 
 
@@ -108,6 +113,37 @@ def add():
 
         return redirect(url_for("home"))
     return render_template("add.html", form=form)
+
+
+# Endpoint for editing a record
+@app.route("/edit/<int:movie_id>", methods=["GET", "POST"])
+def edit(movie_id):
+    form = EditRating()
+    if form.validate_on_submit():
+        # fetch the correct book id to be edited
+        movie_to_update = db.session.execute(
+            db.select(Movie).where(Movie.id == movie_id)
+        ).scalar_one()
+        # add the new rating to the same book to update
+        movie_to_update.rating = request.form["edit_rating"]
+        # commit to update the previous rating
+        db.session.commit()
+
+        return redirect(url_for("home"))
+    return render_template("edit.html", form=form, movie_id=movie_id)
+
+
+# Endpoint for deleting a record
+@app.route("/delete/<int:movie_id>", methods=["GET", "DELETE"])
+def delete(movie_id):
+    # search for the book to remove from the db
+    movie_to_delete = db.session.execute(
+        db.select(Movie).where(Movie.id == movie_id)
+    ).scalar()
+    db.session.delete(movie_to_delete)
+    # commit to update the previous rating
+    db.session.commit()
+    return redirect(url_for("home"))
 
 
 if __name__ == "__main__":
