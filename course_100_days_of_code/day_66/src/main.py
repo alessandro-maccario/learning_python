@@ -187,7 +187,8 @@ def delete_cafe(cafe_id: int):
         )
     else:
         # If found, delete the cafe and commit the change
-        # db.session.commit()
+        db.session.delete(get_cafe_shop)
+        db.session.commit()
         return jsonify(response={"success": "Record successfully deleted."}), 200
 
 
