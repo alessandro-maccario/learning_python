@@ -30,7 +30,7 @@ from wtforms import (
     URLField,
     DateField,
 )
-from wtforms.validators import DataRequired, URL
+from wtforms.validators import DataRequired, URL, Email
 import os
 from dotenv import load_dotenv
 
@@ -74,8 +74,11 @@ class NewUser(FlaskForm):
             DataRequired(),
         ],
     )
-    email = StringField(label="Email", validators=[DataRequired()])
-    password = StringField(label="Password", validators=[DataRequired()])
+    email = EmailField(
+        label="Email",
+        validators=[DataRequired(), Email()],
+    )
+    password = PasswordField(label="Password", validators=[DataRequired()])
     submit = SubmitField(label="Sign me up!")
 
 
