@@ -38,6 +38,7 @@ load_dotenv()  # take environment variables
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+Bootstrap5(app)
 
 
 # CREATE DATABASE
