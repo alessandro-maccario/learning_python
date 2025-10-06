@@ -13,7 +13,7 @@ from wtforms import (
     URLField,
     DateField,
 )
-from wtforms.validators import DataRequired, URL
+from wtforms.validators import DataRequired, URL,
 from flask_ckeditor import CKEditor, CKEditorField
 from flask_ckeditor.utils import cleanify
 from datetime import date
