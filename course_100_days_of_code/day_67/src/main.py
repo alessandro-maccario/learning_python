@@ -11,6 +11,7 @@ from wtforms import (
     EmailField,
     SubmitField,
     URLField,
+    DateField,
 )
 from wtforms.validators import DataRequired, URL
 from flask_ckeditor import CKEditor, CKEditorField
@@ -89,26 +90,74 @@ def show_post(post_id):
     return render_template("post.html", post=requested_post)
 
 
-# TODO: add_new_post() to create a new blog post
+# add_new_post() to create a new blog post
 @app.route("/new-post", methods=["GET", "POST"])
 def add_post():
     form = NewPost()
     if request.method == "POST" and form.validate_on_submit():
-        title = request.form.get("title")
-        subtitle = request.form.get("subtitle")
-        author_name = request.form.get("author_name")
-        background_image_url = request.form.get("background_image_url")
-        body_data = cleanify(
-            request.form.get("ckeditor")
-        )  # Sanitize the new body element before saving it to the db
-        return render_template("index.html")
+        # save the post into the database
+        new_post = BlogPost(
+            title=form.title.data,
+            subtitle=form.subtitle.data,
+            date=str(date.today().strftime("%B %d, %Y")),
+            author=form.author_name.data,
+            img_url=form.background_image_url.data,
+            # Sanitize the new body element before saving it to the db
+            body=cleanify(form.body.data),
+        )
+        db.session.add(new_post)
+        db.session.commit()
+        return redirect(url_for("get_all_posts"))
 
     return render_template("make-post.html", form=form)
 
 
 # TODO: edit_post() to change an existing blog post
+@app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
+def edit_post(post_id):
+    """
+    Editing a post.
+    NOTE: HTML forms (WTForms included) do not accept PUT, PATCH or DELETE methods.
+    So while this would normally be a PUT request (replacing existing data),
+    because the request is coming from a HTML form,
+    you should accept the edited post as a POST request.
 
-# TODO: delete_post() to remove a blog post from the database
+    Parameters
+    ----------
+        post_id: id of the post to be edited
+
+    """
+    requested_post = db.session.get(BlogPost, post_id)
+    form = NewPost(obj=requested_post)
+    if request.method == "GET":
+        # based on the id of the post in the database, call the data already available for ethe specific post
+        return render_template("make-post.html", form=form, post_id=requested_post)
+    # TODO: need to save the new object!
+    else:
+        # if the method is post, the user will modify the current fields with new data
+        requested_post.title = form.title.data
+        requested_post.subtitle = form.subtitle.data
+        requested_post.author = form.author_name.data
+        requested_post.img_url = form.background_image_url.data
+        # Sanitize the new body element before saving it to the db
+        requested_post.body = cleanify(form.body.data)
+
+        # save the post into the database
+        db.session.add(requested_post)
+        db.session.commit()
+        return redirect(url_for("get_all_posts"))
+
+
+# delete_post() to remove a blog post from the database
+@app.route("/delete/<int:post_id>", methods=["GET", "DELETE"])
+def delete_post(post_id):
+    # collect the post to be removed
+    removed_post = db.session.get(BlogPost, post_id)
+
+    # save the post into the database
+    db.session.delete(removed_post)
+    db.session.commit()
+    return redirect(url_for("get_all_posts"))
 
 
 # Below is the code from previous lessons. No changes needed.
