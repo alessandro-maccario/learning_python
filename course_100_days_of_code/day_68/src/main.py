@@ -8,6 +8,7 @@ from flask import (
     send_from_directory,
 )
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import safe_join
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap5
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
@@ -36,7 +37,7 @@ from dotenv import load_dotenv
 
 load_dotenv()  # take environment variables
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static")
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 Bootstrap5(app)
 
@@ -48,8 +49,10 @@ class Base(DeclarativeBase):
 
 # get current file path for project folder and define location for saving the db
 file_path = os.path.abspath(os.getcwd()) + "/day_68/src/instance/"
+static_filepath = os.path.abspath(os.getcwd()) + "/day_68/src/static/files/"
 # configure the SQLite database, relative to the app instance folder
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{file_path}users.db"
+app.config["FILE_2_DOWNLOAD"] = f"{static_filepath}"
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
@@ -91,15 +94,15 @@ def home():
 def register():
     form = NewUser()
     if request.method == "POST" and form.validate_on_submit():
-        # save the post into the database
+        # save the new user into the database
         new_user = User(
             name=form.name.data,
             email=form.email.data,
             password=form.password.data,
         )
-        # db.session.add(new_user)
-        # db.session.commit()
-        return redirect(url_for("home"))
+        db.session.add(new_user)
+        db.session.commit()
+        return render_template("secrets.html", name=form.name.data)
     return render_template("register.html", form=form)
 
 
@@ -118,9 +121,9 @@ def logout():
     pass
 
 
-@app.route("/download")
-def download():
-    pass
+@app.route("/download/<path:name>")
+def download(name):
+    return send_from_directory(app.static_folder, name, as_attachment=True)
 
 
 if __name__ == "__main__":
