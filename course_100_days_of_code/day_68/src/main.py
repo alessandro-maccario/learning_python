@@ -40,6 +40,9 @@ load_dotenv()  # take environment variables
 app = Flask(__name__, static_folder="static")
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 Bootstrap5(app)
+# Instantiate the Login Manager: https://flask-login.readthedocs.io/en/latest/
+# login_manager = LoginManager()
+# login_manager.init_app(app)
 
 
 # CREATE DATABASE
@@ -85,6 +88,16 @@ class NewUser(FlaskForm):
     submit = SubmitField(label="Sign me up!")
 
 
+# Define the login form
+class NewLogin(FlaskForm):
+    email = EmailField(
+        label="Email",
+        validators=[DataRequired(), Email()],
+    )
+    password = PasswordField(label="Password", validators=[DataRequired()])
+    submit = SubmitField(label="Let me in.")
+
+
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -98,17 +111,53 @@ def register():
         new_user = User(
             name=form.name.data,
             email=form.email.data,
-            password=form.password.data,
+            # generate hashed and salted password using Werkzeug
+            password=generate_password_hash(
+                form.password.data, method="pbkdf2", salt_length=8
+            ),
         )
-        db.session.add(new_user)
-        db.session.commit()
-        return render_template("secrets.html", name=form.name.data)
+
+        # check if the email already exists in the database. If it does, then redirect to sign up/register page for the user to try again
+        user = User.query.filter_by(
+            email=new_user.email
+        ).first()  # if this returns a user, then the email already exists in database
+
+        if user:  # if a user is found, we want to redirect back to register/signup page so user can try again
+            # add a custom message to let the user know that that email address already exists
+            flash("Email address already exists, login to enter your account")
+            return redirect(url_for("login"))
+        else:
+            db.session.add(new_user)
+            db.session.commit()
+            return render_template("secrets.html", name=form.name.data)
     return render_template("register.html", form=form)
 
 
-@app.route("/login")
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    return render_template("login.html")
+    form = NewLogin()
+    form_new_user = NewUser()
+
+    if request.method == "POST" and form.validate_on_submit():
+        # get email value to check if the user already exists in the database
+        email = form.email.data
+        # check if the email already exists in the database
+        user = User.query.filter_by(
+            email=email
+        ).first()  # if this returns a user, then the email already exists in database
+
+        if user:
+            # check if the password is correct
+            password = check_password_hash(user.password, form.password.data)
+            if password:  # if true = correct password match
+                return render_template("secrets.html", name=user.name)
+            else:
+                flash("Wrong password, try again!")
+                return render_template("login.html", form=form)
+        else:
+            flash("User not found, please register to use our services!")
+            return render_template("register.html", form=form_new_user)
+    return render_template("login.html", form=form)
 
 
 @app.route("/secrets")
