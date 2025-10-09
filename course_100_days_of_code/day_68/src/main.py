@@ -40,9 +40,13 @@ load_dotenv()  # take environment variables
 app = Flask(__name__, static_folder="static")
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 Bootstrap5(app)
+
+
+# --- Flask-Login setup --- #
 # Instantiate the Login Manager: https://flask-login.readthedocs.io/en/latest/
-# login_manager = LoginManager()
-# login_manager.init_app(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
 
 
 # CREATE DATABASE
@@ -61,7 +65,7 @@ db.init_app(app)
 
 
 # CREATE TABLE IN DB
-class User(db.Model):
+class User(UserMixin, db.Model):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     email: Mapped[str] = mapped_column(String(100), unique=True)
     password: Mapped[str] = mapped_column(String(100))
@@ -98,6 +102,12 @@ class NewLogin(FlaskForm):
     submit = SubmitField(label="Let me in.")
 
 
+# This gives you the current_user information
+@login_manager.user_loader
+def load_user(user_id):
+    return db.session.get(User, user_id)
+
+
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -118,9 +128,10 @@ def register():
         )
 
         # check if the email already exists in the database. If it does, then redirect to sign up/register page for the user to try again
-        user = User.query.filter_by(
-            email=new_user.email
-        ).first()  # if this returns a user, then the email already exists in database
+        user = db.session.execute(
+            db.select(User).where(User.email == new_user.email)
+        ).scalar_one()
+        # if this returns a user, then the email already exists in database
 
         if user:  # if a user is found, we want to redirect back to register/signup page so user can try again
             # add a custom message to let the user know that that email address already exists
@@ -142,35 +153,42 @@ def login():
         # get email value to check if the user already exists in the database
         email = form.email.data
         # check if the email already exists in the database
-        user = User.query.filter_by(
-            email=email
-        ).first()  # if this returns a user, then the email already exists in database
+        user = (
+            db.session.execute(db.select(User).where(User.email == email)).scalar_one()
+        )  # if this returns a user, then the email already exists in database
 
-        if user:
-            # check if the password is correct
-            password = check_password_hash(user.password, form.password.data)
-            if password:  # if true = correct password match
-                return render_template("secrets.html", name=user.name)
-            else:
-                flash("Wrong password, try again!")
-                return render_template("login.html", form=form)
-        else:
+        if not user:
             flash("User not found, please register to use our services!")
             return render_template("register.html", form=form_new_user)
+
+        if check_password_hash(user.password, form.password.data):
+            # then log the user in!
+            login_user(user)
+            flash("Logged in successfully!", "success")
+            return redirect(url_for("secrets"))
+        else:
+            flash("Wrong password, try again!")
+            return redirect(url_for("login"))
+
     return render_template("login.html", form=form)
 
 
 @app.route("/secrets")
+@login_required
 def secrets():
-    return render_template("secrets.html")
+    return render_template("secrets.html", name=current_user.name)
 
 
 @app.route("/logout")
+@login_required
 def logout():
-    pass
+    logout_user()
+    flash("You've been logged out.")
+    return redirect(url_for("login"))
 
 
 @app.route("/download/<path:name>")
+@login_required
 def download(name):
     return send_from_directory(app.static_folder, name, as_attachment=True)
 

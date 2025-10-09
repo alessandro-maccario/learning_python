@@ -195,3 +195,8 @@ input:focus {
 label {
 	color: white;
 }
+
+.alert.success {
+	color: green;
+	font-size: 30px;
+}
