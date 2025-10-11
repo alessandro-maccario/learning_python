@@ -159,7 +159,7 @@ def login():
 
         if not user:
             flash("User not found, please register to use our services!")
-            return render_template("register.html", form=form_new_user)
+            return redirect(url_for("register"))
 
         if check_password_hash(user.password, form.password.data):
             # then log the user in!
