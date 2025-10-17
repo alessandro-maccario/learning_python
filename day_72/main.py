@@ -110,3 +110,13 @@ print(
         ["Undergraduate Major", "Mid-Career Median Salary"]
     ].head()
 )
+
+# 16. How many Majors are available in each category?
+print(
+    "How many Majors are available in each category?",
+    data_salaries.groupby("Group").count(),
+)
+
+# 17. Groupby Group and then calculate the mean of each column
+grouped = data_salaries.groupby("Group").count()
+print(grouped.mean())
