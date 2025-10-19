@@ -34,6 +34,20 @@ print(
 )
 
 
-# 7. Show a line chart for the popularity of a programming
-plt.plot(pivoted_df.index, pivoted_df.python)
+# 7. Show a line chart for the popularity of a programming, by taking the rolling mean of a fixed window
+# The window is number of observations that are averaged
+roll_df = pivoted_df.rolling(window=6).mean()
+
+# defin the figure boundaries
+plt.figure(figsize=(16, 10))
+for column in roll_df.columns:
+    plt.plot(roll_df.index, roll_df[column], linewidth=3, label=roll_df[column].name)
+
+# define x and y-axis
+plt.xlabel("Date", fontsize=14)
+plt.ylabel("Number of Posts", fontsize=14)
+plt.legend(fontsize=16)
+# set lower and upper limit for the plot
+plt.ylim(0, 35000)
+# display the plot
 plt.show()
