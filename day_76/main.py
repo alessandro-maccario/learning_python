@@ -1,25 +1,73 @@
 import pandas as pd
+import plotly.express as px
 
 # 1. How many rows and columns does df_apps have?
 df_app = pd.read_csv("data/apps.csv")
-print("Number of rows and columns:\n", df_app.shape, "\n")
+# print("Number of rows and columns:\n", df_app.shape, "\n")
 
 # 2. What are the column names?
-print("Column names:\n", df_app.columns, "\n")
+# print("Column names:\n", df_app.columns, "\n")
 
 # 3. What does the data look like? Look at a random sample of 5 different rows with .sample()
-print("Sample Data:\n", df_app.sample(5), "\n")
+# print("Sample Data:\n", df_app.sample(5), "\n")
 
 # 4. Remove the columns called Last_Updated and Android_Version from the DataFrame. Columns not used.
 df_app = df_app.drop(columns=["Last_Updated", "Android_Ver"])
 
 # 5. How many rows have a NaN value in the Rating column? Create df_apps_clean that does not include these rows.
 df_apps_clean = df_app.dropna(subset=["Rating"])
-print("Missing values in ratings:\n", df_app.shape[0] - df_apps_clean.shape[0])
+# print("Missing values in ratings:\n", df_app.shape[0] - df_apps_clean.shape[0])
 
 # 6. Are there any duplicates in data? Check for duplicates using the .duplicated() function
-print("\nNumber of duplicates:\n", df_apps_clean.duplicated().sum())
+# print("\nNumber of duplicates:\n", df_apps_clean.duplicated().sum())
 
 # 7. Use .drop_duplicates() to remove any duplicates from df_apps_clean
 df_apps_clean = df_apps_clean.drop_duplicates(subset=["App", "Type", "Price"])
-print(df_apps_clean.shape[0])
+# print(df_apps_clean.shape[0])
+
+# 8. Identify which apps are the highest rated. What problem might you encounter if you rely exclusively on ratings alone to determine the quality of an app?
+# print(df_apps_clean.sort_values(by=["Rating"], ascending=False))
+
+# 9. What's the size in megabytes (MB) of the largest Android apps in the Google Play Store. Based on the data, do you think there could be a limit in place or can developers make apps as large as they please?
+# print(df_apps_clean.sort_values(by=["Size_MBs"], ascending=False))
+
+# 10. Which apps have the highest number of reviews? Are there any paid apps among the top 50?
+# print(df_apps_clean.sort_values(by=["Reviews"], ascending=False).head(50))
+
+
+# 11. Count the number of occurrences of each rating with
+ratings = df_apps_clean.Content_Rating.value_counts()
+
+# 12. Create a pie chart plot with plotly
+# fig = px.pie(
+#     labels=ratings.index,
+#     values=ratings.values,
+#     title="Content Rating",
+#     names=ratings.index,
+#     hole=0.6,
+# )
+# fig.update_traces(textposition="inside", textfont_size=15, textinfo="percent")
+
+# fig.show()
+
+
+# 13. How many apps had over 1 billion (that's right - BILLION) installations?
+df_apps_clean["Installs"] = pd.to_numeric(
+    df_apps_clean["Installs"].astype(str).str.replace(",", "")
+)
+# print(df_apps_clean[df_apps_clean["Installs"] >= 1000000000])
+# 14. How many apps just had a single install?
+# print(df_apps_clean[["App", "Installs"]].groupby("Installs").count())
+
+# 15. Convert the price column to numeric data. Then investigate the top 20 most expensive apps in the dataset.
+df_apps_clean["Price"] = pd.to_numeric(
+    df_apps_clean["Price"].astype(str).str.replace("$", "")
+)
+# print(df_apps_clean.sort_values(by=["Price"], ascending=False).head(20))
+
+# 16. Finding the most Expensive Apps and Filtering out the Junk
+df_apps_clean = df_apps_clean[df_apps_clean["Price"] < 250]
+# print(df_apps_clean.sort_values("Price", ascending=False).head(5))
+
+df_apps_clean["Revenue_Estimate"] = df_apps_clean.Installs.mul(df_apps_clean.Price)
+print(df_apps_clean.sort_values("Revenue_Estimate", ascending=False)[:10])
