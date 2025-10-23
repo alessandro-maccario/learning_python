@@ -70,4 +70,145 @@ df_apps_clean = df_apps_clean[df_apps_clean["Price"] < 250]
 # print(df_apps_clean.sort_values("Price", ascending=False).head(5))
 
 df_apps_clean["Revenue_Estimate"] = df_apps_clean.Installs.mul(df_apps_clean.Price)
-print(df_apps_clean.sort_values("Revenue_Estimate", ascending=False)[:10])
+# print(df_apps_clean.sort_values("Revenue_Estimate", ascending=False)[:10])
+
+# 17. Analyse with bar charts and scatter plots which categories are dominating the market
+top10_category = df_apps_clean.Category.value_counts()[:10]
+# bar_plot_top10_category = px.bar(
+#     x=top10_category.index,  # index = category name
+#     y=top10_category.values,
+# )
+
+# bar_plot_top10_category.show()
+
+# 18. What matters is not just the total number of apps in the category but how often apps are downloaded in that category.
+category_installs = df_apps_clean.groupby("Category").agg({"Installs": pd.Series.sum})
+category_installs = category_installs.sort_values("Installs", ascending=True)
+
+# 19. Create a horizontal bar chart
+# h_bar = px.bar(
+#     x=category_installs.Installs,
+#     y=category_installs.index,
+#     orientation="h",
+#     title="Category Popularity",
+# )
+
+# h_bar.update_layout(xaxis_title="Number of Downloads", yaxis_title="Category")
+# h_bar.show()
+
+# 20. Do few apps have most of the downloads or are the downloads spread out over many apps?
+cat_number = df_apps_clean.groupby("Category").agg({"App": pd.Series.count})
+cat_merged_df = pd.merge(cat_number, category_installs, on="Category", how="inner")
+print(f"The dimensions of the DataFrame are: {cat_merged_df.shape}")
+cat_merged_df.sort_values("Installs", ascending=False)
+
+# Scatterplot
+# scatter = px.scatter(
+#     cat_merged_df,  # data
+#     x="App",  # column name
+#     y="Installs",
+#     title="Category Concentration",
+#     size="App",
+#     hover_name=cat_merged_df.index,
+#     color="Installs",
+# )
+
+# scatter.update_layout(
+#     xaxis_title="Number of Apps (Lower=More installations are more concentrated in fewer apps)",
+#     yaxis_title="Installs",
+#     yaxis=dict(type="log"),
+# )
+
+# scatter.show()
+
+# 21. How many different types of genres are there? We somehow need to separate the genre names to get a clear picture.
+# Split the strings on the semi-colon and then .stack them.
+stack = df_apps_clean.Genres.str.split(";", expand=True).stack()
+# print(f"We now have a single column with shape: {stack.shape}")
+num_genres = stack.value_counts()
+# print(f"Number of genres: {len(num_genres)}")
+
+# bar = px.bar(
+#     x=num_genres.index[:15],  # index = category name
+#     y=num_genres.values[:15],  # count
+#     title="Top Genres",
+#     hover_name=num_genres.index[:15],
+#     color=num_genres.values[:15],
+#     color_continuous_scale="Agsunset",
+# )
+
+# bar.update_layout(
+#     xaxis_title="Genre", yaxis_title="Number of Apps", coloraxis_showscale=False
+# )
+
+# bar.show()
+
+# 22. Let’s see what the split is between free and paid apps
+df_free_vs_paid = df_apps_clean.groupby(["Category", "Type"], as_index=False).agg(
+    {"App": pd.Series.count}
+)
+
+# g_bar = px.bar(
+#     df_free_vs_paid,
+#     x="Category",
+#     y="App",
+#     title="Free vs Paid Apps by Category",
+#     color="Type",
+#     barmode="group",
+# )
+
+# g_bar.update_layout(
+#     xaxis_title="Category",
+#     yaxis_title="Number of Apps",
+#     xaxis={"categoryorder": "total descending"},
+#     yaxis=dict(type="log"),
+# )
+
+# g_bar.show()
+
+# 23. Create Box Plots for the Number of Installs
+# box = px.box(
+#     df_apps_clean,
+#     y="Installs",
+#     x="Type",
+#     color="Type",
+#     notched=True,
+#     points="all",
+#     title="How Many Downloads are Paid Apps Giving Up?",
+# )
+
+# box.update_layout(yaxis=dict(type="log"))
+
+# box.show()
+
+# 24. App Revenue by Category.
+# So, if you were to list a paid app, how should you price it? To help you decide we can look at how your competitors in the same category price their apps.
+df_paid_apps = df_apps_clean[df_apps_clean["Type"] == "Paid"]
+# box = px.box(
+#     df_paid_apps,
+#     x="Category",
+#     y="Revenue_Estimate",
+#     title="How Much Can Paid Apps Earn?",
+# )
+
+# box.update_layout(
+#     xaxis_title="Category",
+#     yaxis_title="Paid App Ballpark Revenue",
+#     xaxis={"categoryorder": "min ascending"},
+#     yaxis=dict(type="log"),
+# )
+
+
+# box.show()
+
+# 25. App Pricing by Category
+box = px.box(df_paid_apps, x="Category", y="Price", title="Price per Category")
+
+box.update_layout(
+    xaxis_title="Category",
+    yaxis_title="Paid App Price",
+    xaxis={"categoryorder": "max descending"},
+    yaxis=dict(type="log"),
+)
+
+box.show()
