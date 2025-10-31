@@ -8,55 +8,24 @@
         <h2 class="mb-5">Projects</h2>
         <p>All the projects link either to my GitHub repo or to the actual project website.</p>
 
-
         <div class="row row-cols-1 row-cols-md-3 g-4">
+
+            {% for project in projects %}
+            <!--ADD HERE THE DIV FOR THE CARD WITH THE JINJA CODE TO LOOP THROUGH THE JSON ELEMENTS-->
             <div class="col">
                 <div class="card">
-                    <img src="..." class="card-img-top" alt="...">
+                    <img src="{{project.image}}" class="card-img-top" alt="{{project.image_alt_text}}" height="80rem" ,
+                        width="80rem">
                     <div class="card-body">
                         <h5 class="card-title"><a
-                                href="https://github.com/alessandro-maccario/expense_tracker_streamlit">Expense
-                                Tracker</a></h5>
-                        <p class="card-text">Expense Tracker built with Streamlit</p>
+                                href="https://github.com/alessandro-maccario/expense_tracker_streamlit">{{project.name}}</a>
+                        </h5>
+                        <p class="card-text">{{project.title}}</p>
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                            additional content. This content is a little bit longer.</p>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
-
-
-
-
-    </div>
 </section>
 <hr class="m-0" />
 {% endblock %}

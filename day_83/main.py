@@ -1,5 +1,6 @@
 ### Day 83: Professional Portfolio Project
 from flask import Flask, render_template
+import json
 
 app = Flask(__name__)
 
@@ -31,7 +32,13 @@ def interests_page():
 
 @app.route("/projects")
 def projects_page():
-    return render_template("projects.html")
+    # TODO: read the json file and pass it as a variable into the render_template as a keyword projects = projects
+    # TODO: then, in the projects.html page, need to loop through the element inside the json and have one single card
+    # TODO: Plus: if possible, add a filter in the page to be able to filter based on the topic/tech stack
+    with open("instance/projects.json") as json_file:
+        projects_json_data = json.load(json_file)
+
+    return render_template("projects.html", projects=projects_json_data)
 
 
 @app.route("/certifications")
