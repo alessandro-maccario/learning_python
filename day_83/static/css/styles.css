@@ -4892,9 +4892,12 @@ fieldset:disabled .btn {
 .card-img-top,
 .card-img-bottom {
   width: 100%;
-  padding-top: 20px;
-  height: 80px;
-  width: 80px;
+}
+
+.card img.card-img-top {
+  height: 60px;
+  width: 60px;
+  margin: 10px auto;
 }
 
 .card-img,
