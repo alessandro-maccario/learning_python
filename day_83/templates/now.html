@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+
+{% block body %}
+<!-- Now-->
+<section class="resume-section" id="now">
+    <div class="resume-section-content">
+        <h2 class="mb-5">Now - What am I currently learning?</h2>
+        <p>(This is a <a href="https://nownownow.com/about">now page</a>, and if you have your own site, <a
+                href="https://nownownow.com/about">you should make
+                one</a>, too.)</p>
+        <p>Inspired by <a href="https://www.giuseppemaccario.com/now/">Giuseppe's Maccario Now Page</a>, in here you can
+            find what I'm currently studying or reading. Drop me a message on LinkedIn if you get inspired by one of
+            these resources, I would be thrilled to know what you think about it!</p>
+
+        <!-- Learning Section -->
+        <div class="row row-cols-1 row-cols-md-4 g-4">
+            {% for book in books %}
+            <div class="col">
+                <div class="card">
+                    <img src="{{book.image}}" class="card-img-top" alt="{{book.image_alt_text}}">
+                    <div class="card-body">
+                        <p class="card-text">{{book.topic}}</p>
+                        <a href="{{book.link}}" class="btn btn-success">{{book.title}}</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</section>
+<hr class="m-0" />
+{% endblock %}
