@@ -3,7 +3,7 @@
 
 {% block body %}
 <!-- Projects-->
-<section class="resume-section" id="interests">
+<section class="resume-section" id="projects">
     <div class="resume-section-content">
         <h2 class="mb-5">Projects</h2>
         <p>All the projects link directly to my GitHub repo.</p>
@@ -11,7 +11,6 @@
         <div class="row row-cols-1 row-cols-md-3 g-4">
 
             {% for project in projects %}
-            <!--ADD HERE THE DIV FOR THE CARD WITH THE JINJA CODE TO LOOP THROUGH THE JSON ELEMENTS-->
             <div class="col">
                 <div class="card">
                     <img src="{{project.image}}" class="card-img-top" alt="{{project.image_alt_text}}">
