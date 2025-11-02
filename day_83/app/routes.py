@@ -1,8 +1,6 @@
-### Day 83: Professional Portfolio Project
-from flask import Flask, render_template
+from app import app
+from flask import render_template
 import json
-
-app = Flask(__name__)
 
 
 @app.route("/")
@@ -22,12 +20,12 @@ def education_page():
 
 @app.route("/skills")
 def skills_page():
-    return render_template("skills.html")
+    return render_template("/skills.html")
 
 
 @app.route("/projects")
 def projects_page():
-    with open("instance/projects.json") as json_file:
+    with open("app/instance/projects.json") as json_file:
         projects_json_data = json.load(json_file)
 
     return render_template("projects.html", projects=projects_json_data)
@@ -45,11 +43,7 @@ def blog_page():
 
 @app.route("/now")
 def now_page():
-    with open("instance/books.json") as json_file:
-        books_json_data = json.load(json_file)
+    with open("app/instance/now.json") as json_file:
+        now_json_data = json.load(json_file)
 
-    return render_template("now.html", books=books_json_data)
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
+    return render_template("now.html", now=now_json_data)
