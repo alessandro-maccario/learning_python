@@ -1,14 +1,6 @@
 from app import app
-from flask import render_template
-import os
-
-# get current file path for project folder and define location for saving the db
-file_path = os.path.abspath(os.getcwd()) + "/day_66/src/instance/"
-# configure the SQLite database, relative to the app instance folder
-app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{file_path}cafes.db"
-db = SQLAlchemy(model_class=Base)
-# initialize the app with the extension
-db.init_app(app)
+from flask import render_template, request, jsonify
+from app.models import db, Cafe
 
 
 @app.route("/")
