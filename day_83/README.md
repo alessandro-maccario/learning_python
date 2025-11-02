@@ -1,8 +1,6 @@
 # Day 83: Professional Portfolio Project
 
-# Personal Portfolio (Flask + Bootstrap)
-
-A professional portfolio web site built using Flask, Bootstrap, and Jinja2.
+A professional personal portfolio web site built using Flask, Bootstrap, and Jinja2.
 
 # Overview
 
