@@ -11,16 +11,18 @@ class Base(DeclarativeBase):
 
 
 # get current file path for project folder and define location for saving the db
-file_path = os.path.abspath(os.getcwd()) + "/day_66/src/instance/"
+file_path = os.path.abspath(os.getcwd()) + "/app/instance/"
 # configure the SQLite database, relative to the app instance folder
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{file_path}cafes.db"
-db = SQLAlchemy(model_class=Base)
+db = SQLAlchemy()
 # initialize the app with the extension
 db.init_app(app)
 
 
 # Cafe TABLE Configuration
 class Cafe(db.Model):
+    __tablename__ = "cafe"
+
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     name: Mapped[str] = mapped_column(String(250), unique=True, nullable=False)
     map_url: Mapped[str] = mapped_column(String(500), nullable=False)
