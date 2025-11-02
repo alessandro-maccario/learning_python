@@ -31,4 +31,4 @@ def fetch_all_cafe():
             ]
         }
 
-        return jsonify(dict_all_cafe)
+        return render_template("cafes.html", cafes_data=dict_all_cafe)
